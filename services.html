@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services & Événements — Hôtel Saphir Brazzaville</title>
+<meta name="description" content="Piscines, restaurant, navette aéroport et organisation de séminaires et mariages à l'Hôtel Saphir, Brazzaville.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ivoire:  '#FBF7EF',
+        perle:   '#F1EADC',
+        saphir:  '#16233F',
+        saphirdk:'#0D1626',
+        saphirlt:'#2C4270',
+        or:      '#C6A15B',
+        orlt:    '#DFC287',
+        encre:   '#211D1A',
+        brume:   '#89806F',
+      },
+      fontFamily: {
+        serif: ['Cormorant Garamond','Georgia','serif'],
+        sans:  ['Jost','system-ui','sans-serif'],
+      },
+    }
+  }
+}
+</script>
+<style>
+  html { scroll-behavior:smooth; }
+  body { background:#FBF7EF; color:#211D1A; overflow-x:hidden; -webkit-text-size-adjust:100%; }
+
+  /* ── positioning safety net: guarantees correct stacking (text over photo
+     overlays) even if the Tailwind CDN script fails to load — a blocked or
+     slow network must never hide page content behind an overlay. Values
+     match Tailwind's own utilities exactly, so this never conflicts when
+     Tailwind does load. ── */
+  .relative{position:relative}
+  .absolute{position:absolute}
+  .fixed{position:fixed}
+  .inset-0{top:0;right:0;bottom:0;left:0}
+  .top-0{top:0}
+  .right-0{right:0}
+  .bottom-0{bottom:0}
+  .left-0{left:0}
+  .z-10{z-index:10}
+  .z-40{z-index:40}
+  .z-50{z-index:50}
+
+  .ht  { border-top:    1px solid rgba(33,29,26,.10); }
+  .hb  { border-bottom: 1px solid rgba(33,29,26,.10); }
+  .hx  { border:        1px solid rgba(33,29,26,.10); }
+  .div { border-top:    1px solid rgba(33,29,26,.09); }
+
+  .serif-tight { letter-spacing:-.01em; }
+  .eyebrow { font-family:'Jost',sans-serif; font-size:.65rem; letter-spacing:.32em; text-transform:uppercase; color:#C6A15B; font-weight:400; }
+  .eyebrow-light { font-family:'Jost',sans-serif; font-size:.65rem; letter-spacing:.32em; text-transform:uppercase; color:rgba(251,247,239,.65); font-weight:400; }
+
+  .h-hero  { font-size:clamp(2.4rem,9vw,5.6rem); line-height:1.05; }
+  .h-title { font-size:clamp(1.9rem,5.5vw,3.4rem); line-height:1.1; }
+  .h-sub   { font-size:clamp(1.4rem,4vw,2.1rem);   line-height:1.2; }
+
+  /* ── hero slideshow ── */
+  .hero { position:relative; min-height:88svh; overflow:hidden; background:#0D1626; }
+  .hero-slides { position:absolute; inset:0; z-index:0; }
+  .hero-slide {
+    position:absolute; inset:0;
+    background-size:cover; background-position:center; background-repeat:no-repeat;
+    opacity:0; transition:opacity 1.8s ease;
+    animation: kenburns 18s ease-in-out infinite alternate;
+  }
+  .hero-slide.active { opacity:1; }
+  .hero-overlay {
+    position:absolute; inset:0; z-index:1;
+    background: linear-gradient(180deg, rgba(13,22,38,.55) 0%, rgba(13,22,38,.35) 45%, rgba(13,22,38,.78) 100%);
+  }
+  @keyframes kenburns { from{ transform:scale(1); } to{ transform:scale(1.08); } }
+
+  /* ── page header banner (non-home pages) ── */
+  .page-banner { position:relative; min-height:46svh; overflow:hidden; background:#0D1626; }
+  .page-banner .hero-overlay { background: linear-gradient(180deg, rgba(13,22,38,.5) 0%, rgba(13,22,38,.68) 100%); }
+
+  /* ── nav ── */
+  #nav { transition:all .4s ease; }
+  #nav.scrolled { background:rgba(251,247,239,.96); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(33,29,26,.08); }
+  #nav.scrolled .nav-link { color:#89806F; }
+  #nav.scrolled .nav-cta  { color:#16233F; border-color:rgba(22,35,63,.35); }
+  #nav.scrolled .lang-btn { color:#16233F; border-color:rgba(22,35,63,.35); }
+  .nav-link  { color:rgba(251,247,239,.75); transition:color .3s; font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; }
+  .nav-link:hover { color:#FBF7EF; }
+  #nav.scrolled .nav-link:hover { color:#16233F; }
+  .nav-logo-img { height:38px; width:auto; display:block; filter:drop-shadow(0 1px 6px rgba(0,0,0,.35)); }
+  .lang-btn { color:rgba(251,247,239,.85); border:1px solid rgba(251,247,239,.4); font-size:.68rem; letter-spacing:.1em; padding:.3rem .6rem; border-radius:1px; transition:all .3s; }
+  .lang-btn:hover { background:rgba(251,247,239,.12); }
+
+  /* ── buttons ── */
+  .btn-or {
+    display:inline-block; text-align:center;
+    background:#C6A15B; color:#16233F;
+    font-family:'Jost',sans-serif; font-weight:500;
+    font-size:.76rem; letter-spacing:.16em; text-transform:uppercase;
+    padding:.9rem 2.1rem; border-radius:1px;
+    transition:background .3s;
+  }
+  .btn-or:hover { background:#DFC287; }
+
+  .btn-outline-light {
+    display:inline-block; text-align:center;
+    border:1px solid rgba(251,247,239,.4); color:#FBF7EF;
+    font-family:'Jost',sans-serif; font-weight:400;
+    font-size:.76rem; letter-spacing:.16em; text-transform:uppercase;
+    padding:.9rem 2.1rem; border-radius:1px;
+    transition:all .3s;
+  }
+  .btn-outline-light:hover { background:rgba(251,247,239,.1); border-color:rgba(251,247,239,.8); }
+
+  .btn-outline-dark {
+    display:inline-block; text-align:center;
+    border:1px solid rgba(33,29,26,.25); color:#16233F;
+    font-family:'Jost',sans-serif; font-weight:400;
+    font-size:.76rem; letter-spacing:.16em; text-transform:uppercase;
+    padding:.9rem 2.1rem; border-radius:1px;
+    transition:all .3s;
+  }
+  .btn-outline-dark:hover { background:#16233F; color:#FBF7EF; border-color:#16233F; }
+
+  /* ── whatsapp float ── */
+  .wa-float {
+    position:fixed; bottom:22px; right:22px; z-index:50;
+    background:#16233F; color:#FBF7EF; border:1px solid rgba(198,161,91,.5);
+    padding:.85rem 1.3rem; border-radius:2px;
+    font-family:'Jost',sans-serif; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+    box-shadow:0 14px 40px -14px rgba(13,22,38,.5);
+    transition:transform .3s;
+  }
+  .wa-float:hover { transform:translateY(-2px); }
+
+  /* ── value strip ── */
+  .value-strip { background:#16233F; }
+
+  /* ── room row / card ── */
+  .room-row { transition:background .3s; }
+  .room-row:hover { background:rgba(198,161,91,.07); }
+  .room-card-photo { min-height:220px; background-size:cover; background-position:center; }
+
+  /* ── bento gallery ── */
+  .bento { display:grid; grid-template-columns:repeat(6,1fr); grid-auto-rows:130px; gap:4px; }
+  .bento .b1 { grid-column:span 4; grid-row:span 2; }
+  .bento .b2 { grid-column:span 2; grid-row:span 2; }
+  .bento .b3 { grid-column:span 2; grid-row:span 1; }
+  .bento .b4 { grid-column:span 2; grid-row:span 1; }
+  .bento .b5 { grid-column:span 2; grid-row:span 1; }
+  .bento .b6 { grid-column:span 2; grid-row:span 1; }
+  .bento .b7 { grid-column:span 2; grid-row:span 1; }
+  .bento .b8 { grid-column:span 2; grid-row:span 1; }
+  .bento .b9 { grid-column:span 2; grid-row:span 1; }
+  @media (max-width:640px){
+    .bento { grid-template-columns:repeat(2,1fr); grid-auto-rows:150px; }
+    .bento [class*="b"] { grid-column:span 1; grid-row:span 1; }
+  }
+  .bento-item { position:relative; overflow:hidden; background-size:cover; background-position:center; }
+  .bento-item::after { content:''; position:absolute; inset:0; background:linear-gradient(0deg, rgba(13,22,38,.35), transparent 55%); }
+  .bento-item .bi-label { position:absolute; bottom:10px; left:14px; z-index:1; }
+
+  /* ── form ── */
+  .f-input, .f-select {
+    width:100%; background:transparent;
+    border:0; border-bottom:1px solid rgba(33,29,26,.2);
+    padding:.6rem 0; color:#211D1A;
+    font-family:'Jost',sans-serif; font-size:.95rem;
+    transition:border-color .3s;
+  }
+  .f-input:focus, .f-select:focus { outline:none; border-color:#C6A15B; }
+  .f-input::placeholder { color:rgba(137,128,111,.55); }
+  .f-label { font-size:.62rem; letter-spacing:.22em; text-transform:uppercase; color:#C6A15B; }
+
+  /* light variant (forms on dark bg) */
+  .f-input-light { border-bottom:1px solid rgba(251,247,239,.25); color:#FBF7EF; }
+  .f-input-light::placeholder { color:rgba(251,247,239,.4); }
+
+  /* ── faq ── */
+  details>summary { list-style:none; }
+  details>summary::-webkit-details-marker { display:none; }
+  .fi { transition:transform .35s ease; flex-shrink:0; }
+  details[open] .fi { transform:rotate(45deg); }
+
+  /* ── reveal ── */
+  .reveal { opacity:1; transform:none; transition:opacity .85s cubic-bezier(.2,.7,.2,1),transform .85s cubic-bezier(.2,.7,.2,1); }
+  .reveal.pre { opacity:0; transform:translateY(16px); }
+
+  /* ── bilingual toggle ── */
+  [data-en] { display:none; }
+  html.lang-en [data-fr] { display:none; }
+  html.lang-en [data-en] { display:revert; }
+
+  ::selection { background:rgba(198,161,91,.25); }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .hero-slide{animation:none !important} }
+</style>
+</head>
+<body class="bg-ivoire text-encre font-sans antialiased">
+
+<header class="fixed top-0 left-0 right-0 z-40">
+  <div id="nav">
+    <nav class="max-w-7xl mx-auto px-5 sm:px-10 flex items-center justify-between" style="height:76px" aria-label="Navigation principale">
+      <a href="index.html" class="shrink-0"><img src="logo.png" alt="Hôtel Saphir" class="nav-logo-img"></a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="index.html" class="nav-link hover:opacity-100"><span data-fr>Accueil</span><span data-en>Home</span></a>
+        <a href="chambres.html" class="nav-link hover:opacity-100"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a>
+        <a href="services.html" class="nav-link hover:opacity-100 font-semibold"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a>
+        <a href="galerie.html" class="nav-link hover:opacity-100"><span data-fr>Galerie</span><span data-en>Gallery</span></a>
+        <a href="apropos.html" class="nav-link hover:opacity-100"><span data-fr>À propos</span><span data-en>About</span></a>
+        <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="langToggle" class="lang-btn" type="button">EN</button>
+        <a href="chambres.html#reserver" class="nav-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-ivoire/10 transition-all hidden sm:block">
+          <span data-fr>Réserver</span><span data-en>Book</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+<section class="page-banner flex flex-col items-center justify-center text-center px-5 relative">
+  <div class="hero-slides"><div class="hero-slide active" style="background-image:url('pool-1.jpg')"></div></div>
+  <div class="hero-overlay"></div>
+  <div class="relative z-10 max-w-2xl mx-auto">
+    <div class="eyebrow-light reveal">Hôtel Saphir</div>
+    <h1 class="font-serif h-title text-ivoire serif-tight mt-4 reveal" style="transition-delay:.1s">
+      <span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span>
+    </h1>
+  </div>
+</section>
+
+<!-- ── AMENITIES ── -->
+<section class="max-w-7xl mx-auto px-5 sm:px-10 py-20 sm:py-28">
+  <div class="text-center mb-14 reveal">
+    <div class="eyebrow mb-5"><span data-fr>Sur place</span><span data-en>On site</span></div>
+    <h2 class="font-serif h-title serif-tight"><span data-fr>Deux piscines, un seul rythme.</span><span data-en>Two pools, one easy rhythm.</span></h2>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-4 mb-4">
+    <div class="rounded-sm reveal" style="min-height:280px;background-image:url('pool-1.jpg');background-size:cover;background-position:center"></div>
+    <div class="rounded-sm reveal" style="min-height:280px;transition-delay:.1s;background-image:url('pool-2.jpg');background-size:cover;background-position:center"></div>
+  </div>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px mt-10" style="background:rgba(33,29,26,.09)">
+    <div class="py-8 px-6 reveal" style="background:#FBF7EF">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
+        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5m0 0l3 3m-3-3l-3 3"/></svg>
+      </div>
+      <h3 class="font-serif text-lg serif-tight"><span data-fr>Deux piscines extérieures</span><span data-en>Two outdoor pools</span></h3>
+      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Ouvertes toute la journée, accès libre pour les clients de l'hôtel.</span><span data-en>Open all day, free access for hotel guests.</span></p>
+    </div>
+    <div class="py-8 px-6 reveal" style="background:#FBF7EF;transition-delay:.07s">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
+        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.288 15.038a5.25 5.25 0 017.424 0M5.106 11.856a10.5 10.5 0 0113.788 0M1.924 8.674a15.75 15.75 0 0120.152 0M12 19.5h.01"/></svg>
+      </div>
+      <h3 class="font-serif text-lg serif-tight"><span data-fr>Wi-Fi gratuit</span><span data-en>Free Wi-Fi</span></h3>
+      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Connexion offerte dans l'ensemble de l'établissement.</span><span data-en>Complimentary connection throughout the hotel.</span></p>
+    </div>
+    <div class="py-8 px-6 reveal" style="background:#FBF7EF;transition-delay:.14s">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
+        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <h3 class="font-serif text-lg serif-tight"><span data-fr>Restaurant sur place</span><span data-en>On-site restaurant</span></h3>
+      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Petit-déjeuner et repas servis sans sortir de l'hôtel.</span><span data-en>Breakfast and meals served without leaving the hotel.</span></p>
+    </div>
+    <div class="py-8 px-6 reveal" style="background:#FBF7EF;transition-delay:.21s">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
+        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 17l4 4 4-4m-4 4V3"/></svg>
+      </div>
+      <h3 class="font-serif text-lg serif-tight"><span data-fr>Navette aéroport</span><span data-en>Airport shuttle</span></h3>
+      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Transfert gratuit depuis et vers Maya-Maya, sur demande.</span><span data-en>Complimentary transfer to and from Maya-Maya, on request.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMMERÇANTS ── -->
+<section id="commerces" class="max-w-7xl mx-auto px-5 sm:px-10 pb-20 sm:pb-28">
+  <div class="text-center mb-14 reveal">
+    <div class="eyebrow mb-5"><span data-fr>Sur place</span><span data-en>On site</span></div>
+    <h2 class="font-serif h-title serif-tight"><span data-fr>Nos commerçants.</span><span data-en>Our on-site shops.</span></h2>
+    <p class="text-brume mt-3 max-w-xl mx-auto">
+      <span data-fr>Quelques adresses installées au sein de l'hôtel, à la disposition de nos clients.</span>
+      <span data-en>A few addresses located within the hotel, available to our guests.</span>
+    </p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px" style="background:rgba(33,29,26,.09)">
+    <div class="py-8 px-6 reveal" style="background:#FBF7EF">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
+        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+      </div>
+      <h3 class="font-serif text-lg serif-tight"><span data-fr>Boutique souvenirs</span><span data-en>Gift shop</span></h3>
+      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Artisanat local et idées cadeaux, au rez-de-chaussée.</span><span data-en>Local crafts and gift ideas, on the ground floor.</span></p>
+    </div>
+    <div class="py-8 px-6 reveal" style="background:#FBF7EF;transition-delay:.07s">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
+        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+      </div>
+      <h3 class="font-serif text-lg serif-tight"><span data-fr>Salon de coiffure &amp; beauté</span><span data-en>Hair &amp; beauty salon</span></h3>
+      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Soins et coiffure sur place, sur rendez-vous.</span><span data-en>Beauty care and hairdressing on site, by appointment.</span></p>
+    </div>
+    <div class="py-8 px-6 reveal" style="background:#FBF7EF;transition-delay:.14s">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
+        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v8M8 12h8"/></svg>
+      </div>
+      <h3 class="font-serif text-lg serif-tight"><span data-fr>Pharmacie</span><span data-en>Pharmacy</span></h3>
+      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Produits de première nécessité, accessible aux clients.</span><span data-en>Everyday essentials, available to guests.</span></p>
+    </div>
+    <div class="py-8 px-6 reveal" style="background:#FBF7EF;transition-delay:.21s">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
+        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l18-8-8 18-2-8-8-2z"/></svg>
+      </div>
+      <h3 class="font-serif text-lg serif-tight"><span data-fr>Agence de voyage</span><span data-en>Travel agency</span></h3>
+      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Billetterie et organisation de séjours, sur place.</span><span data-en>Ticketing and trip planning, on site.</span></p>
+    </div>
+  </div>
+  <p class="text-center text-brume text-xs mt-6"><span data-fr>Liste à confirmer avec l'hôtel.</span><span data-en>List to be confirmed with the hotel.</span></p>
+</section>
+
+<!-- ── ÉVÉNEMENTS ── -->
+<section id="evenements" style="background:#16233F">
+  <div class="max-w-5xl mx-auto px-5 sm:px-10 py-20 sm:py-28">
+    <div class="grid lg:grid-cols-2 gap-14">
+      <div class="reveal">
+        <div class="eyebrow-light mb-5"><span data-fr>Événements</span><span data-en>Events</span></div>
+        <h2 class="font-serif h-title text-ivoire serif-tight mb-6">
+          <span data-fr>Séminaires &amp; mariages.</span><span data-en>Seminars &amp; weddings.</span>
+        </h2>
+        <p class="text-ivoire/65 leading-relaxed mb-6">
+          <span data-fr>Un espace pour vos réunions professionnelles ou vos réceptions privées, avec l'accompagnement de nos équipes. Décrivez-nous votre événement, nous revenons vers vous avec une proposition adaptée.</span>
+          <span data-en>A space for your professional meetings or private receptions, supported by our team. Tell us about your event and we'll get back to you with a tailored proposal.</span>
+        </p>
+        <ul class="space-y-3 text-ivoire/70 text-sm">
+          <li class="flex items-start gap-2.5"><svg class="w-4 h-4 text-or shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span data-fr>Séminaires et réunions d'entreprise</span><span data-en>Corporate seminars and meetings</span></li>
+          <li class="flex items-start gap-2.5"><svg class="w-4 h-4 text-or shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span data-fr>Mariages et réceptions privées</span><span data-en>Weddings and private receptions</span></li>
+          <li class="flex items-start gap-2.5"><svg class="w-4 h-4 text-or shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span data-fr>Restauration et boissons sur demande</span><span data-en>Catering and beverages on request</span></li>
+        </ul>
+      </div>
+
+      <form id="eventForm" class="reveal" style="transition-delay:.1s">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="f-label"><span data-fr>Nom</span><span data-en>Name</span></label>
+            <input required name="nom" type="text" class="f-input f-input-light">
+          </div>
+          <div>
+            <label class="f-label">WhatsApp / <span data-fr>Téléphone</span><span data-en>Phone</span></label>
+            <input required name="tel" type="tel" class="f-input f-input-light">
+          </div>
+          <div>
+            <label class="f-label"><span data-fr>Type d'événement</span><span data-en>Event type</span></label>
+            <select required name="type" class="f-select f-input-light">
+              <option value="" disabled selected></option>
+              <option data-fr value="Séminaire">Séminaire</option>
+              <option data-fr value="Mariage">Mariage</option>
+              <option data-fr value="Autre">Autre</option>
+            </select>
+          </div>
+          <div>
+            <label class="f-label"><span data-fr>Date souhaitée</span><span data-en>Preferred date</span></label>
+            <input name="date" type="date" class="f-input f-input-light">
+          </div>
+          <div>
+            <label class="f-label"><span data-fr>Nombre d'invités</span><span data-en>Number of guests</span></label>
+            <input name="invites" type="number" min="1" class="f-input f-input-light">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="f-label"><span data-fr>Message</span><span data-en>Message</span></label>
+            <textarea name="message" rows="2" class="f-input f-input-light"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn-or mt-7 w-full sm:w-auto"><span data-fr>Demander un devis</span><span data-en>Request a quote</span></button>
+        <p class="text-ivoire/45 text-xs mt-3"><span data-fr>Votre demande sera transmise par WhatsApp à notre équipe.</span><span data-en>Your request will be sent to our team via WhatsApp.</span></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#0D1626">
+  <div class="max-w-7xl mx-auto px-5 sm:px-10 py-16 grid sm:grid-cols-3 gap-12">
+    <div>
+      <img src="logo-large.png" alt="Hôtel Saphir" style="height:64px;width:auto" class="mb-5">
+      <p class="text-ivoire/45 text-xs leading-relaxed max-w-xs">Brazzaville, République du Congo.</p>
+      <p class="text-ivoire/45 text-xs mt-4">Avenue Alfassa, rue Charles Ebina<br>Brazzaville — RC</p>
+    </div>
+    <div>
+      <div class="eyebrow-light mb-5"><span data-fr>Navigation</span><span data-en>Navigation</span></div>
+      <ul class="space-y-2.5 text-xs text-ivoire/45">
+          <li><a href="index.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Accueil</span><span data-en>Home</span></a></li>
+          <li><a href="chambres.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a></li>
+          <li><a href="services.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a></li>
+          <li><a href="galerie.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Galerie</span><span data-en>Gallery</span></a></li>
+          <li><a href="apropos.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>À propos</span><span data-en>About</span></a></li>
+          <li><a href="contact.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Contact</span><span data-en>Contact</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="eyebrow-light mb-5"><span data-fr>Contact</span><span data-en>Contact</span></div>
+      <ul class="space-y-2.5 text-xs text-ivoire/45">
+        <li>+242 06 928 4245</li>
+        <li>+242 05 528 42 45</li>
+        <li>contact@hotel-saphir-brazza.com</li>
+      </ul>
+      <a href="https://wa.me/24269284245" target="_blank" rel="noopener" class="btn-outline-light text-xs mt-5 inline-block">
+        <span data-fr>Écrire sur WhatsApp</span><span data-en>Message us on WhatsApp</span>
+      </a>
+      <div class="flex gap-4 mt-6">
+        <a href="#" class="text-ivoire/40 hover:text-ivoire transition text-xs uppercase tracking-widest">Facebook</a>
+        <a href="#" class="text-ivoire/40 hover:text-ivoire transition text-xs uppercase tracking-widest">Instagram</a>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-5 sm:px-10 py-6 border-t border-ivoire/10 text-ivoire/30 text-[11px] flex flex-col sm:flex-row justify-between gap-2">
+    <span>&copy; 2026 Hôtel Saphir — Brazzaville.</span>
+    <span data-fr>Site réalisé par l'Atelier KPM.</span><span data-en>Website by Atelier KPM.</span>
+  </div>
+</footer>
+
+<a href="https://wa.me/24269284245" target="_blank" rel="noopener" class="wa-float hidden sm:flex items-center gap-2">
+  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0012.04 2zm0 18.1a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.35c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.83c0 4.55-3.7 8.2-8.25 8.2z"/></svg>
+  <span data-fr>WhatsApp</span><span data-en>WhatsApp</span>
+</a>
+
+
+<script>
+  // Nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive:true });
+
+  // Language toggle
+  (function(){
+    const btn = document.getElementById('langToggle');
+    if (!btn) return;
+    const stored = null; // no persistence — static demo, defaults to FR each load
+    btn.addEventListener('click', () => {
+      const isEn = document.documentElement.classList.toggle('lang-en');
+      btn.textContent = isEn ? 'FR' : 'EN';
+    });
+  })();
+
+  // Hero slideshow
+  (function(){
+    const slides = document.querySelectorAll('.hero-slide');
+    if (!slides.length) return;
+    let idx = Array.from(slides).findIndex(s => s.classList.contains('active'));
+    if (idx < 0) idx = 0;
+    setInterval(() => {
+      slides[idx].classList.remove('active');
+      idx = (idx + 1) % slides.length;
+      slides[idx].classList.add('active');
+    }, 5500);
+  })();
+
+  // Reveal
+  document.querySelectorAll('.reveal').forEach((el) => {
+    el.classList.add('pre');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.remove('pre'); io.unobserve(e.target); } });
+    }, { threshold:0.07 });
+    io.observe(el);
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.reveal.pre').forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.remove('pre'); });
+  });
+
+  // FAQ
+  document.querySelectorAll('details').forEach(d => {
+    d.addEventListener('toggle', () => {
+      if(d.open) document.querySelectorAll('details').forEach(o => { if(o!==d) o.open=false; });
+    });
+  });
+</script>
+
+<script>
+  const eventForm = document.getElementById('eventForm');
+  if (eventForm) {
+    eventForm.addEventListener('submit', e => {
+      e.preventDefault();
+      let ok = true;
+      eventForm.querySelectorAll('[required]').forEach(i => {
+        if(!i.value){ ok=false; i.style.borderColor='rgba(200,90,90,.8)'; }
+        else i.style.borderColor='rgba(251,247,239,.25)';
+      });
+      if(!ok) return;
+      const d = new FormData(eventForm);
+      const lines = [
+        'Demande de devis événement — Hôtel Saphir',
+        'Nom: ' + d.get('nom'),
+        'Téléphone: ' + d.get('tel'),
+        'Type: ' + d.get('type'),
+        'Date souhaitée: ' + (d.get('date') || 'non précisée'),
+        'Invités: ' + (d.get('invites') || 'non précisé'),
+        'Message: ' + (d.get('message') || '-')
+      ];
+      const msg = encodeURIComponent(lines.join(String.fromCharCode(10)));
+      window.open('https://wa.me/24269284245?text=' + msg, '_blank');
+    });
+  }
+</script>
+
+</body>
+</html>
