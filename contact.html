@@ -290,14 +290,14 @@ tailwind.config = {
   </div>
 </section>
 
-<section style="background:#16233F">
+<section style="background:#F1EADC">
   <div class="max-w-6xl mx-auto px-5 sm:px-10 py-20 sm:py-28 grid lg:grid-cols-2 gap-14">
 
     <div class="reveal">
-      <div class="eyebrow-light mb-5"><span data-fr>Coordonnées</span><span data-en>Contact details</span></div>
-      <h2 class="font-serif h-sub text-ivoire serif-tight mb-8"><span data-fr>Parlons de votre séjour.</span><span data-en>Let's talk about your stay.</span></h2>
+      <div class="eyebrow mb-5"><span data-fr>Coordonnées</span><span data-en>Contact details</span></div>
+      <h2 class="font-serif h-sub serif-tight mb-8"><span data-fr>Parlons de votre séjour.</span><span data-en>Let's talk about your stay.</span></h2>
 
-      <ul class="space-y-4 text-ivoire/75 text-sm mb-8">
+      <ul class="space-y-4 text-brume text-sm mb-8">
         <li class="flex items-start gap-3">
           <svg class="w-4 h-4 text-or shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           <span>Avenue Alfassa, Rue Charles Ebina<br>Brazzaville — République du Congo</span>
@@ -328,22 +328,22 @@ tailwind.config = {
       <div class="grid sm:grid-cols-2 gap-5">
         <div>
           <label class="f-label"><span data-fr>Nom</span><span data-en>Name</span></label>
-          <input required name="nom" type="text" class="f-input f-input-light">
+          <input required name="nom" type="text" class="f-input">
         </div>
         <div>
           <label class="f-label">Email</label>
-          <input required name="email" type="email" class="f-input f-input-light">
+          <input required name="email" type="email" class="f-input">
         </div>
         <div class="sm:col-span-2">
           <label class="f-label">WhatsApp / <span data-fr>Téléphone</span><span data-en>Phone</span></label>
-          <input name="tel" type="tel" class="f-input f-input-light">
+          <input name="tel" type="tel" class="f-input">
         </div>
         <div class="sm:col-span-2">
           <label class="f-label"><span data-fr>Message</span><span data-en>Message</span></label>
-          <textarea required name="message" rows="4" class="f-input f-input-light"></textarea>
+          <textarea required name="message" rows="4" class="f-input"></textarea>
         </div>
       </div>
-      <button type="submit" class="btn-outline-light mt-7 w-full sm:w-auto"><span data-fr>Envoyer</span><span data-en>Send</span></button>
+      <button type="submit" class="btn-outline-dark mt-7 w-full sm:w-auto"><span data-fr>Envoyer</span><span data-en>Send</span></button>
       <p id="contactOk" class="text-or text-sm mt-4 hidden"><span data-fr>Merci — votre messagerie va s'ouvrir pour envoyer le message.</span><span data-en>Thank you — your mail app will open to send the message.</span></p>
     </form>
 
@@ -494,7 +494,7 @@ tailwind.config = {
       let ok = true;
       contactForm.querySelectorAll('[required]').forEach(i => {
         if(!i.value){ ok=false; i.style.borderColor='rgba(200,90,90,.8)'; }
-        else i.style.borderColor='rgba(251,247,239,.25)';
+        else i.style.borderColor='rgba(33,29,26,.2)';
       });
       if(!ok) return;
       const d = new FormData(contactForm);
