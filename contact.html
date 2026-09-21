@@ -6,6 +6,12 @@
 <title>Contact — Hôtel Saphir Brazzaville</title>
 <meta name="description" content="Contactez l'Hôtel Saphir à Brazzaville : adresse, téléphone, WhatsApp et formulaire de contact.">
 
+<script>
+  /* langue choisie par le visiteur : appliquée avant le 1er rendu pour
+     éviter un flash en français quand il navigue d'une page à l'autre. */
+  try { if (localStorage.getItem('saphirLang') === 'en') document.documentElement.classList.add('lang-en'); } catch(e) {}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -371,14 +377,28 @@ tailwind.config = {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive:true });
 
-  // Language toggle
+  // Language toggle — choix mémorisé (localStorage) et appliqué sur toutes les pages
   (function(){
     const btn = document.getElementById('langToggle');
+    // <option> ne supporte pas [data-fr]/[data-en] + display:none de façon fiable
+    // (certains navigateurs gardent l'option sélectionnable même invisible, d'autres
+    // la retirent complètement du <select> — pour un champ obligatoire, mieux vaut
+    // ne pas dépendre du CSS ici et simplement retraduire le texte des options.
+    function applyOptionLabels(isEn){
+      document.querySelectorAll('option[data-fr-label]').forEach(opt => {
+        opt.textContent = isEn ? opt.dataset.enLabel : opt.dataset.frLabel;
+      });
+    }
+    const startEn = document.documentElement.classList.contains('lang-en');
+    applyOptionLabels(startEn);
     if (!btn) return;
-    const stored = null; // no persistence — static demo, defaults to FR each load
+    // la classe lang-en a déjà été posée par le script en <head> si besoin
+    btn.textContent = startEn ? 'FR' : 'EN';
     btn.addEventListener('click', () => {
       const isEn = document.documentElement.classList.toggle('lang-en');
       btn.textContent = isEn ? 'FR' : 'EN';
+      applyOptionLabels(isEn);
+      try { localStorage.setItem('saphirLang', isEn ? 'en' : 'fr'); } catch(e) {}
     });
   })();
 
