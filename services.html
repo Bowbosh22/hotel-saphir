@@ -55,6 +55,23 @@ tailwind.config = {
   .z-40{z-index:40}
   .z-50{z-index:50}
 
+  /* ── sizing/layout safety net: same reasoning as above — the icon circles
+     and their SVGs are sized purely by Tailwind (w-4/h-4/w-9/.../rounded-full/
+     flex/items-center/justify-center/shrink-0). Without Tailwind an unsized
+     inline <svg> falls back to its browser-default box (often 300×150),
+     blowing up every icon on the page. These mirror Tailwind's own values. ── */
+  .flex{display:flex}
+  .items-center{align-items:center}
+  .justify-center{justify-content:center}
+  .shrink-0{flex-shrink:0}
+  .rounded-full{border-radius:9999px}
+  .w-4{width:1rem}
+  .h-4{height:1rem}
+  .w-9{width:2.25rem}
+  .h-9{height:2.25rem}
+  .w-10{width:2.5rem}
+  .h-10{height:2.5rem}
+
   .ht  { border-top:    1px solid rgba(33,29,26,.10); }
   .hb  { border-bottom: 1px solid rgba(33,29,26,.10); }
   .hx  { border:        1px solid rgba(33,29,26,.10); }
@@ -286,47 +303,116 @@ tailwind.config = {
 </section>
 
 <!-- ── COMMERÇANTS ── -->
-<section id="commerces" class="max-w-7xl mx-auto px-5 sm:px-10 pb-20 sm:pb-28">
+<section id="commerces" class="max-w-5xl mx-auto px-5 sm:px-10 pb-20 sm:pb-28">
   <div class="text-center mb-14 reveal">
     <div class="eyebrow mb-5"><span data-fr>Sur place</span><span data-en>On site</span></div>
     <h2 class="font-serif h-title serif-tight"><span data-fr>Nos commerçants.</span><span data-en>Our on-site shops.</span></h2>
     <p class="text-brume mt-3 max-w-xl mx-auto">
-      <span data-fr>Quelques adresses installées au sein de l'hôtel, à la disposition de nos clients.</span>
-      <span data-en>A few addresses located within the hotel, available to our guests.</span>
+      <span data-fr>Plus de vingt adresses installées au sein de l'hôtel, à la disposition de nos clients.</span>
+      <span data-en>More than twenty addresses located within the hotel, available to our guests.</span>
     </p>
   </div>
 
-  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px" style="background:rgba(33,29,26,.09)">
-    <div class="py-8 px-6 reveal" style="background:#FBF7EF">
-      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
-        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+      <div class="mb-10 reveal" style="transition-delay:0.00s">
+        <div class="eyebrow mb-4"><span data-fr>Restauration</span><span data-en>Food & drink</span></div>
+        <div class="grid sm:grid-cols-2 gap-x-10">
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Grillades</span><span class="text-brume text-xs"> — <span data-fr>Restauration</span><span data-en>Restaurant</span></span></div>
+          
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Bar de l'hôtel</span><span class="text-brume text-xs"> — <span data-fr>Bar</span><span data-en>Bar</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">06 433 81 21 / 05 528 42 45</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Le Mijoté</span><span class="text-brume text-xs"> — <span data-fr>Restauration</span><span data-en>Restaurant</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">05 017 73 17</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Chez Amigos</span><span class="text-brume text-xs"> — <span data-fr>Spécialités congolaises &amp; fast food</span><span data-en>Congolese specialties &amp; fast food</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">06 890 72 75</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Crousty Fast</span><span class="text-brume text-xs"> — <span data-fr>Fast food</span><span data-en>Fast food</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">06 698 59 19</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Bonelless AFR</span><span class="text-brume text-xs"> — <span data-fr>Fast food</span><span data-en>Fast food</span></span></div>
+          
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Tira Juice</span><span class="text-brume text-xs"> — <span data-fr>Salon de thé &amp; tiramisserie</span><span data-en>Tea room &amp; tiramisu bar</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">06 438 56 46</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Healthy Eats</span><span class="text-brume text-xs"> — <span data-fr>Salades, fruits &amp; detox</span><span data-en>Salads, fruit &amp; detox</span></span></div>
+          
+        </div>
+        </div>
       </div>
-      <h3 class="font-serif text-lg serif-tight"><span data-fr>Boutique souvenirs</span><span data-en>Gift shop</span></h3>
-      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Artisanat local et idées cadeaux, au rez-de-chaussée.</span><span data-en>Local crafts and gift ideas, on the ground floor.</span></p>
-    </div>
-    <div class="py-8 px-6 reveal" style="background:#FBF7EF;transition-delay:.07s">
-      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
-        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+      <div class="mb-10 reveal" style="transition-delay:0.05s">
+        <div class="eyebrow mb-4"><span data-fr>Beauté & bien-être</span><span data-en>Beauty & wellness</span></div>
+        <div class="grid sm:grid-cols-2 gap-x-10">
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Magic Hand by Dédé</span><span class="text-brume text-xs"> — <span data-fr>Bien-être &amp; santé, agroalimentaire</span><span data-en>Wellness &amp; health, food products</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">06 652 94 80</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Choco Hair</span><span class="text-brume text-xs"> — <span data-fr>Salon de coiffure</span><span data-en>Hair salon</span></span></div>
+          
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Fresh R Shop</span><span class="text-brume text-xs"> — <span data-fr>Salon de coiffure</span><span data-en>Hair salon</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">06 608 20 23 / 06 816 12 03</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">NSA Mina</span><span class="text-brume text-xs"> — <span data-fr>Soins esthétiques</span><span data-en>Beauty care</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">+242 06 832 67 83</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Stéphane Séry Hair</span><span class="text-brume text-xs"> — <span data-fr>Salon de coiffure</span><span data-en>Hair salon</span></span></div>
+          
+        </div>
+        </div>
       </div>
-      <h3 class="font-serif text-lg serif-tight"><span data-fr>Salon de coiffure &amp; beauté</span><span data-en>Hair &amp; beauty salon</span></h3>
-      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Soins et coiffure sur place, sur rendez-vous.</span><span data-en>Beauty care and hairdressing on site, by appointment.</span></p>
-    </div>
-    <div class="py-8 px-6 reveal" style="background:#FBF7EF;transition-delay:.14s">
-      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
-        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v8M8 12h8"/></svg>
+      <div class="mb-10 reveal" style="transition-delay:0.10s">
+        <div class="eyebrow mb-4"><span data-fr>Mode & boutiques</span><span data-en>Fashion & shops</span></div>
+        <div class="grid sm:grid-cols-2 gap-x-10">
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Addis Création Congo</span><span class="text-brume text-xs"> — <span data-fr>Couture</span><span data-en>Tailoring</span></span></div>
+          
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Europa Shop</span><span class="text-brume text-xs"> — <span data-fr>Prêt-à-porter</span><span data-en>Ready-to-wear</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">06 81 16 444</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Paris Saint-Germain Shop</span><span class="text-brume text-xs"> — <span data-fr>Électronique</span><span data-en>Electronics</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">05 380 23 23</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Fashion et Style</span><span class="text-brume text-xs"> — <span data-fr>Boutique prêt-à-porter</span><span data-en>Ready-to-wear boutique</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">06 50 55 054</span>
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">ONYX</span><span class="text-brume text-xs"> — <span data-fr>Habits &amp; cosmétiques</span><span data-en>Clothing &amp; cosmetics</span></span></div>
+          
+        </div>
+        </div>
       </div>
-      <h3 class="font-serif text-lg serif-tight"><span data-fr>Pharmacie</span><span data-en>Pharmacy</span></h3>
-      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Produits de première nécessité, accessible aux clients.</span><span data-en>Everyday essentials, available to guests.</span></p>
-    </div>
-    <div class="py-8 px-6 reveal" style="background:#FBF7EF;transition-delay:.21s">
-      <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
-        <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l18-8-8 18-2-8-8-2z"/></svg>
+      <div class="mb-10 reveal" style="transition-delay:0.15s">
+        <div class="eyebrow mb-4"><span data-fr>Services</span><span data-en>Services</span></div>
+        <div class="grid sm:grid-cols-2 gap-x-10">
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Congo BET</span><span class="text-brume text-xs"> — <span data-fr>Paris sportifs</span><span data-en>Sports betting</span></span></div>
+          
+        </div>
+        <div class="hb py-3 flex items-baseline justify-between gap-3">
+          <div><span class="font-serif text-base text-encre">Cordonnerie &amp; Clés Minute</span><span class="text-brume text-xs"> — <span data-fr>Cordonnerie, clés minute &amp; articles divers</span><span data-en>Shoe repair, key cutting &amp; sundries</span></span></div>
+          <span class="text-or text-xs whitespace-nowrap ml-4">05 660 80 08 / 06 73 80 512</span>
+        </div>
+        </div>
       </div>
-      <h3 class="font-serif text-lg serif-tight"><span data-fr>Agence de voyage</span><span data-en>Travel agency</span></h3>
-      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Billetterie et organisation de séjours, sur place.</span><span data-en>Ticketing and trip planning, on site.</span></p>
-    </div>
-  </div>
-  <p class="text-center text-brume text-xs mt-6"><span data-fr>Liste à confirmer avec l'hôtel.</span><span data-en>List to be confirmed with the hotel.</span></p>
 </section>
 
 <!-- ── ÉVÉNEMENTS ── -->
