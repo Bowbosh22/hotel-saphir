@@ -204,6 +204,71 @@ tailwind.config = {
   .bento-item::after { content:''; position:absolute; inset:0; background:linear-gradient(0deg, rgba(13,22,38,.35), transparent 55%); }
   .bento-item .bi-label { position:absolute; bottom:10px; left:14px; z-index:1; }
 
+  /* ── modale de pré-réservation (calendrier + voyageurs) ── */
+  .res-modal { position:fixed; inset:0; z-index:60; display:none; }
+  .res-modal.open { display:block; }
+  .res-modal-backdrop { position:absolute; inset:0; background:rgba(13,22,38,.62); backdrop-filter:blur(2px); }
+  .res-modal-panel {
+    position:relative; z-index:1; background:#FBF7EF;
+    max-width:420px; width:calc(100% - 32px); margin:4vh auto;
+    max-height:92vh; overflow-y:auto; border-radius:2px;
+    padding:28px 24px 26px;
+    box-shadow:0 30px 80px -20px rgba(13,22,38,.55);
+  }
+  .res-modal-close {
+    position:absolute; top:14px; right:14px; width:32px; height:32px;
+    display:flex; align-items:center; justify-content:center;
+    background:none; border:0; color:#89806F; cursor:pointer;
+  }
+  .res-modal-room { margin-bottom:20px; padding-right:30px; }
+
+  .res-cal-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .res-cal-label { font-family:'Jost',sans-serif; font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; color:#16233F; }
+  .res-cal-nav {
+    width:30px; height:30px; border:1px solid rgba(33,29,26,.15); background:none;
+    border-radius:1px; cursor:pointer; font-size:1.05rem; line-height:1; color:#16233F;
+  }
+  .res-cal-nav:disabled { opacity:.3; cursor:default; }
+  .res-cal-weekdays {
+    display:grid; grid-template-columns:repeat(7,1fr); text-align:center;
+    font-size:.6rem; letter-spacing:.06em; text-transform:uppercase; color:#89806F; margin-bottom:4px;
+  }
+  .res-cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+  .res-cal-day {
+    position:relative; aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+    font-family:'Jost',sans-serif; font-size:.8rem; border:0; background:none; cursor:pointer;
+    border-radius:1px; color:#211D1A;
+  }
+  .res-cal-day:disabled { color:rgba(33,29,26,.22); cursor:default; }
+  .res-cal-day:not(:disabled):hover { background:rgba(198,161,91,.12); }
+  .res-cal-day.res-in-range { background:rgba(198,161,91,.16); }
+  .res-cal-day.res-selected { background:#16233F; color:#FBF7EF; }
+  .res-cal-day.res-today::after {
+    content:''; position:absolute; bottom:5px; left:50%; transform:translateX(-50%);
+    width:3px; height:3px; border-radius:50%; background:#C6A15B;
+  }
+  .res-cal-day.res-selected.res-today::after { background:#FBF7EF; }
+
+  .res-dates-summary {
+    display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0; padding:14px 0;
+    border-top:1px solid rgba(33,29,26,.1); border-bottom:1px solid rgba(33,29,26,.1);
+  }
+  .res-date-value { font-family:'Cormorant Garamond',serif; font-size:1.15rem; margin-top:2px; }
+
+  .res-guests { margin-bottom:20px; }
+  .res-guest-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; }
+  .res-guest-row + .res-guest-row { border-top:1px solid rgba(33,29,26,.08); }
+  .res-stepper { display:flex; align-items:center; gap:14px; font-family:'Jost',sans-serif; }
+  .res-step {
+    width:30px; height:30px; border:1px solid rgba(33,29,26,.2); background:none;
+    border-radius:50%; font-size:1.05rem; line-height:1; cursor:pointer; color:#16233F;
+  }
+  .res-step:hover { background:rgba(33,29,26,.05); }
+
+  .res-disabled { opacity:.4; pointer-events:none; }
+
+  body.res-modal-lock { overflow:hidden; }
+
   /* ── form ── */
   .f-input, .f-select {
     width:100%; background:transparent;
@@ -300,24 +365,6 @@ tailwind.config = {
     </p>
   </div>
 
-  <div class="max-w-xl mx-auto mb-14 reveal hx p-6 sm:p-8" style="background:#F1EADC">
-    <div class="eyebrow mb-5 text-center"><span data-fr>Vos dates de séjour</span><span data-en>Your stay dates</span></div>
-    <div class="grid sm:grid-cols-2 gap-5">
-      <div>
-        <label class="f-label"><span data-fr>Arrivée</span><span data-en>Check-in</span></label>
-        <input id="dateArrivee" type="date" class="f-input">
-      </div>
-      <div>
-        <label class="f-label"><span data-fr>Départ</span><span data-en>Check-out</span></label>
-        <input id="dateDepart" type="date" class="f-input">
-      </div>
-    </div>
-    <p class="text-brume text-xs mt-4 text-center">
-      <span data-fr>Optionnel — vos dates seront ajoutées automatiquement au message WhatsApp d'une chambre lorsque vous cliquez sur « Réserver ».</span>
-      <span data-en>Optional — your dates are added automatically to the WhatsApp message when you click "Book".</span>
-    </p>
-  </div>
-
   <div class="space-y-6">
     
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.00s">
@@ -387,6 +434,73 @@ tailwind.config = {
     </p>
   </div>
 </section>
+
+<!-- ── modale de pré-réservation : dates (calendrier) + voyageurs, avant WhatsApp ── -->
+<div id="resModal" class="res-modal" aria-hidden="true">
+  <div class="res-modal-backdrop" data-close></div>
+  <div class="res-modal-panel" role="dialog" aria-modal="true" aria-labelledby="resRoomName">
+    <button type="button" class="res-modal-close" data-close aria-label="Fermer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <div class="res-modal-room">
+      <div class="eyebrow mb-1"><span data-fr>Votre réservation</span><span data-en>Your booking</span></div>
+      <div id="resRoomName" class="font-serif text-xl serif-tight"></div>
+    </div>
+
+    <div class="res-cal">
+      <div class="res-cal-head">
+        <button type="button" id="resCalPrev" class="res-cal-nav" aria-label="Mois précédent">‹</button>
+        <div id="resCalLabel" class="res-cal-label"></div>
+        <button type="button" id="resCalNext" class="res-cal-nav" aria-label="Mois suivant">›</button>
+      </div>
+      <div id="resCalWeekdays" class="res-cal-weekdays"></div>
+      <div id="resCalGrid" class="res-cal-grid"></div>
+    </div>
+
+    <div class="res-dates-summary">
+      <div>
+        <div class="f-label"><span data-fr>Arrivée</span><span data-en>Check-in</span></div>
+        <div id="resArrLabel" class="res-date-value">—</div>
+      </div>
+      <div>
+        <div class="f-label"><span data-fr>Départ</span><span data-en>Check-out</span></div>
+        <div id="resDepLabel" class="res-date-value">—</div>
+      </div>
+    </div>
+
+    <div class="res-guests">
+      <div class="res-guest-row">
+        <div class="font-serif text-base"><span data-fr>Adultes</span><span data-en>Adults</span></div>
+        <div class="res-stepper">
+          <button type="button" class="res-step" data-step="adults" data-dir="-1" aria-label="Moins d'adultes">−</button>
+          <span id="resAdults">1</span>
+          <button type="button" class="res-step" data-step="adults" data-dir="1" aria-label="Plus d'adultes">+</button>
+        </div>
+      </div>
+      <div class="res-guest-row">
+        <div>
+          <div class="font-serif text-base"><span data-fr>Enfants</span><span data-en>Children</span></div>
+          <div class="text-brume text-xs"><span data-fr>0–12 ans</span><span data-en>Ages 0–12</span></div>
+        </div>
+        <div class="res-stepper">
+          <button type="button" class="res-step" data-step="children" data-dir="-1" aria-label="Moins d'enfants">−</button>
+          <span id="resChildren">0</span>
+          <button type="button" class="res-step" data-step="children" data-dir="1" aria-label="Plus d'enfants">+</button>
+        </div>
+      </div>
+    </div>
+
+    <a id="resSubmit" href="#" target="_blank" rel="noopener" class="btn-or w-full text-center res-disabled" style="display:block">
+      <span data-fr>Continuer sur WhatsApp</span><span data-en>Continue on WhatsApp</span>
+    </a>
+    <p id="resHint" class="text-or text-xs mt-3 text-center"><span data-fr>Sélectionnez vos dates pour continuer.</span><span data-en>Select your dates to continue.</span></p>
+    <p class="text-brume text-xs mt-3 text-center">
+      <span data-fr>Séjour confirmé par l'hôtel directement sur WhatsApp.</span>
+      <span data-en>Your stay is confirmed by the hotel directly on WhatsApp.</span>
+    </p>
+  </div>
+</div>
 
 <footer style="background:#0D1626">
   <div class="max-w-7xl mx-auto px-5 sm:px-10 py-16 grid sm:grid-cols-3 gap-12">
@@ -488,6 +602,7 @@ tailwind.config = {
       btn.textContent = isEn ? 'FR' : 'EN';
       applyOptionLabels(isEn);
       try { localStorage.setItem('saphirLang', isEn ? 'en' : 'fr'); } catch(e) {}
+      document.dispatchEvent(new CustomEvent('saphir:langchange', { detail: { isEn } }));
     });
   })();
 
@@ -525,46 +640,185 @@ tailwind.config = {
 </script>
 
 <script>
-  // Sélecteur de dates — ajoute les dates choisies au message WhatsApp de chaque chambre
+  // Modale de pré-réservation : calendrier (dates) + nombre de voyageurs,
+  // ouverte au clic sur « Réserver ». Tout est front-end (pas de backend,
+  // pas de vérification de disponibilité réelle) — au clic sur « Continuer
+  // sur WhatsApp », un message pré-rempli (chambre, dates, voyageurs) est
+  // envoyé, et c'est la réceptionniste qui confirme ensuite.
   (function(){
-    const arr = document.getElementById('dateArrivee');
-    const dep = document.getElementById('dateDepart');
-    if (!arr || !dep) return;
+    const modal = document.getElementById('resModal');
+    if (!modal) return;
 
+    const calGrid      = document.getElementById('resCalGrid');
+    const calWeekdays   = document.getElementById('resCalWeekdays');
+    const calLabel      = document.getElementById('resCalLabel');
+    const calPrev       = document.getElementById('resCalPrev');
+    const calNext       = document.getElementById('resCalNext');
+    const roomNameEl    = document.getElementById('resRoomName');
+    const arrLabelEl    = document.getElementById('resArrLabel');
+    const depLabelEl    = document.getElementById('resDepLabel');
+    const adultsEl      = document.getElementById('resAdults');
+    const childrenEl    = document.getElementById('resChildren');
+    const submitEl      = document.getElementById('resSubmit');
+    const hintEl        = document.getElementById('resHint');
+
+    const MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const WD_FR = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+    const WD_EN = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    function isEn(){ return document.documentElement.classList.contains('lang-en'); }
+
+    let currentRoomFr = '';
+    let calMonth = startOfMonth(new Date());
+    let selStart = null, selEnd = null;
+    let adults = 1, children = 0;
+
+    function startOfMonth(d){ return new Date(d.getFullYear(), d.getMonth(), 1); }
     function isoLocal(d){
-      const y = d.getFullYear();
-      const m = String(d.getMonth()+1).padStart(2,'0');
-      const day = String(d.getDate()).padStart(2,'0');
+      const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
       return y + '-' + m + '-' + day;
     }
-    function fmt(dateStr){
-      const p = dateStr.split('-');
-      return p[2] + '/' + p[1] + '/' + p[0];
-    }
+    function fmt(iso){ const p = iso.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
 
-    arr.min = isoLocal(new Date());
-
-    function update(){
-      if (arr.value){
-        const next = new Date(arr.value);
-        next.setDate(next.getDate() + 1);
-        dep.min = isoLocal(next);
-        if (dep.value && dep.value <= arr.value) dep.value = '';
+    function buildMessage(){
+      let msg = "Bonjour, je suis intéressé(e) par la " + currentRoomFr + " à l'Hôtel Saphir.";
+      if (selStart && selEnd){
+        msg += " Du " + fmt(selStart) + " au " + fmt(selEnd) + ",";
       }
-      document.querySelectorAll('.wa-reserve-link').forEach(link => {
-        const room = link.getAttribute('data-room-fr');
-        let msg = "Bonjour, je suis intéressé(e) par la " + room + " à l'Hôtel Saphir.";
-        if (arr.value && dep.value){
-          msg += " Du " + fmt(arr.value) + " au " + fmt(dep.value) + ".";
-        } else if (arr.value){
-          msg += " Arrivée prévue le " + fmt(arr.value) + ".";
-        }
-        link.href = 'https://wa.me/24269284245?text=' + encodeURIComponent(msg);
-      });
+      msg += " pour " + adults + (adults > 1 ? " adultes" : " adulte");
+      if (children > 0){
+        msg += " et " + children + (children > 1 ? " enfants" : " enfant");
+      }
+      msg += ".";
+      return msg;
     }
 
-    arr.addEventListener('change', update);
-    dep.addEventListener('change', update);
+    function renderWeekdays(){
+      const wd = isEn() ? WD_EN : WD_FR;
+      calWeekdays.innerHTML = wd.map(w => '<div>' + w + '</div>').join('');
+    }
+
+    function renderCalendar(){
+      renderWeekdays();
+      calLabel.textContent = (isEn() ? MONTHS_EN : MONTHS_FR)[calMonth.getMonth()] + ' ' + calMonth.getFullYear();
+
+      calGrid.innerHTML = '';
+      const first = startOfMonth(calMonth);
+      const leading = (first.getDay() + 6) % 7;
+      const daysInMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 0).getDate();
+      const todayIso = isoLocal(new Date());
+
+      for (let i = 0; i < leading; i++){
+        calGrid.appendChild(document.createElement('div'));
+      }
+      for (let d = 1; d <= daysInMonth; d++){
+        const iso = isoLocal(new Date(calMonth.getFullYear(), calMonth.getMonth(), d));
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'res-cal-day';
+        btn.textContent = String(d);
+        if (iso === todayIso) btn.classList.add('res-today');
+        if (iso < todayIso){
+          btn.disabled = true;
+        } else {
+          if (iso === selStart || iso === selEnd) btn.classList.add('res-selected');
+          else if (selStart && selEnd && iso > selStart && iso < selEnd) btn.classList.add('res-in-range');
+          btn.addEventListener('click', () => onDayClick(iso));
+        }
+        calGrid.appendChild(btn);
+      }
+
+      const now = new Date();
+      calPrev.disabled = (calMonth.getFullYear() === now.getFullYear() && calMonth.getMonth() === now.getMonth());
+    }
+
+    function onDayClick(iso){
+      if (!selStart || (selStart && selEnd)){
+        selStart = iso; selEnd = null;
+      } else if (iso <= selStart){
+        selStart = iso; selEnd = null;
+      } else {
+        selEnd = iso;
+      }
+      renderCalendar();
+      updateSummary();
+      updateSubmit();
+    }
+
+    function updateSummary(){
+      arrLabelEl.textContent = selStart ? fmt(selStart) : '—';
+      depLabelEl.textContent = selEnd ? fmt(selEnd) : '—';
+    }
+
+    function updateSubmit(){
+      if (selStart && selEnd){
+        submitEl.href = 'https://wa.me/24269284245?text=' + encodeURIComponent(buildMessage());
+        submitEl.classList.remove('res-disabled');
+        hintEl.style.display = 'none';
+      } else {
+        submitEl.href = '#';
+        submitEl.classList.add('res-disabled');
+        hintEl.style.display = '';
+      }
+    }
+
+    function openModal(roomFr){
+      currentRoomFr = roomFr;
+      roomNameEl.textContent = roomFr;
+      selStart = null; selEnd = null; adults = 1; children = 0;
+      adultsEl.textContent = '1';
+      childrenEl.textContent = '0';
+      calMonth = startOfMonth(new Date());
+      renderCalendar();
+      updateSummary();
+      updateSubmit();
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('res-modal-lock');
+    }
+
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('res-modal-lock');
+    }
+
+    document.querySelectorAll('.wa-reserve-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        openModal(link.getAttribute('data-room-fr'));
+      });
+    });
+
+    modal.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeModal));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+    calPrev.addEventListener('click', () => { calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() - 1, 1); renderCalendar(); });
+    calNext.addEventListener('click', () => { calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1); renderCalendar(); });
+
+    modal.querySelectorAll('.res-step').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-step');
+        const dir = parseInt(btn.getAttribute('data-dir'), 10);
+        if (key === 'adults'){
+          adults = Math.min(8, Math.max(1, adults + dir));
+          adultsEl.textContent = String(adults);
+        } else {
+          children = Math.min(8, Math.max(0, children + dir));
+          childrenEl.textContent = String(children);
+        }
+        updateSubmit();
+      });
+    });
+
+    submitEl.addEventListener('click', e => {
+      if (submitEl.classList.contains('res-disabled')){ e.preventDefault(); return; }
+      closeModal();
+    });
+
+    document.addEventListener('saphir:langchange', () => {
+      if (modal.classList.contains('open')) renderCalendar();
+    });
   })();
 </script>
 
