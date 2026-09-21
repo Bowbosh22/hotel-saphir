@@ -83,6 +83,8 @@ tailwind.config = {
   .hx  { border:        1px solid rgba(33,29,26,.10); }
   .div { border-top:    1px solid rgba(33,29,26,.09); }
 
+  .commerce-thumb { width:44px; height:44px; border-radius:8px; background-size:cover; background-position:center; }
+
   .serif-tight { letter-spacing:-.01em; }
   .eyebrow { font-family:'Jost',sans-serif; font-size:.65rem; letter-spacing:.32em; text-transform:uppercase; color:#C6A15B; font-weight:400; }
   .eyebrow-light { font-family:'Jost',sans-serif; font-size:.65rem; letter-spacing:.32em; text-transform:uppercase; color:rgba(251,247,239,.65); font-weight:400; }
@@ -107,9 +109,8 @@ tailwind.config = {
   }
   @keyframes kenburns { from{ transform:scale(1); } to{ transform:scale(1.08); } }
 
-  /* ── page header banner (non-home pages) ── */
-  .page-banner { position:relative; min-height:46svh; overflow:hidden; background:#0D1626; }
-  .page-banner .hero-overlay { background: linear-gradient(180deg, rgba(13,22,38,.5) 0%, rgba(13,22,38,.68) 100%); }
+  /* ── page header banner (non-home pages) : dégradé bleu, pas de photo ── */
+  .page-banner { position:relative; min-height:38svh; overflow:hidden; background: linear-gradient(135deg, #1B2C4D 0%, #0D1626 100%); }
 
   /* ── nav ── */
   #nav { transition:all .4s ease; }
@@ -288,15 +289,14 @@ tailwind.config = {
     <div class="hero-slide" style="background-image:url('hero-river.jpg')"></div>
   </div>
   <div class="hero-overlay"></div>
-  <div class="relative z-10 max-w-3xl mx-auto">
-    <div class="eyebrow-light reveal" style="transition-delay:.1s">Hôtel Saphir &ensp;·&ensp; Brazzaville</div>
-    <h1 class="font-serif h-hero text-ivoire serif-tight mt-6 reveal" style="transition-delay:.25s">
-      <span data-fr>Un instant pour ralentir.<br><em>Un lieu pour se retrouver.</em></span>
-      <span data-en>A moment to slow down.<br><em>A place to reconnect.</em></span>
-    </h1>
-    <p class="text-ivoire/70 mt-6 max-w-lg mx-auto leading-relaxed font-light reveal" style="transition-delay:.4s">
-      <span data-fr>Une piscine, un accueil sans détour, à deux pas de l'ambassade de France. L'adresse simple et sûre pour votre séjour à Brazzaville.</span>
-      <span data-en>One pool, a straightforward welcome, steps from the French embassy. The simple, reliable address for your stay in Brazzaville.</span>
+  <div class="relative z-10 max-w-2xl mx-auto">
+    <div class="eyebrow-light reveal" style="transition-delay:.1s">
+      <span data-fr>Brazzaville, avenue Alfassa</span><span data-en>Brazzaville, avenue Alfassa</span>
+    </div>
+    <h1 class="font-serif h-hero text-ivoire serif-tight mt-6 reveal" style="transition-delay:.25s">Hôtel Saphir</h1>
+    <p class="text-ivoire/70 mt-6 max-w-md mx-auto leading-relaxed font-light reveal" style="transition-delay:.4s">
+      <span data-fr>Une piscine, un accueil sans détour, à deux pas de l'ambassade de France.</span>
+      <span data-en>A pool and a straightforward welcome, steps from the French embassy.</span>
     </p>
     <div class="mt-9 flex flex-col sm:flex-row gap-3 justify-center reveal" style="transition-delay:.55s">
       <a href="chambres.html#reserver" class="btn-or"><span data-fr>Réserver</span><span data-en>Book</span></a>
