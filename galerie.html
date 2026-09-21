@@ -55,6 +55,23 @@ tailwind.config = {
   .z-40{z-index:40}
   .z-50{z-index:50}
 
+  /* ── sizing/layout safety net: same reasoning as above — the icon circles
+     and their SVGs are sized purely by Tailwind (w-4/h-4/w-9/.../rounded-full/
+     flex/items-center/justify-center/shrink-0). Without Tailwind an unsized
+     inline <svg> falls back to its browser-default box (often 300×150),
+     blowing up every icon on the page. These mirror Tailwind's own values. ── */
+  .flex{display:flex}
+  .items-center{align-items:center}
+  .justify-center{justify-content:center}
+  .shrink-0{flex-shrink:0}
+  .rounded-full{border-radius:9999px}
+  .w-4{width:1rem}
+  .h-4{height:1rem}
+  .w-9{width:2.25rem}
+  .h-9{height:2.25rem}
+  .w-10{width:2.5rem}
+  .h-10{height:2.5rem}
+
   .ht  { border-top:    1px solid rgba(33,29,26,.10); }
   .hb  { border-bottom: 1px solid rgba(33,29,26,.10); }
   .hx  { border:        1px solid rgba(33,29,26,.10); }
