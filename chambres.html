@@ -300,6 +300,24 @@ tailwind.config = {
     </p>
   </div>
 
+  <div class="max-w-xl mx-auto mb-14 reveal hx p-6 sm:p-8" style="background:#F1EADC">
+    <div class="eyebrow mb-5 text-center"><span data-fr>Vos dates de séjour</span><span data-en>Your stay dates</span></div>
+    <div class="grid sm:grid-cols-2 gap-5">
+      <div>
+        <label class="f-label"><span data-fr>Arrivée</span><span data-en>Check-in</span></label>
+        <input id="dateArrivee" type="date" class="f-input">
+      </div>
+      <div>
+        <label class="f-label"><span data-fr>Départ</span><span data-en>Check-out</span></label>
+        <input id="dateDepart" type="date" class="f-input">
+      </div>
+    </div>
+    <p class="text-brume text-xs mt-4 text-center">
+      <span data-fr>Optionnel — vos dates seront ajoutées automatiquement au message WhatsApp d'une chambre lorsque vous cliquez sur « Réserver ».</span>
+      <span data-en>Optional — your dates are added automatically to the WhatsApp message when you click "Book".</span>
+    </p>
+  </div>
+
   <div class="space-y-6">
     
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.00s">
@@ -314,7 +332,7 @@ tailwind.config = {
             <div class="font-serif text-2xl">40 000</div>
             <div class="text-brume text-xs"><span data-fr>FCFA / nuit · petit-déjeuner inclus</span><span data-en>FCFA / night · breakfast included</span></div>
           </div>
-          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Chambre%20Standard%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or shrink-0">
+          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Chambre%20Standard%20%C3%A0%20l%27H%C3%B4tel%20Saphir." data-room-fr="Chambre Standard" target="_blank" rel="noopener" class="btn-or shrink-0 wa-reserve-link">
             <span data-fr>Réserver</span><span data-en>Book</span>
           </a>
         </div>
@@ -333,7 +351,7 @@ tailwind.config = {
             <div class="font-serif text-2xl">65 000</div>
             <div class="text-brume text-xs"><span data-fr>FCFA / nuit · petit-déjeuner inclus</span><span data-en>FCFA / night · breakfast included</span></div>
           </div>
-          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Chambre%20Confort%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or shrink-0">
+          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Chambre%20Confort%20%C3%A0%20l%27H%C3%B4tel%20Saphir." data-room-fr="Chambre Confort" target="_blank" rel="noopener" class="btn-or shrink-0 wa-reserve-link">
             <span data-fr>Réserver</span><span data-en>Book</span>
           </a>
         </div>
@@ -352,7 +370,7 @@ tailwind.config = {
             <div class="font-serif text-2xl">150 000</div>
             <div class="text-brume text-xs"><span data-fr>FCFA / nuit · petit-déjeuner inclus</span><span data-en>FCFA / night · breakfast included</span></div>
           </div>
-          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Suite%20Junior%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or shrink-0">
+          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Suite%20Junior%20%C3%A0%20l%27H%C3%B4tel%20Saphir." data-room-fr="Suite Junior" target="_blank" rel="noopener" class="btn-or shrink-0 wa-reserve-link">
             <span data-fr>Réserver</span><span data-en>Book</span>
           </a>
         </div>
@@ -504,6 +522,50 @@ tailwind.config = {
       if(d.open) document.querySelectorAll('details').forEach(o => { if(o!==d) o.open=false; });
     });
   });
+</script>
+
+<script>
+  // Sélecteur de dates — ajoute les dates choisies au message WhatsApp de chaque chambre
+  (function(){
+    const arr = document.getElementById('dateArrivee');
+    const dep = document.getElementById('dateDepart');
+    if (!arr || !dep) return;
+
+    function isoLocal(d){
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      return y + '-' + m + '-' + day;
+    }
+    function fmt(dateStr){
+      const p = dateStr.split('-');
+      return p[2] + '/' + p[1] + '/' + p[0];
+    }
+
+    arr.min = isoLocal(new Date());
+
+    function update(){
+      if (arr.value){
+        const next = new Date(arr.value);
+        next.setDate(next.getDate() + 1);
+        dep.min = isoLocal(next);
+        if (dep.value && dep.value <= arr.value) dep.value = '';
+      }
+      document.querySelectorAll('.wa-reserve-link').forEach(link => {
+        const room = link.getAttribute('data-room-fr');
+        let msg = "Bonjour, je suis intéressé(e) par la " + room + " à l'Hôtel Saphir.";
+        if (arr.value && dep.value){
+          msg += " Du " + fmt(arr.value) + " au " + fmt(dep.value) + ".";
+        } else if (arr.value){
+          msg += " Arrivée prévue le " + fmt(arr.value) + ".";
+        }
+        link.href = 'https://wa.me/24269284245?text=' + encodeURIComponent(msg);
+      });
+    }
+
+    arr.addEventListener('change', update);
+    dep.addEventListener('change', update);
+  })();
 </script>
 
 </body>
