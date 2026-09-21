@@ -93,21 +93,16 @@ tailwind.config = {
   .h-title { font-size:clamp(1.9rem,5.5vw,3.4rem); line-height:1.1; }
   .h-sub   { font-size:clamp(1.4rem,4vw,2.1rem);   line-height:1.2; }
 
-  /* ── hero slideshow ── */
+  /* ── hero : une seule photo statique (plus de diaporama) ── */
   .hero { position:relative; min-height:88svh; overflow:hidden; background:#0D1626; }
-  .hero-slides { position:absolute; inset:0; z-index:0; }
-  .hero-slide {
-    position:absolute; inset:0;
-    background-size:cover; background-position:center; background-repeat:no-repeat;
-    opacity:0; transition:opacity 1.8s ease;
-    animation: kenburns 18s ease-in-out infinite alternate;
+  .hero-photo {
+    position:absolute; inset:0; z-index:0;
+    background-size:cover; background-position:center 62%; background-repeat:no-repeat;
   }
-  .hero-slide.active { opacity:1; }
   .hero-overlay {
     position:absolute; inset:0; z-index:1;
     background: linear-gradient(180deg, rgba(13,22,38,.55) 0%, rgba(13,22,38,.35) 45%, rgba(13,22,38,.78) 100%);
   }
-  @keyframes kenburns { from{ transform:scale(1); } to{ transform:scale(1.08); } }
 
   /* ── page header banner (non-home pages) : dégradé bleu, pas de photo ── */
   .page-banner { position:relative; min-height:38svh; overflow:hidden; background: linear-gradient(135deg, #1B2C4D 0%, #0D1626 100%); }
@@ -301,7 +296,7 @@ tailwind.config = {
   html.lang-en [data-en] { display:revert; }
 
   ::selection { background:rgba(198,161,91,.25); }
-  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .hero-slide{animation:none !important} }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
 </style>
 </head>
 <body class="bg-ivoire text-encre font-sans antialiased">
@@ -556,19 +551,6 @@ tailwind.config = {
       try { localStorage.setItem('saphirLang', isEn ? 'en' : 'fr'); } catch(e) {}
       document.dispatchEvent(new CustomEvent('saphir:langchange', { detail: { isEn } }));
     });
-  })();
-
-  // Hero slideshow
-  (function(){
-    const slides = document.querySelectorAll('.hero-slide');
-    if (!slides.length) return;
-    let idx = Array.from(slides).findIndex(s => s.classList.contains('active'));
-    if (idx < 0) idx = 0;
-    setInterval(() => {
-      slides[idx].classList.remove('active');
-      idx = (idx + 1) % slides.length;
-      slides[idx].classList.add('active');
-    }, 5500);
   })();
 
   // Reveal
