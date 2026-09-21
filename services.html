@@ -185,6 +185,7 @@ tailwind.config = {
   .bento .b7 { grid-column:span 2; grid-row:span 1; }
   .bento .b8 { grid-column:span 2; grid-row:span 1; }
   .bento .b9 { grid-column:span 2; grid-row:span 1; }
+  .bento .b10 { grid-column:span 2; grid-row:span 1; }
   @media (max-width:640px){
     .bento { grid-template-columns:repeat(2,1fr); grid-auto-rows:150px; }
     .bento [class*="b"] { grid-column:span 1; grid-row:span 1; }
@@ -282,7 +283,7 @@ tailwind.config = {
         <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5m0 0l3 3m-3-3l-3 3"/></svg>
       </div>
       <h3 class="font-serif text-lg serif-tight"><span data-fr>Piscine extérieure</span><span data-en>Outdoor pool</span></h3>
-      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Ouvertes toute la journée, accès libre pour les clients de l'hôtel.</span><span data-en>Open all day, free access for hotel guests.</span></p>
+      <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Ouverte toute la journée, accès libre pour les clients de l'hôtel.</span><span data-en>Open all day, free access for hotel guests.</span></p>
     </div>
     <div class="py-8 px-6 reveal" style="background:#FBF7EF;transition-delay:.07s">
       <div class="w-9 h-9 rounded-full flex items-center justify-center mb-4" style="background:rgba(198,161,91,.12)">
@@ -424,6 +425,11 @@ tailwind.config = {
 <!-- ── ÉVÉNEMENTS ── -->
 <section id="evenements" style="background:#16233F">
   <div class="max-w-5xl mx-auto px-5 sm:px-10 py-20 sm:py-28">
+    <div class="grid grid-cols-3 gap-3 mb-14 reveal">
+      <div class="rounded-sm overflow-hidden" style="aspect-ratio:4/3;background-image:url('evenement-longue-table.jpg');background-size:cover;background-position:center"></div>
+      <div class="rounded-sm overflow-hidden" style="aspect-ratio:4/3;background-image:url('evenement-buffet.jpg');background-size:cover;background-position:center"></div>
+      <div class="rounded-sm overflow-hidden" style="aspect-ratio:4/3;background-image:url('evenement-chaises-mariage.jpg');background-size:cover;background-position:center"></div>
+    </div>
     <div class="grid lg:grid-cols-2 gap-14">
       <div class="reveal">
         <div class="eyebrow-light mb-5"><span data-fr>Événements</span><span data-en>Events</span></div>
