@@ -7,9 +7,11 @@
 <meta name="description" content="Piscine, restaurant, navette aéroport et organisation de séminaires et mariages à l'Hôtel Saphir, Brazzaville.">
 
 <script>
-  /* langue choisie par le visiteur : appliquée avant le 1er rendu pour
-     éviter un flash en français quand il navigue d'une page à l'autre. */
+  /* langue choisie par le visiteur, et démo déjà déverrouillée : appliqués
+     avant le 1er rendu pour éviter un flash (français, ou contenu visible
+     une fraction de seconde avant le filtre d'accès). */
   try { if (localStorage.getItem('saphirLang') === 'en') document.documentElement.classList.add('lang-en'); } catch(e) {}
+  try { if (sessionStorage.getItem('saphirDemoUnlocked') === 'true') document.documentElement.classList.add('demo-unlocked'); } catch(e) {}
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,7 +44,49 @@ tailwind.config = {
 </script>
 <style>
   html { scroll-behavior:smooth; }
-  body { background:#FBF7EF; color:#211D1A; overflow-x:hidden; -webkit-text-size-adjust:100%; }
+  body { background:#FBF7EF; color:#211D1A; overflow-x:hidden; -webkit-text-size-adjust:100%; text-rendering:optimizeLegibility; }
+
+  /* ── démo : filigrane + code d'accès ── */
+  html:not(.demo-unlocked) body { overflow:hidden !important; }
+  .demo-watermark {
+    position:fixed; inset:0; z-index:55; overflow:hidden; pointer-events:none;
+  }
+  .demo-watermark-inner {
+    position:absolute; top:50%; left:50%; width:230vw; height:230vh;
+    transform:translate(-50%,-50%) rotate(-30deg);
+    display:flex; flex-wrap:wrap; align-content:flex-start; justify-content:flex-start;
+  }
+  .demo-watermark-inner span {
+    display:block; white-space:nowrap; margin:34px 46px;
+    font-family:'Jost','system-ui',sans-serif; font-size:13px; letter-spacing:.18em;
+    text-transform:uppercase; color:#0D1626; opacity:.05;
+  }
+  .demo-gate {
+    position:fixed; inset:0; z-index:9999; background:#0D1626;
+    display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  html.demo-unlocked .demo-gate { display:none; }
+  .demo-gate-card { max-width:360px; width:100%; text-align:center; }
+  .demo-gate-card img { height:52px; width:auto; margin:0 auto 28px; display:block; }
+  .demo-gate-eyebrow { font-family:'Jost',sans-serif; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#C6A15B; margin-bottom:10px; }
+  .demo-gate-title { font-family:'Cormorant Garamond',Georgia,serif; font-size:24px; color:#FBF7EF; margin-bottom:22px; }
+  .demo-gate-form { display:flex; gap:10px; }
+  .demo-gate-input {
+    flex:1; min-width:0; background:rgba(251,247,239,.06); border:1px solid rgba(251,247,239,.25);
+    color:#FBF7EF; font-family:'Jost',sans-serif; font-size:14px; letter-spacing:.05em;
+    padding:12px 14px; border-radius:2px; text-align:center;
+  }
+  .demo-gate-input::placeholder { color:rgba(251,247,239,.35); }
+  .demo-gate-input:focus { outline:none; border-color:#C6A15B; }
+  .demo-gate-btn {
+    background:#C6A15B; color:#0D1626; font-family:'Jost',sans-serif; font-size:12px; font-weight:500;
+    letter-spacing:.1em; text-transform:uppercase; border:none; padding:0 20px; border-radius:2px; cursor:pointer;
+  }
+  .demo-gate-btn:hover { background:#DFC287; }
+  .demo-gate-error { color:#E7A9A0; font-size:12px; margin-top:14px; opacity:0; transition:opacity .2s ease; font-family:'Jost',sans-serif; }
+  .demo-gate-error.show { opacity:1; }
+  .demo-gate-card.shake { animation: demoShake .35s ease; }
+  @keyframes demoShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
 
   /* ── positioning safety net: guarantees correct stacking (text over photo
      overlays) even if the Tailwind CDN script fails to load — a blocked or
@@ -85,7 +129,9 @@ tailwind.config = {
 
   .commerce-thumb { width:44px; height:44px; border-radius:8px; background-size:cover; background-position:center; }
 
-  .serif-tight { letter-spacing:-.01em; }
+  /* pas de letter-spacing négatif ici : sur certains rendus, ça décale l'accent
+     des lettres accentuées (ex. « ô ») hors de la lettre de base — corrigé le 22/09 */
+  .serif-tight { letter-spacing:normal; }
   .eyebrow { font-family:'Jost',sans-serif; font-size:.65rem; letter-spacing:.32em; text-transform:uppercase; color:#C6A15B; font-weight:400; }
   .eyebrow-light { font-family:'Jost',sans-serif; font-size:.65rem; letter-spacing:.32em; text-transform:uppercase; color:rgba(251,247,239,.65); font-weight:400; }
 
@@ -300,6 +346,20 @@ tailwind.config = {
 </style>
 </head>
 <body class="bg-ivoire text-encre font-sans antialiased">
+
+<div class="demo-gate" id="demoGate">
+  <div class="demo-gate-card" id="demoGateCard">
+    <img src="logo-large.png" alt="Hôtel Saphir">
+    <div class="demo-gate-eyebrow">Démonstration — Atelier KPM</div>
+    <div class="demo-gate-title">Accès réservé</div>
+    <form class="demo-gate-form" id="demoGateForm" autocomplete="off">
+      <input type="password" id="demoGateInput" class="demo-gate-input" placeholder="Code d'accès" autocomplete="off">
+      <button type="submit" class="demo-gate-btn">Entrer</button>
+    </form>
+    <div class="demo-gate-error" id="demoGateError">Code incorrect — réessayez.</div>
+  </div>
+</div>
+<div class="demo-watermark" aria-hidden="true"><div class="demo-watermark-inner"><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span></div></div>
 
 <header class="fixed top-0 left-0 right-0 z-40">
   <div id="nav">
@@ -760,6 +820,37 @@ tailwind.config = {
       if(d.open) document.querySelectorAll('details').forEach(o => { if(o!==d) o.open=false; });
     });
   });
+
+  // Filtre d'accès démo — code donné directement au prospect, pas de backend
+  (function(){
+    const CODE = 'SAPHIR2026';
+    const gate = document.getElementById('demoGate');
+    const form = document.getElementById('demoGateForm');
+    const input = document.getElementById('demoGateInput');
+    const card = document.getElementById('demoGateCard');
+    const error = document.getElementById('demoGateError');
+    if (!gate || !form) return;
+    try {
+      if (sessionStorage.getItem('saphirDemoUnlocked') === 'true') {
+        document.documentElement.classList.add('demo-unlocked');
+      } else {
+        setTimeout(() => input.focus(), 50);
+      }
+    } catch(e) {}
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = (input.value || '').trim().toUpperCase();
+      if (val === CODE) {
+        document.documentElement.classList.add('demo-unlocked');
+        try { sessionStorage.setItem('saphirDemoUnlocked', 'true'); } catch(e) {}
+      } else {
+        error.classList.add('show');
+        card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+        input.value = '';
+        input.focus();
+      }
+    });
+  })();
 </script>
 
 <script>
