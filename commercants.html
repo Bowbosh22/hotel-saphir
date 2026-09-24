@@ -127,9 +127,30 @@ tailwind.config = {
 
   .commerce-thumb { width:44px; height:44px; border-radius:8px; background-size:cover; background-position:center; }
 
-  .merchant-card { background:#FBF7EF; display:flex; flex-direction:column; }
-  .merchant-card-photo { aspect-ratio:4/3; background-size:cover; background-position:center; }
-  .merchant-card-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
+  .merchant-card {
+    background:#FBF7EF; display:flex; flex-direction:column;
+    border-radius:3px; overflow:hidden;
+    box-shadow:0 14px 34px -22px rgba(33,29,26,.28);
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .merchant-card:hover { transform:translateY(-5px); box-shadow:0 22px 46px -18px rgba(33,29,26,.32); }
+  .merchant-card-photo-wrap { position:relative; aspect-ratio:4/3; overflow:hidden; background:rgba(198,161,91,.10); }
+  .merchant-card-photo {
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+    transition:transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .merchant-card:hover .merchant-card-photo { transform:scale(1.07); }
+  .merchant-card-body { padding:1.6rem 1.6rem 1.75rem; flex:1; display:flex; flex-direction:column; }
+  .merchant-card-name { letter-spacing:.005em; }
+  .merchant-card-divider { height:1px; background:rgba(33,29,26,.10); margin:1rem 0 .9rem; }
+  .merchant-card-tel {
+    display:inline-flex; align-items:center; gap:.4rem;
+    font-family:'Jost',sans-serif; font-size:.72rem; letter-spacing:.06em;
+    color:#16233F; margin-top:auto; transition:color .25s;
+  }
+  .merchant-card-tel:hover { color:#C6A15B; }
+  .merchant-card-tel-icon { width:13px; height:13px; flex-shrink:0; }
 
   /* pas de letter-spacing négatif ici : sur certains rendus, ça décale l'accent
      des lettres accentuées (ex. « ô ») hors de la lettre de base — corrigé le 22/09 */
@@ -444,82 +465,124 @@ tailwind.config = {
     <div class="eyebrow mb-5 mt-12"><span data-fr>Restauration</span><span data-en>Food & drink</span></div>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
-    <div class="merchant-card hx reveal" style="transition-delay:0.00s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.00s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Grillades</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Grillades</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Restauration</span><span data-en>Restaurant</span></p>
-        <p class="text-brume/50 text-xs mt-3 italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
+        <div class="merchant-card-divider"></div>
+        <p class="text-brume/45 text-xs mt-auto italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.03s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.03s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Bar de l'hôtel</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Bar de l'hôtel</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Bar</span><span data-en>Bar</span></p>
-        <a href="tel:+24264338121" class="text-or text-xs mt-3 inline-block hover:underline">06 433 81 21 / 05 528 42 45</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24264338121" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 433 81 21 / 05 528 42 45
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.06s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.06s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Le Mijoté</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Le Mijoté</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Restauration</span><span data-en>Restaurant</span></p>
-        <a href="tel:+24250177317" class="text-or text-xs mt-3 inline-block hover:underline">05 017 73 17</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24250177317" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          05 017 73 17
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.09s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.09s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Chez Amigos</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Chez Amigos</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Spécialités congolaises &amp; fast food</span><span data-en>Congolese specialties &amp; fast food</span></p>
-        <a href="tel:+24268907275" class="text-or text-xs mt-3 inline-block hover:underline">06 890 72 75</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24268907275" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 890 72 75
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.12s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.12s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Crousty Fast</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Crousty Fast</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Fast food</span><span data-en>Fast food</span></p>
-        <a href="tel:+24266985919" class="text-or text-xs mt-3 inline-block hover:underline">06 698 59 19</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24266985919" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 698 59 19
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.15s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.15s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Bonelless AFR</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Bonelless AFR</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Fast food</span><span data-en>Fast food</span></p>
-        <p class="text-brume/50 text-xs mt-3 italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
+        <div class="merchant-card-divider"></div>
+        <p class="text-brume/45 text-xs mt-auto italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.18s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.18s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Tira Juice</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Tira Juice</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Salon de thé &amp; tiramisserie</span><span data-en>Tea room &amp; tiramisu bar</span></p>
-        <a href="tel:+24264385646" class="text-or text-xs mt-3 inline-block hover:underline">06 438 56 46</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24264385646" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 438 56 46
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.21s">
-      <div class="merchant-card-photo" style="background-image:url('commerce-healthyeats.jpg')"></div>
+    <div class="merchant-card reveal" style="transition-delay:0.21s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo" style="background-image:url('commerce-healthyeats.jpg')"></div>
+      </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Healthy Eats</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Healthy Eats</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Salades, fruits &amp; detox</span><span data-en>Salads, fruit &amp; detox</span></p>
-        <a href="tel:+24261727275" class="text-or text-xs mt-3 inline-block hover:underline">06 172 72 75</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24261727275" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 172 72 75
+        </a>
       </div>
     </div>
   </div>
@@ -527,52 +590,79 @@ tailwind.config = {
     <div class="eyebrow mb-5 mt-12"><span data-fr>Beauté & bien-être</span><span data-en>Beauty & wellness</span></div>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
-    <div class="merchant-card hx reveal" style="transition-delay:0.05s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.05s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Magic Hand by Dédé</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Magic Hand by Dédé</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Bien-être &amp; santé, agroalimentaire</span><span data-en>Wellness &amp; health, food products</span></p>
-        <a href="tel:+24266529480" class="text-or text-xs mt-3 inline-block hover:underline">06 652 94 80</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24266529480" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 652 94 80
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.08s">
-      <div class="merchant-card-photo" style="background-image:url('commerce-choco.jpg')"></div>
+    <div class="merchant-card reveal" style="transition-delay:0.08s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo" style="background-image:url('commerce-choco.jpg')"></div>
+      </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Choco Hair</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Choco Hair</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Salon de coiffure — nappy &amp; locks</span><span data-en>Hair salon — nappy &amp; locks</span></p>
-        <a href="tel:+24255779154" class="text-or text-xs mt-3 inline-block hover:underline">05 577 91 54 / 06 627 46 43</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24255779154" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          05 577 91 54 / 06 627 46 43
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.11s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.11s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Fresh R Shop</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Fresh R Shop</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Salon de coiffure</span><span data-en>Hair salon</span></p>
-        <a href="tel:+24266082023" class="text-or text-xs mt-3 inline-block hover:underline">06 608 20 23 / 06 816 12 03</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24266082023" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 608 20 23 / 06 816 12 03
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.14s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.14s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">NSA Mina</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">NSA Mina</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Soins esthétiques</span><span data-en>Beauty care</span></p>
-        <a href="tel:+24268326783" class="text-or text-xs mt-3 inline-block hover:underline">+242 06 832 67 83</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24268326783" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          +242 06 832 67 83
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.17s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.17s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Stéphane Séry Hair</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Stéphane Séry Hair</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Salon de coiffure</span><span data-en>Hair salon</span></p>
-        <p class="text-brume/50 text-xs mt-3 italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
+        <div class="merchant-card-divider"></div>
+        <p class="text-brume/45 text-xs mt-auto italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
       </div>
     </div>
   </div>
@@ -580,60 +670,93 @@ tailwind.config = {
     <div class="eyebrow mb-5 mt-12"><span data-fr>Mode & boutiques</span><span data-en>Fashion & shops</span></div>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
-    <div class="merchant-card hx reveal" style="transition-delay:0.10s">
-      <div class="merchant-card-photo" style="background-image:url('commerce-addis.jpg')"></div>
+    <div class="merchant-card reveal" style="transition-delay:0.10s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo" style="background-image:url('commerce-addis.jpg')"></div>
+      </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Addis Création Congo</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Addis Création Congo</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Couture</span><span data-en>Tailoring</span></p>
-        <a href="tel:+24265989889" class="text-or text-xs mt-3 inline-block hover:underline">06 598 98 89</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24265989889" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 598 98 89
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.13s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.13s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Europa Shop</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Europa Shop</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Prêt-à-porter</span><span data-en>Ready-to-wear</span></p>
-        <a href="tel:+24268116444" class="text-or text-xs mt-3 inline-block hover:underline">06 81 16 444</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24268116444" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 81 16 444
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.16s">
-      <div class="merchant-card-photo" style="background-image:url('commerce-psg.jpg')"></div>
+    <div class="merchant-card reveal" style="transition-delay:0.16s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo" style="background-image:url('commerce-psg.jpg')"></div>
+      </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Paris Saint-Germain Shop</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Paris Saint-Germain Shop</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Électronique</span><span data-en>Electronics</span></p>
-        <a href="tel:+24253802323" class="text-or text-xs mt-3 inline-block hover:underline">05 380 23 23 / 06 452 32 53</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24253802323" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          05 380 23 23 / 06 452 32 53
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.19s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.19s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Aboubakar Store</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Aboubakar Store</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Téléphonie, accessoires &amp; informatique</span><span data-en>Phones, accessories &amp; computer gear</span></p>
-        <a href="tel:+24265252576" class="text-or text-xs mt-3 inline-block hover:underline">06 525 25 76</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24265252576" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 525 25 76
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.22s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.22s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Fashion et Style</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Fashion et Style</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Boutique prêt-à-porter</span><span data-en>Ready-to-wear boutique</span></p>
-        <a href="tel:+24265055054" class="text-or text-xs mt-3 inline-block hover:underline">06 50 55 054</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24265055054" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          06 50 55 054
+        </a>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.25s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.25s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">ONYX</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">ONYX</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Habits &amp; cosmétiques</span><span data-en>Clothing &amp; cosmetics</span></p>
-        <p class="text-brume/50 text-xs mt-3 italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
+        <div class="merchant-card-divider"></div>
+        <p class="text-brume/45 text-xs mt-auto italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
       </div>
     </div>
   </div>
@@ -641,24 +764,33 @@ tailwind.config = {
     <div class="eyebrow mb-5 mt-12"><span data-fr>Services</span><span data-en>Services</span></div>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
-    <div class="merchant-card hx reveal" style="transition-delay:0.15s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v8M8 12h8"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.15s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v8M8 12h8"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Congo BET</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Congo BET</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Paris sportifs</span><span data-en>Sports betting</span></p>
-        <p class="text-brume/50 text-xs mt-3 italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
+        <div class="merchant-card-divider"></div>
+        <p class="text-brume/45 text-xs mt-auto italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
       </div>
     </div>
-    <div class="merchant-card hx reveal" style="transition-delay:0.18s">
-      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
-        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v8M8 12h8"/></svg>
+    <div class="merchant-card reveal" style="transition-delay:0.18s">
+      <div class="merchant-card-photo-wrap">
+        <div class="merchant-card-photo flex items-center justify-center">
+          <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v8M8 12h8"/></svg>
+        </div>
       </div>
       <div class="merchant-card-body">
-        <h3 class="font-serif text-lg serif-tight">Cordonnerie &amp; Clés Minute</h3>
+        <h3 class="font-serif text-lg serif-tight merchant-card-name">Cordonnerie &amp; Clés Minute</h3>
         <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Cordonnerie, clés minute &amp; articles divers</span><span data-en>Shoe repair, key cutting &amp; sundries</span></p>
-        <a href="tel:+24256608008" class="text-or text-xs mt-3 inline-block hover:underline">05 660 80 08 / 06 73 80 512</a>
+        <div class="merchant-card-divider"></div>
+        <a href="tel:+24256608008" class="merchant-card-tel">
+          <svg class="merchant-card-tel-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.98.8l.63 3.16a1 1 0 01-.27.94l-1.4 1.4a13.5 13.5 0 006.14 6.14l1.4-1.4a1 1 0 01.94-.27l3.16.63a1 1 0 01.8.98V19a2 2 0 01-2 2h-1C8.7 21 3 15.3 3 8V5z"/></svg>
+          05 660 80 08 / 06 73 80 512
+        </a>
       </div>
     </div>
   </div>
