@@ -127,6 +127,10 @@ tailwind.config = {
 
   .commerce-thumb { width:44px; height:44px; border-radius:8px; background-size:cover; background-position:center; }
 
+  .merchant-card { background:#FBF7EF; display:flex; flex-direction:column; }
+  .merchant-card-photo { aspect-ratio:4/3; background-size:cover; background-position:center; }
+  .merchant-card-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
+
   /* pas de letter-spacing négatif ici : sur certains rendus, ça décale l'accent
      des lettres accentuées (ex. « ô ») hors de la lettre de base — corrigé le 22/09 */
   .serif-tight { letter-spacing:normal; }
@@ -384,6 +388,7 @@ tailwind.config = {
         <a href="index.html" class="nav-link hover:opacity-100"><span data-fr>Accueil</span><span data-en>Home</span></a>
         <a href="chambres.html" class="nav-link hover:opacity-100"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a>
         <a href="services.html" class="nav-link hover:opacity-100"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a>
+        <a href="commercants.html" class="nav-link hover:opacity-100"><span data-fr>Commerçants</span><span data-en>Merchants</span></a>
         <a href="galerie.html" class="nav-link hover:opacity-100"><span data-fr>Galerie</span><span data-en>Gallery</span></a>
         <a href="apropos.html" class="nav-link hover:opacity-100 font-semibold"><span data-fr>À propos</span><span data-en>About</span></a>
         <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
@@ -404,6 +409,7 @@ tailwind.config = {
       <a href="index.html" class="nav-link hover:opacity-100"><span data-fr>Accueil</span><span data-en>Home</span></a>
         <a href="chambres.html" class="nav-link hover:opacity-100"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a>
         <a href="services.html" class="nav-link hover:opacity-100"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a>
+        <a href="commercants.html" class="nav-link hover:opacity-100"><span data-fr>Commerçants</span><span data-en>Merchants</span></a>
         <a href="galerie.html" class="nav-link hover:opacity-100"><span data-fr>Galerie</span><span data-en>Gallery</span></a>
         <a href="apropos.html" class="nav-link hover:opacity-100 font-semibold"><span data-fr>À propos</span><span data-en>About</span></a>
         <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
@@ -536,6 +542,7 @@ tailwind.config = {
           <li><a href="index.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Accueil</span><span data-en>Home</span></a></li>
           <li><a href="chambres.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a></li>
           <li><a href="services.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a></li>
+          <li><a href="commercants.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Commerçants</span><span data-en>Merchants</span></a></li>
           <li><a href="galerie.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Galerie</span><span data-en>Gallery</span></a></li>
           <li><a href="apropos.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>À propos</span><span data-en>About</span></a></li>
           <li><a href="contact.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Contact</span><span data-en>Contact</span></a></li>
