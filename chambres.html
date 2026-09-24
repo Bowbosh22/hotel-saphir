@@ -447,7 +447,11 @@ tailwind.config = {
   <div class="space-y-6">
     
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.00s">
-      <div class="room-card-photo" style="background-image:url('room-standard.jpg')">
+      <div class="room-card-photo" style="background-image:url('room-standard.jpg')" data-photos="[&quot;room-standard.jpg&quot;, &quot;room-standard-2.jpg&quot;, &quot;room-standard-3.jpg&quot;, &quot;room-standard-4.jpg&quot;, &quot;room-standard-5.jpg&quot;]">
+        <button type="button" class="room-card-nav prev" aria-label="Photo précédente">&#8249;</button>
+        <button type="button" class="room-card-nav next" aria-label="Photo suivante">&#8250;</button>
+        <div class="room-card-dots"><button type="button" class="dot active" data-i="0" aria-label="Photo 1"></button><button type="button" class="dot" data-i="1" aria-label="Photo 2"></button><button type="button" class="dot" data-i="2" aria-label="Photo 3"></button><button type="button" class="dot" data-i="3" aria-label="Photo 4"></button><button type="button" class="dot" data-i="4" aria-label="Photo 5"></button></div>
+        <span class="room-card-photo-badge">1 / 5</span>
       </div>
       <div class="p-8 sm:p-10 flex flex-col justify-center">
         
