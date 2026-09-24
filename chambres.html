@@ -467,7 +467,11 @@ tailwind.config = {
     </article>
 
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.08s">
-      <div class="room-card-photo" style="background-image:url('room-confort.jpg')">
+      <div class="room-card-photo" style="background-image:url('room-confort.jpg')" data-photos="[&quot;room-confort.jpg&quot;, &quot;room-confort-2.jpg&quot;, &quot;room-confort-3.jpg&quot;, &quot;room-confort-4.jpg&quot;, &quot;room-confort-5.jpg&quot;, &quot;room-confort-6.jpg&quot;]">
+        <button type="button" class="room-card-nav prev" aria-label="Photo précédente">&#8249;</button>
+        <button type="button" class="room-card-nav next" aria-label="Photo suivante">&#8250;</button>
+        <div class="room-card-dots"><button type="button" class="dot active" data-i="0" aria-label="Photo 1"></button><button type="button" class="dot" data-i="1" aria-label="Photo 2"></button><button type="button" class="dot" data-i="2" aria-label="Photo 3"></button><button type="button" class="dot" data-i="3" aria-label="Photo 4"></button><button type="button" class="dot" data-i="4" aria-label="Photo 5"></button><button type="button" class="dot" data-i="5" aria-label="Photo 6"></button></div>
+        <span class="room-card-photo-badge">1 / 6</span>
       </div>
       <div class="p-8 sm:p-10 flex flex-col justify-center">
         <span class="inline-block bg-or text-saphir text-[10px] px-2 py-0.5 uppercase tracking-widest mb-3"><span data-fr>Le plus réservé</span><span data-en>Most booked</span></span>
