@@ -228,7 +228,15 @@ tailwind.config = {
   /* ── room row / card ── */
   .room-row { transition:background .3s; }
   .room-row:hover { background:rgba(198,161,91,.07); }
-  .room-card-photo { min-height:220px; background-size:cover; background-position:center; }
+  .room-card-photo { min-height:220px; background-size:cover; background-position:center; position:relative; overflow:hidden; }
+  .room-card-nav { position:absolute; top:50%; transform:translateY(-50%); z-index:2; width:32px; height:32px; border:none; background:rgba(13,22,38,.55); color:#FBF7EF; font-size:1.05rem; line-height:1; cursor:pointer; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .room-card-nav.prev { left:10px; }
+  .room-card-nav.next { right:10px; }
+  .room-card-nav:hover { background:rgba(13,22,38,.8); }
+  .room-card-dots { position:absolute; bottom:10px; left:0; right:0; z-index:2; display:flex; justify-content:center; gap:6px; }
+  .room-card-dots .dot { width:6px; height:6px; border-radius:50%; background:rgba(251,247,239,.45); cursor:pointer; padding:0; border:none; }
+  .room-card-dots .dot.active { background:#FBF7EF; }
+  .room-card-photo-badge { position:absolute; top:10px; right:10px; z-index:2; background:rgba(13,22,38,.55); color:#FBF7EF; font-family:'Jost',sans-serif; font-size:.62rem; letter-spacing:.08em; padding:3px 8px; border-radius:2px; }
 
   /* ── bandeau rappel de réservation (version légère, sans calendrier/backend) ── */
   .stay-banner { display:flex; flex-wrap:wrap; background:#16233F; border-radius:2px; overflow:hidden; }
@@ -439,7 +447,8 @@ tailwind.config = {
   <div class="space-y-6">
     
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.00s">
-      <div class="room-card-photo" style="background-image:url('room-standard.jpg')"></div>
+      <div class="room-card-photo" style="background-image:url('room-standard.jpg')">
+      </div>
       <div class="p-8 sm:p-10 flex flex-col justify-center">
         
         <h3 class="font-serif text-2xl sm:text-3xl serif-tight"><span data-fr>Chambre Standard</span><span data-en>Standard Room</span></h3>
@@ -458,7 +467,8 @@ tailwind.config = {
     </article>
 
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.08s">
-      <div class="room-card-photo" style="background-image:url('room-confort.jpg')"></div>
+      <div class="room-card-photo" style="background-image:url('room-confort.jpg')">
+      </div>
       <div class="p-8 sm:p-10 flex flex-col justify-center">
         <span class="inline-block bg-or text-saphir text-[10px] px-2 py-0.5 uppercase tracking-widest mb-3"><span data-fr>Le plus réservé</span><span data-en>Most booked</span></span>
         <h3 class="font-serif text-2xl sm:text-3xl serif-tight"><span data-fr>Chambre Confort</span><span data-en>Comfort Room</span></h3>
@@ -477,7 +487,12 @@ tailwind.config = {
     </article>
 
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.16s">
-      <div class="room-card-photo" style="background-image:url('room-suite.jpg')"></div>
+      <div class="room-card-photo" style="background-image:url('room-suite.jpg')" data-photos="[&quot;room-suite.jpg&quot;, &quot;room-suite-2.jpg&quot;, &quot;room-suite-3.jpg&quot;, &quot;room-suite-4.jpg&quot;, &quot;room-suite-5.jpg&quot;]">
+        <button type="button" class="room-card-nav prev" aria-label="Photo précédente">&#8249;</button>
+        <button type="button" class="room-card-nav next" aria-label="Photo suivante">&#8250;</button>
+        <div class="room-card-dots"><button type="button" class="dot active" data-i="0" aria-label="Photo 1"></button><button type="button" class="dot" data-i="1" aria-label="Photo 2"></button><button type="button" class="dot" data-i="2" aria-label="Photo 3"></button><button type="button" class="dot" data-i="3" aria-label="Photo 4"></button><button type="button" class="dot" data-i="4" aria-label="Photo 5"></button></div>
+        <span class="room-card-photo-badge">1 / 5</span>
+      </div>
       <div class="p-8 sm:p-10 flex flex-col justify-center">
         
         <h3 class="font-serif text-2xl sm:text-3xl serif-tight"><span data-fr>Suite Junior</span><span data-en>Junior Suite</span></h3>
@@ -633,6 +648,36 @@ tailwind.config = {
       }
     });
   })();
+</script>
+
+<script>
+(function(){
+  document.querySelectorAll('.room-card-photo[data-photos]').forEach(function(card){
+    var photos;
+    try { photos = JSON.parse(card.getAttribute('data-photos')); } catch(e) { return; }
+    if (!photos || photos.length < 2) return;
+    var idx = 0;
+    var dots = card.querySelectorAll('.room-card-dots .dot');
+    var badge = card.querySelector('.room-card-photo-badge');
+    function render(){
+      card.style.backgroundImage = "url('" + photos[idx] + "')";
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+      if (badge) badge.textContent = (idx + 1) + ' / ' + photos.length;
+    }
+    function go(delta){ idx = (idx + delta + photos.length) % photos.length; render(); }
+    var prev = card.querySelector('.room-card-nav.prev');
+    var next = card.querySelector('.room-card-nav.next');
+    if (prev) prev.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); go(-1); });
+    if (next) next.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); go(1); });
+    dots.forEach(function(d){
+      d.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        idx = parseInt(d.getAttribute('data-i'), 10) || 0;
+        render();
+      });
+    });
+  });
+})();
 </script>
 
 </body>
