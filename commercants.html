@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nos commerçants — Hôtel Saphir Brazzaville</title>
+<meta name="description" content="Plus de vingt commerces installés au sein de l'Hôtel Saphir à Brazzaville : restauration, beauté, mode et services.">
+
+<script>
+  /* démo déjà déverrouillée : appliqué avant le 1er rendu pour éviter que le
+     contenu soit visible une fraction de seconde avant le filtre d'accès. */
+  try { if (sessionStorage.getItem('saphirDemoUnlocked') === 'true') document.documentElement.classList.add('demo-unlocked'); } catch(e) {}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ivoire:  '#FBF7EF',
+        perle:   '#F1EADC',
+        saphir:  '#16233F',
+        saphirdk:'#0D1626',
+        saphirlt:'#2C4270',
+        or:      '#C6A15B',
+        orlt:    '#DFC287',
+        encre:   '#211D1A',
+        brume:   '#89806F',
+      },
+      fontFamily: {
+        serif: ['Cormorant Garamond','Georgia','serif'],
+        sans:  ['Jost','system-ui','sans-serif'],
+      },
+    }
+  }
+}
+</script>
+<style>
+  html { scroll-behavior:smooth; }
+  body { background:#FBF7EF; color:#211D1A; overflow-x:hidden; -webkit-text-size-adjust:100%; text-rendering:optimizeLegibility; }
+
+  /* ── démo : filigrane + code d'accès ── */
+  html:not(.demo-unlocked) body { overflow:hidden !important; }
+  .demo-watermark {
+    position:fixed; inset:0; z-index:55; overflow:hidden; pointer-events:none;
+  }
+  .demo-watermark-inner {
+    position:absolute; top:50%; left:50%; width:230vw; height:230vh;
+    transform:translate(-50%,-50%) rotate(-30deg);
+    display:flex; flex-wrap:wrap; align-content:flex-start; justify-content:flex-start;
+  }
+  .demo-watermark-inner span {
+    display:block; white-space:nowrap; margin:34px 46px;
+    font-family:'Jost','system-ui',sans-serif; font-size:13px; letter-spacing:.18em;
+    text-transform:uppercase; color:#0D1626; opacity:.05;
+  }
+  .demo-gate {
+    position:fixed; inset:0; z-index:9999; background:#0D1626;
+    display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  html.demo-unlocked .demo-gate { display:none; }
+  .demo-gate-card { max-width:360px; width:100%; text-align:center; }
+  .demo-gate-card img { height:52px; width:auto; margin:0 auto 28px; display:block; }
+  .demo-gate-eyebrow { font-family:'Jost',sans-serif; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#C6A15B; margin-bottom:10px; }
+  .demo-gate-title { font-family:'Cormorant Garamond',Georgia,serif; font-size:24px; color:#FBF7EF; margin-bottom:22px; }
+  .demo-gate-form { display:flex; gap:10px; }
+  .demo-gate-input {
+    flex:1; min-width:0; background:rgba(251,247,239,.06); border:1px solid rgba(251,247,239,.25);
+    color:#FBF7EF; font-family:'Jost',sans-serif; font-size:14px; letter-spacing:.05em;
+    padding:12px 14px; border-radius:2px; text-align:center;
+  }
+  .demo-gate-input::placeholder { color:rgba(251,247,239,.35); }
+  .demo-gate-input:focus { outline:none; border-color:#C6A15B; }
+  .demo-gate-btn {
+    background:#C6A15B; color:#0D1626; font-family:'Jost',sans-serif; font-size:12px; font-weight:500;
+    letter-spacing:.1em; text-transform:uppercase; border:none; padding:0 20px; border-radius:2px; cursor:pointer;
+  }
+  .demo-gate-btn:hover { background:#DFC287; }
+  .demo-gate-error { color:#E7A9A0; font-size:12px; margin-top:14px; opacity:0; transition:opacity .2s ease; font-family:'Jost',sans-serif; }
+  .demo-gate-error.show { opacity:1; }
+  .demo-gate-card.shake { animation: demoShake .35s ease; }
+  @keyframes demoShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+  /* ── positioning safety net: guarantees correct stacking (text over photo
+     overlays) even if the Tailwind CDN script fails to load — a blocked or
+     slow network must never hide page content behind an overlay. Values
+     match Tailwind's own utilities exactly, so this never conflicts when
+     Tailwind does load. ── */
+  .relative{position:relative}
+  .absolute{position:absolute}
+  .fixed{position:fixed}
+  .inset-0{top:0;right:0;bottom:0;left:0}
+  .top-0{top:0}
+  .right-0{right:0}
+  .bottom-0{bottom:0}
+  .left-0{left:0}
+  .z-10{z-index:10}
+  .z-40{z-index:40}
+  .z-50{z-index:50}
+
+  /* ── sizing/layout safety net: same reasoning as above — the icon circles
+     and their SVGs are sized purely by Tailwind (w-4/h-4/w-9/.../rounded-full/
+     flex/items-center/justify-center/shrink-0). Without Tailwind an unsized
+     inline <svg> falls back to its browser-default box (often 300×150),
+     blowing up every icon on the page. These mirror Tailwind's own values. ── */
+  .flex{display:flex}
+  .items-center{align-items:center}
+  .justify-center{justify-content:center}
+  .shrink-0{flex-shrink:0}
+  .rounded-full{border-radius:9999px}
+  .w-4{width:1rem}
+  .h-4{height:1rem}
+  .w-9{width:2.25rem}
+  .h-9{height:2.25rem}
+  .w-10{width:2.5rem}
+  .h-10{height:2.5rem}
+
+  .ht  { border-top:    1px solid rgba(33,29,26,.10); }
+  .hb  { border-bottom: 1px solid rgba(33,29,26,.10); }
+  .hx  { border:        1px solid rgba(33,29,26,.10); }
+  .div { border-top:    1px solid rgba(33,29,26,.09); }
+
+  .commerce-thumb { width:44px; height:44px; border-radius:8px; background-size:cover; background-position:center; }
+
+  .merchant-card { background:#FBF7EF; display:flex; flex-direction:column; }
+  .merchant-card-photo { aspect-ratio:4/3; background-size:cover; background-position:center; }
+  .merchant-card-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
+
+  /* pas de letter-spacing négatif ici : sur certains rendus, ça décale l'accent
+     des lettres accentuées (ex. « ô ») hors de la lettre de base — corrigé le 22/09 */
+  .serif-tight { letter-spacing:normal; }
+  .eyebrow { font-family:'Jost',sans-serif; font-size:.65rem; letter-spacing:.32em; text-transform:uppercase; color:#C6A15B; font-weight:400; }
+  .eyebrow-light { font-family:'Jost',sans-serif; font-size:.65rem; letter-spacing:.32em; text-transform:uppercase; color:rgba(251,247,239,.65); font-weight:400; }
+
+  .h-hero  { font-size:clamp(2.4rem,9vw,5.6rem); line-height:1.05; }
+  .h-title { font-size:clamp(1.9rem,5.5vw,3.4rem); line-height:1.1; }
+  .h-sub   { font-size:clamp(1.4rem,4vw,2.1rem);   line-height:1.2; }
+
+  /* ── hero : une seule photo statique (plus de diaporama) ── */
+  .hero { position:relative; min-height:88svh; overflow:hidden; background:#0D1626; }
+  .hero-photo {
+    position:absolute; inset:0; z-index:0;
+    background-size:cover; background-position:center; background-repeat:no-repeat;
+  }
+  .hero-overlay {
+    position:absolute; inset:0; z-index:1;
+    background: linear-gradient(180deg, rgba(13,22,38,.55) 0%, rgba(13,22,38,.35) 45%, rgba(13,22,38,.78) 100%);
+  }
+
+  /* ── page header banner (non-home pages) : dégradé bleu, pas de photo ── */
+  .page-banner { position:relative; min-height:38svh; overflow:hidden; background: linear-gradient(135deg, #1B2C4D 0%, #0D1626 100%); }
+
+  /* ── nav ── */
+  #nav { transition:all .4s ease; }
+  #nav.scrolled { background:rgba(251,247,239,.96); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(33,29,26,.08); }
+  #nav.scrolled .nav-link { color:#89806F; }
+  #nav.scrolled .nav-cta  { color:#16233F; border-color:rgba(22,35,63,.35); }
+  #nav.scrolled .lang-btn { color:#16233F; border-color:rgba(22,35,63,.35); }
+  .nav-link  { color:rgba(251,247,239,.75); transition:color .3s; font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; }
+  .nav-link:hover { color:#FBF7EF; }
+  #nav.scrolled .nav-link:hover { color:#16233F; }
+  .nav-logo-img { height:38px; width:auto; display:block; filter:drop-shadow(0 1px 6px rgba(0,0,0,.35)); }
+  .lang-btn { color:rgba(251,247,239,.85); border:1px solid rgba(251,247,239,.4); font-size:.68rem; letter-spacing:.1em; padding:.3rem .6rem; border-radius:1px; transition:all .3s; }
+  .lang-btn:hover { background:rgba(251,247,239,.12); }
+
+  /* ── mobile nav menu ── */
+  .mobile-nav-btn { display:flex; align-items:center; justify-content:center; width:38px; height:38px; padding:0; margin:0; background:none; border:none; cursor:pointer; color:rgba(251,247,239,.9); }
+  .mobile-nav-btn svg { width:23px; height:23px; display:block; }
+  .mobile-nav-btn .icon-close { display:none; }
+  .mobile-nav-btn.open .icon-open { display:none; }
+  .mobile-nav-btn.open .icon-close { display:block; }
+  #nav.scrolled .mobile-nav-btn { color:#16233F; }
+  @media (min-width:1024px){ .mobile-nav-btn { display:none; } }
+  .mobile-menu { position:fixed; top:0; left:0; right:0; bottom:0; background:#0D1626; z-index:39; opacity:0; visibility:hidden; transform:translateY(-8px); transition:opacity .25s ease, transform .25s ease, visibility 0s linear .25s; overflow-y:auto; padding-top:76px; }
+  .mobile-menu.open { opacity:1; visibility:visible; transform:translateY(0); transition:opacity .25s ease, transform .25s ease; }
+  .mobile-menu-inner { padding:28px 28px 40px; display:flex; flex-direction:column; }
+  .mobile-menu .nav-link { display:block; padding:16px 2px; font-size:.85rem; letter-spacing:.08em; color:rgba(251,247,239,.8); border-bottom:1px solid rgba(251,247,239,.1); }
+  .mobile-menu .nav-link.font-semibold { color:#C6A15B; }
+  .mobile-menu .mobile-cta { margin-top:28px; text-align:center; }
+  @media (min-width:1024px){ .mobile-menu { display:none; } }
+
+  /* ── buttons ── */
+  .btn-or {
+    display:inline-block; text-align:center;
+    background:#C6A15B; color:#16233F;
+    font-family:'Jost',sans-serif; font-weight:500;
+    font-size:.76rem; letter-spacing:.16em; text-transform:uppercase;
+    padding:.9rem 2.1rem; border-radius:1px;
+    transition:background .3s;
+  }
+  .btn-or:hover { background:#DFC287; }
+
+  .btn-outline-light {
+    display:inline-block; text-align:center;
+    border:1px solid rgba(251,247,239,.4); color:#FBF7EF;
+    font-family:'Jost',sans-serif; font-weight:400;
+    font-size:.76rem; letter-spacing:.16em; text-transform:uppercase;
+    padding:.9rem 2.1rem; border-radius:1px;
+    transition:all .3s;
+  }
+  .btn-outline-light:hover { background:rgba(251,247,239,.1); border-color:rgba(251,247,239,.8); }
+
+  .btn-outline-dark {
+    display:inline-block; text-align:center;
+    border:1px solid rgba(33,29,26,.25); color:#16233F;
+    font-family:'Jost',sans-serif; font-weight:400;
+    font-size:.76rem; letter-spacing:.16em; text-transform:uppercase;
+    padding:.9rem 2.1rem; border-radius:1px;
+    transition:all .3s;
+  }
+  .btn-outline-dark:hover { background:#16233F; color:#FBF7EF; border-color:#16233F; }
+
+  /* ── whatsapp float ── */
+  .wa-float {
+    position:fixed; bottom:22px; right:22px; z-index:50;
+    background:#16233F; color:#FBF7EF; border:1px solid rgba(198,161,91,.5);
+    padding:.85rem 1.3rem; border-radius:2px;
+    font-family:'Jost',sans-serif; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+    box-shadow:0 14px 40px -14px rgba(13,22,38,.5);
+    transition:transform .3s;
+  }
+  .wa-float:hover { transform:translateY(-2px); }
+
+  /* ── value strip ── */
+  .value-strip { background:#16233F; }
+
+  /* ── room row / card ── */
+  .room-row { transition:background .3s; }
+  .room-row:hover { background:rgba(198,161,91,.07); }
+  .room-card-photo { min-height:220px; background-size:cover; background-position:center; position:relative; overflow:hidden; }
+  .room-card-nav { position:absolute; top:50%; transform:translateY(-50%); z-index:2; width:32px; height:32px; border:none; background:rgba(13,22,38,.55); color:#FBF7EF; font-size:1.05rem; line-height:1; cursor:pointer; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .room-card-nav.prev { left:10px; }
+  .room-card-nav.next { right:10px; }
+  .room-card-nav:hover { background:rgba(13,22,38,.8); }
+  .room-card-dots { position:absolute; bottom:10px; left:0; right:0; z-index:2; display:flex; justify-content:center; gap:6px; }
+  .room-card-dots .dot { width:6px; height:6px; border-radius:50%; background:rgba(251,247,239,.45); cursor:pointer; padding:0; border:none; }
+  .room-card-dots .dot.active { background:#FBF7EF; }
+  .room-card-photo-badge { position:absolute; top:10px; right:10px; z-index:2; background:rgba(13,22,38,.55); color:#FBF7EF; font-family:'Jost',sans-serif; font-size:.62rem; letter-spacing:.08em; padding:3px 8px; border-radius:2px; }
+
+  /* ── bandeau rappel de réservation (version légère, sans calendrier/backend) ── */
+  .stay-banner { display:flex; flex-wrap:wrap; background:#16233F; border-radius:2px; overflow:hidden; }
+  .stay-banner-photo { flex:1 1 220px; min-height:160px; background-size:cover; background-position:center; }
+  .stay-banner-content { flex:2 1 320px; padding:30px 34px; }
+  .stay-banner-content .eyebrow { color:#C6A15B; }
+  .stay-banner-title { color:#FBF7EF; }
+  .stay-banner-text { color:rgba(251,247,239,.65); }
+  .stay-banner-cta { margin-top:18px; }
+
+  /* ── galerie : grille uniforme, chaque photo bien visible ── */
+  .simple-gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+  @media (max-width:640px){
+    .simple-gallery { grid-template-columns:repeat(2,1fr); gap:4px; }
+  }
+  .gallery-item { position:relative; overflow:hidden; background-size:cover; background-position:center; aspect-ratio:3/4; }
+  .gallery-item::after { content:''; position:absolute; inset:0; background:linear-gradient(0deg, rgba(13,22,38,.4), transparent 45%); }
+  .gallery-item .bi-label { position:absolute; bottom:10px; left:12px; z-index:1; }
+  /* anciennes classes bento conservées pour compatibilité, plus utilisées sur la galerie */
+  .bento-item { position:relative; overflow:hidden; background-size:cover; background-position:center; }
+  .bento-item::after { content:''; position:absolute; inset:0; background:linear-gradient(0deg, rgba(13,22,38,.35), transparent 55%); }
+  .bento-item .bi-label { position:absolute; bottom:10px; left:14px; z-index:1; }
+
+  /* ── modale de pré-réservation (calendrier + voyageurs) ── */
+  .res-modal { position:fixed; inset:0; z-index:60; display:none; }
+  .res-modal.open { display:block; }
+  .res-modal-backdrop { position:absolute; inset:0; background:rgba(13,22,38,.62); backdrop-filter:blur(2px); }
+  .res-modal-panel {
+    position:relative; z-index:1; background:#FBF7EF;
+    max-width:420px; width:calc(100% - 32px); margin:4vh auto;
+    max-height:92vh; overflow-y:auto; border-radius:2px;
+    padding:28px 24px 26px;
+    box-shadow:0 30px 80px -20px rgba(13,22,38,.55);
+  }
+  .res-modal-close {
+    position:absolute; top:14px; right:14px; width:32px; height:32px;
+    display:flex; align-items:center; justify-content:center;
+    background:none; border:0; color:#89806F; cursor:pointer;
+  }
+  .res-modal-room { margin-bottom:20px; padding-right:30px; }
+
+  .res-cal-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .res-cal-label { font-family:'Jost',sans-serif; font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; color:#16233F; }
+  .res-cal-nav {
+    width:30px; height:30px; border:1px solid rgba(33,29,26,.15); background:none;
+    border-radius:1px; cursor:pointer; font-size:1.05rem; line-height:1; color:#16233F;
+  }
+  .res-cal-nav:disabled { opacity:.3; cursor:default; }
+  .res-cal-weekdays {
+    display:grid; grid-template-columns:repeat(7,1fr); text-align:center;
+    font-size:.6rem; letter-spacing:.06em; text-transform:uppercase; color:#89806F; margin-bottom:4px;
+  }
+  .res-cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+  .res-cal-day {
+    position:relative; aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+    font-family:'Jost',sans-serif; font-size:.8rem; border:0; background:none; cursor:pointer;
+    border-radius:1px; color:#211D1A;
+  }
+  .res-cal-day:disabled { color:rgba(33,29,26,.22); cursor:default; }
+  .res-cal-day:not(:disabled):hover { background:rgba(198,161,91,.12); }
+  .res-cal-day.res-in-range { background:rgba(198,161,91,.16); }
+  .res-cal-day.res-selected { background:#16233F; color:#FBF7EF; }
+  .res-cal-day.res-today::after {
+    content:''; position:absolute; bottom:5px; left:50%; transform:translateX(-50%);
+    width:3px; height:3px; border-radius:50%; background:#C6A15B;
+  }
+  .res-cal-day.res-selected.res-today::after { background:#FBF7EF; }
+
+  .res-dates-summary {
+    display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0; padding:14px 0;
+    border-top:1px solid rgba(33,29,26,.1); border-bottom:1px solid rgba(33,29,26,.1);
+  }
+  .res-date-value { font-family:'Cormorant Garamond',serif; font-size:1.15rem; margin-top:2px; }
+
+  .res-guests { margin-bottom:20px; }
+  .res-guest-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; }
+  .res-guest-row + .res-guest-row { border-top:1px solid rgba(33,29,26,.08); }
+  .res-stepper { display:flex; align-items:center; gap:14px; font-family:'Jost',sans-serif; }
+  .res-step {
+    width:30px; height:30px; border:1px solid rgba(33,29,26,.2); background:none;
+    border-radius:50%; font-size:1.05rem; line-height:1; cursor:pointer; color:#16233F;
+  }
+  .res-step:hover { background:rgba(33,29,26,.05); }
+
+  .res-disabled { opacity:.4; pointer-events:none; }
+
+  body.res-modal-lock { overflow:hidden; }
+
+  /* ── form ── */
+  .f-input, .f-select {
+    width:100%; background:transparent;
+    border:0; border-bottom:1px solid rgba(33,29,26,.2);
+    padding:.6rem 0; color:#211D1A;
+    font-family:'Jost',sans-serif; font-size:.95rem;
+    transition:border-color .3s;
+  }
+  .f-input:focus, .f-select:focus { outline:none; border-color:#C6A15B; }
+  .f-input::placeholder { color:rgba(137,128,111,.55); }
+  .f-label { font-size:.62rem; letter-spacing:.22em; text-transform:uppercase; color:#C6A15B; }
+
+  /* light variant (forms on dark bg) */
+  .f-input-light { border-bottom:1px solid rgba(251,247,239,.25); color:#FBF7EF; }
+  .f-input-light::placeholder { color:rgba(251,247,239,.4); }
+
+  /* ── faq ── */
+  details>summary { list-style:none; }
+  details>summary::-webkit-details-marker { display:none; }
+  .fi { transition:transform .35s ease; flex-shrink:0; }
+  details[open] .fi { transform:rotate(45deg); }
+
+  /* ── reveal ── */
+  .reveal { opacity:1; transform:none; transition:opacity .85s cubic-bezier(.2,.7,.2,1),transform .85s cubic-bezier(.2,.7,.2,1); }
+  .reveal.pre { opacity:0; transform:translateY(16px); }
+
+  /* ── bilingual toggle ── */
+  [data-en] { display:none; }
+  html.lang-en [data-fr] { display:none; }
+  html.lang-en [data-en] { display:revert; }
+
+  ::selection { background:rgba(198,161,91,.25); }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+</style>
+</head>
+<body class="bg-ivoire text-encre font-sans antialiased">
+
+<div class="demo-gate" id="demoGate">
+  <div class="demo-gate-card" id="demoGateCard">
+    <img src="logo-large.png" alt="Hôtel Saphir">
+    <div class="demo-gate-eyebrow">Démonstration — Atelier KPM</div>
+    <div class="demo-gate-title">Accès réservé</div>
+    <form class="demo-gate-form" id="demoGateForm" autocomplete="off">
+      <input type="password" id="demoGateInput" class="demo-gate-input" placeholder="Code d'accès" autocomplete="off">
+      <button type="submit" class="demo-gate-btn">Entrer</button>
+    </form>
+    <div class="demo-gate-error" id="demoGateError">Code incorrect — réessayez.</div>
+  </div>
+</div>
+<div class="demo-watermark" aria-hidden="true"><div class="demo-watermark-inner"><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span><span>Démonstration — Atelier KPM</span></div></div>
+
+<header class="fixed top-0 left-0 right-0 z-40">
+  <div id="nav">
+    <nav class="max-w-7xl mx-auto px-5 sm:px-10 flex items-center justify-between" style="height:76px" aria-label="Navigation principale">
+      <a href="index.html" class="shrink-0"><img src="logo.png" alt="Hôtel Saphir" class="nav-logo-img"></a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="index.html" class="nav-link hover:opacity-100"><span data-fr>Accueil</span><span data-en>Home</span></a>
+        <a href="chambres.html" class="nav-link hover:opacity-100"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a>
+        <a href="services.html" class="nav-link hover:opacity-100"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a>
+        <a href="commercants.html" class="nav-link hover:opacity-100 font-semibold"><span data-fr>Commerçants</span><span data-en>Merchants</span></a>
+        <a href="galerie.html" class="nav-link hover:opacity-100"><span data-fr>Galerie</span><span data-en>Gallery</span></a>
+        <a href="apropos.html" class="nav-link hover:opacity-100"><span data-fr>À propos</span><span data-en>About</span></a>
+        <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="chambres.html#reserver" class="nav-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-ivoire/10 transition-all hidden sm:block">
+          <span data-fr>Réserver</span><span data-en>Book</span>
+        </a>
+        <button id="mobileNavBtn" class="mobile-nav-btn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <div class="mobile-menu-inner">
+      <a href="index.html" class="nav-link hover:opacity-100"><span data-fr>Accueil</span><span data-en>Home</span></a>
+        <a href="chambres.html" class="nav-link hover:opacity-100"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a>
+        <a href="services.html" class="nav-link hover:opacity-100"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a>
+        <a href="commercants.html" class="nav-link hover:opacity-100 font-semibold"><span data-fr>Commerçants</span><span data-en>Merchants</span></a>
+        <a href="galerie.html" class="nav-link hover:opacity-100"><span data-fr>Galerie</span><span data-en>Gallery</span></a>
+        <a href="apropos.html" class="nav-link hover:opacity-100"><span data-fr>À propos</span><span data-en>About</span></a>
+        <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
+      <a href="chambres.html#reserver" class="nav-cta mobile-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-3 rounded-sm">
+        <span data-fr>Réserver</span><span data-en>Book</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<section class="page-banner flex flex-col items-center justify-center text-center px-5 relative">
+  <div class="relative z-10 max-w-2xl mx-auto">
+    <div class="eyebrow-light reveal">Hôtel Saphir</div>
+    <h1 class="font-serif h-title text-ivoire serif-tight mt-4 reveal" style="transition-delay:.1s">
+      <span data-fr>Nos commerçants</span><span data-en>Our merchants</span>
+    </h1>
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto px-5 sm:px-10 py-20 sm:py-28">
+  <div class="text-center mb-14 reveal">
+    <div class="eyebrow mb-5"><span data-fr>Sur place</span><span data-en>On site</span></div>
+    <h2 class="font-serif h-title serif-tight"><span data-fr>Plus de vingt adresses, un seul endroit.</span><span data-en>More than twenty addresses, one place.</span></h2>
+    <p class="text-brume mt-3 max-w-xl mx-auto">
+      <span data-fr>Restauration, beauté, mode et services : les commerces installés au sein de l'Hôtel Saphir, à la disposition de nos clients.</span>
+      <span data-en>Food, beauty, fashion and services: the shops located within Hôtel Saphir, available to our guests.</span>
+    </p>
+  </div>
+
+  <div class="mb-4 reveal">
+    <div class="eyebrow mb-5 mt-12"><span data-fr>Restauration</span><span data-en>Food & drink</span></div>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
+    <div class="merchant-card hx reveal" style="transition-delay:0.00s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Grillades</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Restauration</span><span data-en>Restaurant</span></p>
+        <p class="text-brume/50 text-xs mt-3 italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.03s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Bar de l'hôtel</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Bar</span><span data-en>Bar</span></p>
+        <a href="tel:+24264338121" class="text-or text-xs mt-3 inline-block hover:underline">06 433 81 21 / 05 528 42 45</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.06s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Le Mijoté</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Restauration</span><span data-en>Restaurant</span></p>
+        <a href="tel:+24250177317" class="text-or text-xs mt-3 inline-block hover:underline">05 017 73 17</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.09s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Chez Amigos</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Spécialités congolaises &amp; fast food</span><span data-en>Congolese specialties &amp; fast food</span></p>
+        <a href="tel:+24268907275" class="text-or text-xs mt-3 inline-block hover:underline">06 890 72 75</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.12s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Crousty Fast</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Fast food</span><span data-en>Fast food</span></p>
+        <a href="tel:+24266985919" class="text-or text-xs mt-3 inline-block hover:underline">06 698 59 19</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.15s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Bonelless AFR</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Fast food</span><span data-en>Fast food</span></p>
+        <p class="text-brume/50 text-xs mt-3 italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.18s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Tira Juice</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Salon de thé &amp; tiramisserie</span><span data-en>Tea room &amp; tiramisu bar</span></p>
+        <a href="tel:+24264385646" class="text-or text-xs mt-3 inline-block hover:underline">06 438 56 46</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.21s">
+      <div class="merchant-card-photo" style="background-image:url('commerce-healthyeats.jpg')"></div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Healthy Eats</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Salades, fruits &amp; detox</span><span data-en>Salads, fruit &amp; detox</span></p>
+        <a href="tel:+24261727275" class="text-or text-xs mt-3 inline-block hover:underline">06 172 72 75</a>
+      </div>
+    </div>
+  </div>
+  <div class="mb-4 reveal">
+    <div class="eyebrow mb-5 mt-12"><span data-fr>Beauté & bien-être</span><span data-en>Beauty & wellness</span></div>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
+    <div class="merchant-card hx reveal" style="transition-delay:0.05s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Magic Hand by Dédé</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Bien-être &amp; santé, agroalimentaire</span><span data-en>Wellness &amp; health, food products</span></p>
+        <a href="tel:+24266529480" class="text-or text-xs mt-3 inline-block hover:underline">06 652 94 80</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.08s">
+      <div class="merchant-card-photo" style="background-image:url('commerce-choco.jpg')"></div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Choco Hair</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Salon de coiffure — nappy &amp; locks</span><span data-en>Hair salon — nappy &amp; locks</span></p>
+        <a href="tel:+24255779154" class="text-or text-xs mt-3 inline-block hover:underline">05 577 91 54 / 06 627 46 43</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.11s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Fresh R Shop</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Salon de coiffure</span><span data-en>Hair salon</span></p>
+        <a href="tel:+24266082023" class="text-or text-xs mt-3 inline-block hover:underline">06 608 20 23 / 06 816 12 03</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.14s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">NSA Mina</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Soins esthétiques</span><span data-en>Beauty care</span></p>
+        <a href="tel:+24268326783" class="text-or text-xs mt-3 inline-block hover:underline">+242 06 832 67 83</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.17s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Stéphane Séry Hair</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Salon de coiffure</span><span data-en>Hair salon</span></p>
+        <p class="text-brume/50 text-xs mt-3 italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="mb-4 reveal">
+    <div class="eyebrow mb-5 mt-12"><span data-fr>Mode & boutiques</span><span data-en>Fashion & shops</span></div>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
+    <div class="merchant-card hx reveal" style="transition-delay:0.10s">
+      <div class="merchant-card-photo" style="background-image:url('commerce-addis.jpg')"></div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Addis Création Congo</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Couture</span><span data-en>Tailoring</span></p>
+        <a href="tel:+24265989889" class="text-or text-xs mt-3 inline-block hover:underline">06 598 98 89</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.13s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Europa Shop</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Prêt-à-porter</span><span data-en>Ready-to-wear</span></p>
+        <a href="tel:+24268116444" class="text-or text-xs mt-3 inline-block hover:underline">06 81 16 444</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.16s">
+      <div class="merchant-card-photo" style="background-image:url('commerce-psg.jpg')"></div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Paris Saint-Germain Shop</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Électronique</span><span data-en>Electronics</span></p>
+        <a href="tel:+24253802323" class="text-or text-xs mt-3 inline-block hover:underline">05 380 23 23 / 06 452 32 53</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.19s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Aboubakar Store</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Téléphonie, accessoires &amp; informatique</span><span data-en>Phones, accessories &amp; computer gear</span></p>
+        <a href="tel:+24265252576" class="text-or text-xs mt-3 inline-block hover:underline">06 525 25 76</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.22s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Fashion et Style</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Boutique prêt-à-porter</span><span data-en>Ready-to-wear boutique</span></p>
+        <a href="tel:+24265055054" class="text-or text-xs mt-3 inline-block hover:underline">06 50 55 054</a>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.25s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">ONYX</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Habits &amp; cosmétiques</span><span data-en>Clothing &amp; cosmetics</span></p>
+        <p class="text-brume/50 text-xs mt-3 italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="mb-4 reveal">
+    <div class="eyebrow mb-5 mt-12"><span data-fr>Services</span><span data-en>Services</span></div>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
+    <div class="merchant-card hx reveal" style="transition-delay:0.15s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v8M8 12h8"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Congo BET</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Paris sportifs</span><span data-en>Sports betting</span></p>
+        <p class="text-brume/50 text-xs mt-3 italic"><span data-fr>Téléphone à venir</span><span data-en>Phone coming soon</span></p>
+      </div>
+    </div>
+    <div class="merchant-card hx reveal" style="transition-delay:0.18s">
+      <div class="merchant-card-photo flex items-center justify-center" style="background:rgba(198,161,91,.10)">
+        <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v8M8 12h8"/></svg>
+      </div>
+      <div class="merchant-card-body">
+        <h3 class="font-serif text-lg serif-tight">Cordonnerie &amp; Clés Minute</h3>
+        <p class="text-brume text-sm mt-2 leading-relaxed"><span data-fr>Cordonnerie, clés minute &amp; articles divers</span><span data-en>Shoe repair, key cutting &amp; sundries</span></p>
+        <a href="tel:+24256608008" class="text-or text-xs mt-3 inline-block hover:underline">05 660 80 08 / 06 73 80 512</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-center text-brume text-xs mt-10">
+    <span data-fr>Photos à venir pour les commerces qui n'en ont pas encore.</span>
+    <span data-en>Photos coming soon for the shops that don't have one yet.</span>
+  </p>
+</section>
+
+<footer style="background:#0D1626">
+  <div class="max-w-7xl mx-auto px-5 sm:px-10 py-16 grid sm:grid-cols-3 gap-12">
+    <div>
+      <img src="logo-large.png" alt="Hôtel Saphir" style="height:64px;width:auto" class="mb-5">
+      <p class="text-ivoire/45 text-xs leading-relaxed max-w-xs">Brazzaville, République du Congo.</p>
+      <p class="text-ivoire/45 text-xs mt-4">Avenue Alfassa, rue Charles Ebina<br>Brazzaville — RC</p>
+    </div>
+    <div>
+      <div class="eyebrow-light mb-5"><span data-fr>Navigation</span><span data-en>Navigation</span></div>
+      <ul class="space-y-2.5 text-xs text-ivoire/45">
+          <li><a href="index.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Accueil</span><span data-en>Home</span></a></li>
+          <li><a href="chambres.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a></li>
+          <li><a href="services.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a></li>
+          <li><a href="commercants.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Commerçants</span><span data-en>Merchants</span></a></li>
+          <li><a href="galerie.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Galerie</span><span data-en>Gallery</span></a></li>
+          <li><a href="apropos.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>À propos</span><span data-en>About</span></a></li>
+          <li><a href="contact.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Contact</span><span data-en>Contact</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="eyebrow-light mb-5"><span data-fr>Contact</span><span data-en>Contact</span></div>
+      <ul class="space-y-2.5 text-xs text-ivoire/45">
+        <li>+242 06 928 4245</li>
+        <li>+242 05 528 42 45</li>
+        <li>contact@hotel-saphir-brazza.com</li>
+      </ul>
+      <a href="https://wa.me/24269284245" target="_blank" rel="noopener" class="btn-outline-light text-xs mt-5 inline-block">
+        <span data-fr>Écrire sur WhatsApp</span><span data-en>Message us on WhatsApp</span>
+      </a>
+      <div class="flex gap-4 mt-6">
+        <a href="https://www.facebook.com/saphirstyle01/" target="_blank" rel="noopener" class="text-ivoire/40 hover:text-ivoire transition text-xs uppercase tracking-widest">Facebook</a>
+        <a href="https://www.instagram.com/hotel_saphir_242/" target="_blank" rel="noopener" class="text-ivoire/40 hover:text-ivoire transition text-xs uppercase tracking-widest">Instagram</a>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-5 sm:px-10 py-6 border-t border-ivoire/10 text-ivoire/30 text-[11px] flex flex-col sm:flex-row justify-between gap-2">
+    <span>&copy; 2026 Hôtel Saphir — Brazzaville.</span>
+    <span data-fr>Site réalisé par l'Atelier KPM.</span><span data-en>Website by Atelier KPM.</span>
+  </div>
+</footer>
+
+<a href="https://wa.me/24269284245" target="_blank" rel="noopener" class="wa-float hidden sm:flex items-center gap-2">
+  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0012.04 2zm0 18.1a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.35c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.83c0 4.55-3.7 8.2-8.25 8.2z"/></svg>
+  <span data-fr>WhatsApp</span><span data-en>WhatsApp</span>
+</a>
+
+
+<script>
+  // Nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive:true });
+
+  // Menu mobile (hamburger) — pas de lien de navigation visible sous 1024px sans ceci
+  (function(){
+    const btn = document.getElementById('mobileNavBtn');
+    const menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+    function closeMenu(){
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    function openMenu(){
+      menu.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    btn.addEventListener('click', () => {
+      if (menu.classList.contains('open')) closeMenu(); else openMenu();
+    });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    window.addEventListener('resize', () => { if (window.innerWidth >= 1024) closeMenu(); });
+  })();
+
+  // Reveal
+  document.querySelectorAll('.reveal').forEach((el) => {
+    el.classList.add('pre');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.remove('pre'); io.unobserve(e.target); } });
+    }, { threshold:0.07 });
+    io.observe(el);
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.reveal.pre').forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.remove('pre'); });
+  });
+
+  // FAQ
+  document.querySelectorAll('details').forEach(d => {
+    d.addEventListener('toggle', () => {
+      if(d.open) document.querySelectorAll('details').forEach(o => { if(o!==d) o.open=false; });
+    });
+  });
+
+  // Filtre d'accès démo — code donné directement au prospect, pas de backend
+  (function(){
+    const CODE = 'SAPHIR2026';
+    const gate = document.getElementById('demoGate');
+    const form = document.getElementById('demoGateForm');
+    const input = document.getElementById('demoGateInput');
+    const card = document.getElementById('demoGateCard');
+    const error = document.getElementById('demoGateError');
+    if (!gate || !form) return;
+    try {
+      if (sessionStorage.getItem('saphirDemoUnlocked') === 'true') {
+        document.documentElement.classList.add('demo-unlocked');
+      } else {
+        setTimeout(() => input.focus(), 50);
+      }
+    } catch(e) {}
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = (input.value || '').trim().toUpperCase();
+      if (val === CODE) {
+        document.documentElement.classList.add('demo-unlocked');
+        try { sessionStorage.setItem('saphirDemoUnlocked', 'true'); } catch(e) {}
+      } else {
+        error.classList.add('show');
+        card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+        input.value = '';
+        input.focus();
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
