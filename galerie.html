@@ -7,10 +7,8 @@
 <meta name="description" content="Photos de l'Hôtel Saphir à Brazzaville : piscine, chambres, suites.">
 
 <script>
-  /* langue choisie par le visiteur, et démo déjà déverrouillée : appliqués
-     avant le 1er rendu pour éviter un flash (français, ou contenu visible
-     une fraction de seconde avant le filtre d'accès). */
-  try { if (localStorage.getItem('saphirLang') === 'en') document.documentElement.classList.add('lang-en'); } catch(e) {}
+  /* démo déjà déverrouillée : appliqué avant le 1er rendu pour éviter que le
+     contenu soit visible une fraction de seconde avant le filtre d'accès. */
   try { if (sessionStorage.getItem('saphirDemoUnlocked') === 'true') document.documentElement.classList.add('demo-unlocked'); } catch(e) {}
 </script>
 
@@ -232,6 +230,15 @@ tailwind.config = {
   .room-row:hover { background:rgba(198,161,91,.07); }
   .room-card-photo { min-height:220px; background-size:cover; background-position:center; }
 
+  /* ── bandeau rappel de réservation (version légère, sans calendrier/backend) ── */
+  .stay-banner { display:flex; flex-wrap:wrap; background:#16233F; border-radius:2px; overflow:hidden; }
+  .stay-banner-photo { flex:1 1 220px; min-height:160px; background-size:cover; background-position:center; }
+  .stay-banner-content { flex:2 1 320px; padding:30px 34px; }
+  .stay-banner-content .eyebrow { color:#C6A15B; }
+  .stay-banner-title { color:#FBF7EF; }
+  .stay-banner-text { color:rgba(251,247,239,.65); }
+  .stay-banner-cta { margin-top:18px; }
+
   /* ── galerie : grille uniforme, chaque photo bien visible ── */
   .simple-gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
   @media (max-width:640px){
@@ -374,7 +381,6 @@ tailwind.config = {
         <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
       </div>
       <div class="flex items-center gap-3">
-        <button id="langToggle" class="lang-btn" type="button">EN</button>
         <a href="chambres.html#reserver" class="nav-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-ivoire/10 transition-all hidden sm:block">
           <span data-fr>Réserver</span><span data-en>Book</span>
         </a>
@@ -529,32 +535,6 @@ tailwind.config = {
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
     window.addEventListener('resize', () => { if (window.innerWidth >= 1024) closeMenu(); });
-  })();
-
-  // Language toggle — choix mémorisé (localStorage) et appliqué sur toutes les pages
-  (function(){
-    const btn = document.getElementById('langToggle');
-    // <option> ne supporte pas [data-fr]/[data-en] + display:none de façon fiable
-    // (certains navigateurs gardent l'option sélectionnable même invisible, d'autres
-    // la retirent complètement du <select> — pour un champ obligatoire, mieux vaut
-    // ne pas dépendre du CSS ici et simplement retraduire le texte des options.
-    function applyOptionLabels(isEn){
-      document.querySelectorAll('option[data-fr-label]').forEach(opt => {
-        opt.textContent = isEn ? opt.dataset.enLabel : opt.dataset.frLabel;
-      });
-    }
-    const startEn = document.documentElement.classList.contains('lang-en');
-    applyOptionLabels(startEn);
-    if (!btn) return;
-    // la classe lang-en a déjà été posée par le script en <head> si besoin
-    btn.textContent = startEn ? 'FR' : 'EN';
-    btn.addEventListener('click', () => {
-      const isEn = document.documentElement.classList.toggle('lang-en');
-      btn.textContent = isEn ? 'FR' : 'EN';
-      applyOptionLabels(isEn);
-      try { localStorage.setItem('saphirLang', isEn ? 'en' : 'fr'); } catch(e) {}
-      document.dispatchEvent(new CustomEvent('saphir:langchange', { detail: { isEn } }));
-    });
   })();
 
   // Reveal
