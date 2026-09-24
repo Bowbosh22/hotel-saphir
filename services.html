@@ -127,6 +127,10 @@ tailwind.config = {
 
   .commerce-thumb { width:44px; height:44px; border-radius:8px; background-size:cover; background-position:center; }
 
+  .merchant-card { background:#FBF7EF; display:flex; flex-direction:column; }
+  .merchant-card-photo { aspect-ratio:4/3; background-size:cover; background-position:center; }
+  .merchant-card-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
+
   /* pas de letter-spacing négatif ici : sur certains rendus, ça décale l'accent
      des lettres accentuées (ex. « ô ») hors de la lettre de base — corrigé le 22/09 */
   .serif-tight { letter-spacing:normal; }
@@ -384,6 +388,7 @@ tailwind.config = {
         <a href="index.html" class="nav-link hover:opacity-100"><span data-fr>Accueil</span><span data-en>Home</span></a>
         <a href="chambres.html" class="nav-link hover:opacity-100"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a>
         <a href="services.html" class="nav-link hover:opacity-100 font-semibold"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a>
+        <a href="commercants.html" class="nav-link hover:opacity-100"><span data-fr>Commerçants</span><span data-en>Merchants</span></a>
         <a href="galerie.html" class="nav-link hover:opacity-100"><span data-fr>Galerie</span><span data-en>Gallery</span></a>
         <a href="apropos.html" class="nav-link hover:opacity-100"><span data-fr>À propos</span><span data-en>About</span></a>
         <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
@@ -404,6 +409,7 @@ tailwind.config = {
       <a href="index.html" class="nav-link hover:opacity-100"><span data-fr>Accueil</span><span data-en>Home</span></a>
         <a href="chambres.html" class="nav-link hover:opacity-100"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a>
         <a href="services.html" class="nav-link hover:opacity-100 font-semibold"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a>
+        <a href="commercants.html" class="nav-link hover:opacity-100"><span data-fr>Commerçants</span><span data-en>Merchants</span></a>
         <a href="galerie.html" class="nav-link hover:opacity-100"><span data-fr>Galerie</span><span data-en>Gallery</span></a>
         <a href="apropos.html" class="nav-link hover:opacity-100"><span data-fr>À propos</span><span data-en>About</span></a>
         <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
@@ -468,184 +474,22 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ── COMMERÇANTS ── -->
-<section id="commerces" class="max-w-5xl mx-auto px-5 sm:px-10 pb-20 sm:pb-28">
-  <div class="text-center mb-14 reveal">
+<!-- ── COMMERÇANTS (teaser) ── -->
+<section id="commerces" class="max-w-5xl mx-auto px-5 sm:px-10 pb-20 sm:pb-28 text-center">
+  <div class="reveal">
     <div class="eyebrow mb-5"><span data-fr>Sur place</span><span data-en>On site</span></div>
     <h2 class="font-serif h-title serif-tight"><span data-fr>Nos commerçants.</span><span data-en>Our on-site shops.</span></h2>
     <p class="text-brume mt-3 max-w-xl mx-auto">
-      <span data-fr>Plus de vingt adresses installées au sein de l'hôtel, à la disposition de nos clients.</span>
-      <span data-en>More than twenty addresses located within the hotel, available to our guests.</span>
+      <span data-fr>Plus de vingt adresses installées au sein de l'hôtel, à la disposition de nos clients — restauration, beauté, mode et services.</span>
+      <span data-en>More than twenty addresses located within the hotel, available to our guests — food, beauty, fashion and services.</span>
     </p>
+    <p class="text-brume/70 text-xs mt-4 uppercase tracking-widest">
+      <span data-fr>Restauration · Beauté & bien-être · Mode & boutiques · Services</span><span data-en>Food & drink · Beauty & wellness · Fashion & shops · Services</span>
+    </p>
+    <a href="commercants.html" class="btn-or inline-block mt-8">
+      <span data-fr>Voir tous nos commerçants</span><span data-en>See all our merchants</span> →
+    </a>
   </div>
-
-      <div class="mb-10 reveal" style="transition-delay:0.00s">
-        <div class="eyebrow mb-4"><span data-fr>Restauration</span><span data-en>Food & drink</span></div>
-        <div class="grid sm:grid-cols-2 gap-x-10">
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Grillades</span><span class="text-brume text-xs"> — <span data-fr>Restauration</span><span data-en>Restaurant</span></span></div>
-          </div>
-          
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Bar de l'hôtel</span><span class="text-brume text-xs"> — <span data-fr>Bar</span><span data-en>Bar</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 433 81 21 / 05 528 42 45</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Le Mijoté</span><span class="text-brume text-xs"> — <span data-fr>Restauration</span><span data-en>Restaurant</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">05 017 73 17</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Chez Amigos</span><span class="text-brume text-xs"> — <span data-fr>Spécialités congolaises &amp; fast food</span><span data-en>Congolese specialties &amp; fast food</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 890 72 75</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Crousty Fast</span><span class="text-brume text-xs"> — <span data-fr>Fast food</span><span data-en>Fast food</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 698 59 19</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Bonelless AFR</span><span class="text-brume text-xs"> — <span data-fr>Fast food</span><span data-en>Fast food</span></span></div>
-          </div>
-          
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Tira Juice</span><span class="text-brume text-xs"> — <span data-fr>Salon de thé &amp; tiramisserie</span><span data-en>Tea room &amp; tiramisu bar</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 438 56 46</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div class="commerce-thumb shrink-0" style="background-image:url('commerce-healthyeats.jpg')"></div>
-            <div><span class="font-serif text-base text-encre">Healthy Eats</span><span class="text-brume text-xs"> — <span data-fr>Salades, fruits &amp; detox</span><span data-en>Salads, fruit &amp; detox</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 172 72 75</span>
-        </div>
-        </div>
-      </div>
-      <div class="mb-10 reveal" style="transition-delay:0.05s">
-        <div class="eyebrow mb-4"><span data-fr>Beauté & bien-être</span><span data-en>Beauty & wellness</span></div>
-        <div class="grid sm:grid-cols-2 gap-x-10">
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Magic Hand by Dédé</span><span class="text-brume text-xs"> — <span data-fr>Bien-être &amp; santé, agroalimentaire</span><span data-en>Wellness &amp; health, food products</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 652 94 80</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div class="commerce-thumb shrink-0" style="background-image:url('commerce-choco.jpg')"></div>
-            <div><span class="font-serif text-base text-encre">Choco Hair</span><span class="text-brume text-xs"> — <span data-fr>Salon de coiffure — nappy &amp; locks</span><span data-en>Hair salon — nappy &amp; locks</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">05 577 91 54 / 06 627 46 43</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Fresh R Shop</span><span class="text-brume text-xs"> — <span data-fr>Salon de coiffure</span><span data-en>Hair salon</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 608 20 23 / 06 816 12 03</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">NSA Mina</span><span class="text-brume text-xs"> — <span data-fr>Soins esthétiques</span><span data-en>Beauty care</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">+242 06 832 67 83</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Stéphane Séry Hair</span><span class="text-brume text-xs"> — <span data-fr>Salon de coiffure</span><span data-en>Hair salon</span></span></div>
-          </div>
-          
-        </div>
-        </div>
-      </div>
-      <div class="mb-10 reveal" style="transition-delay:0.10s">
-        <div class="eyebrow mb-4"><span data-fr>Mode & boutiques</span><span data-en>Fashion & shops</span></div>
-        <div class="grid sm:grid-cols-2 gap-x-10">
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div class="commerce-thumb shrink-0" style="background-image:url('commerce-addis.jpg')"></div>
-            <div><span class="font-serif text-base text-encre">Addis Création Congo</span><span class="text-brume text-xs"> — <span data-fr>Couture</span><span data-en>Tailoring</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 598 98 89</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Europa Shop</span><span class="text-brume text-xs"> — <span data-fr>Prêt-à-porter</span><span data-en>Ready-to-wear</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 81 16 444</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div class="commerce-thumb shrink-0" style="background-image:url('commerce-psg.jpg')"></div>
-            <div><span class="font-serif text-base text-encre">Paris Saint-Germain Shop</span><span class="text-brume text-xs"> — <span data-fr>Électronique</span><span data-en>Electronics</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">05 380 23 23 / 06 452 32 53</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Aboubakar Store</span><span class="text-brume text-xs"> — <span data-fr>Téléphonie, accessoires &amp; informatique</span><span data-en>Phones, accessories &amp; computer gear</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 525 25 76</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Fashion et Style</span><span class="text-brume text-xs"> — <span data-fr>Boutique prêt-à-porter</span><span data-en>Ready-to-wear boutique</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">06 50 55 054</span>
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">ONYX</span><span class="text-brume text-xs"> — <span data-fr>Habits &amp; cosmétiques</span><span data-en>Clothing &amp; cosmetics</span></span></div>
-          </div>
-          
-        </div>
-        </div>
-      </div>
-      <div class="mb-10 reveal" style="transition-delay:0.15s">
-        <div class="eyebrow mb-4"><span data-fr>Services</span><span data-en>Services</span></div>
-        <div class="grid sm:grid-cols-2 gap-x-10">
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Congo BET</span><span class="text-brume text-xs"> — <span data-fr>Paris sportifs</span><span data-en>Sports betting</span></span></div>
-          </div>
-          
-        </div>
-        <div class="hb py-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            
-            <div><span class="font-serif text-base text-encre">Cordonnerie &amp; Clés Minute</span><span class="text-brume text-xs"> — <span data-fr>Cordonnerie, clés minute &amp; articles divers</span><span data-en>Shoe repair, key cutting &amp; sundries</span></span></div>
-          </div>
-          <span class="text-or text-xs whitespace-nowrap ml-4">05 660 80 08 / 06 73 80 512</span>
-        </div>
-        </div>
-      </div>
 </section>
 
 <!-- ── ÉVÉNEMENTS ── -->
@@ -708,6 +552,7 @@ tailwind.config = {
           <li><a href="index.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Accueil</span><span data-en>Home</span></a></li>
           <li><a href="chambres.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a></li>
           <li><a href="services.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a></li>
+          <li><a href="commercants.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Commerçants</span><span data-en>Merchants</span></a></li>
           <li><a href="galerie.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Galerie</span><span data-en>Gallery</span></a></li>
           <li><a href="apropos.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>À propos</span><span data-en>About</span></a></li>
           <li><a href="contact.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Contact</span><span data-en>Contact</span></a></li>
