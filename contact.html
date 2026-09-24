@@ -228,7 +228,15 @@ tailwind.config = {
   /* ── room row / card ── */
   .room-row { transition:background .3s; }
   .room-row:hover { background:rgba(198,161,91,.07); }
-  .room-card-photo { min-height:220px; background-size:cover; background-position:center; }
+  .room-card-photo { min-height:220px; background-size:cover; background-position:center; position:relative; overflow:hidden; }
+  .room-card-nav { position:absolute; top:50%; transform:translateY(-50%); z-index:2; width:32px; height:32px; border:none; background:rgba(13,22,38,.55); color:#FBF7EF; font-size:1.05rem; line-height:1; cursor:pointer; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .room-card-nav.prev { left:10px; }
+  .room-card-nav.next { right:10px; }
+  .room-card-nav:hover { background:rgba(13,22,38,.8); }
+  .room-card-dots { position:absolute; bottom:10px; left:0; right:0; z-index:2; display:flex; justify-content:center; gap:6px; }
+  .room-card-dots .dot { width:6px; height:6px; border-radius:50%; background:rgba(251,247,239,.45); cursor:pointer; padding:0; border:none; }
+  .room-card-dots .dot.active { background:#FBF7EF; }
+  .room-card-photo-badge { position:absolute; top:10px; right:10px; z-index:2; background:rgba(13,22,38,.55); color:#FBF7EF; font-family:'Jost',sans-serif; font-size:.62rem; letter-spacing:.08em; padding:3px 8px; border-radius:2px; }
 
   /* ── bandeau rappel de réservation (version légère, sans calendrier/backend) ── */
   .stay-banner { display:flex; flex-wrap:wrap; background:#16233F; border-radius:2px; overflow:hidden; }
