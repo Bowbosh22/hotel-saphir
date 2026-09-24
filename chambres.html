@@ -7,10 +7,8 @@
 <meta name="description" content="Chambre Standard, Confort et Suite Junior à l'Hôtel Saphir, Brazzaville. Petit-déjeuner inclus, tarif direct sans commission.">
 
 <script>
-  /* langue choisie par le visiteur, et démo déjà déverrouillée : appliqués
-     avant le 1er rendu pour éviter un flash (français, ou contenu visible
-     une fraction de seconde avant le filtre d'accès). */
-  try { if (localStorage.getItem('saphirLang') === 'en') document.documentElement.classList.add('lang-en'); } catch(e) {}
+  /* démo déjà déverrouillée : appliqué avant le 1er rendu pour éviter que le
+     contenu soit visible une fraction de seconde avant le filtre d'accès. */
   try { if (sessionStorage.getItem('saphirDemoUnlocked') === 'true') document.documentElement.classList.add('demo-unlocked'); } catch(e) {}
 </script>
 
@@ -232,6 +230,15 @@ tailwind.config = {
   .room-row:hover { background:rgba(198,161,91,.07); }
   .room-card-photo { min-height:220px; background-size:cover; background-position:center; }
 
+  /* ── bandeau rappel de réservation (version légère, sans calendrier/backend) ── */
+  .stay-banner { display:flex; flex-wrap:wrap; background:#16233F; border-radius:2px; overflow:hidden; }
+  .stay-banner-photo { flex:1 1 220px; min-height:160px; background-size:cover; background-position:center; }
+  .stay-banner-content { flex:2 1 320px; padding:30px 34px; }
+  .stay-banner-content .eyebrow { color:#C6A15B; }
+  .stay-banner-title { color:#FBF7EF; }
+  .stay-banner-text { color:rgba(251,247,239,.65); }
+  .stay-banner-cta { margin-top:18px; }
+
   /* ── galerie : grille uniforme, chaque photo bien visible ── */
   .simple-gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
   @media (max-width:640px){
@@ -374,7 +381,6 @@ tailwind.config = {
         <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
       </div>
       <div class="flex items-center gap-3">
-        <button id="langToggle" class="lang-btn" type="button">EN</button>
         <a href="chambres.html#reserver" class="nav-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-ivoire/10 transition-all hidden sm:block">
           <span data-fr>Réserver</span><span data-en>Book</span>
         </a>
@@ -420,6 +426,16 @@ tailwind.config = {
     </p>
   </div>
 
+  <div class="stay-banner reveal mb-14">
+    <div class="stay-banner-photo" style="background-image:url('pool-1.jpg')"></div>
+    <div class="stay-banner-content">
+      <div class="eyebrow mb-2">Hôtel Saphir</div>
+      <h3 class="font-serif h-sub serif-tight stay-banner-title">Votre prochain séjour vous attend.</h3>
+      <p class="stay-banner-text text-sm mt-3 max-w-sm">Chambres à partir de 40 000 FCFA la nuit, petit-déjeuner inclus. Indiquez-nous vos dates sur WhatsApp, nous confirmons la disponibilité directement.</p>
+      <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20une%20chambre%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or stay-banner-cta inline-block">Réserver maintenant</a>
+    </div>
+  </div>
+
   <div class="space-y-6">
     
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.00s">
@@ -434,7 +450,7 @@ tailwind.config = {
             <div class="font-serif text-2xl">40 000</div>
             <div class="text-brume text-xs"><span data-fr>FCFA / nuit · petit-déjeuner inclus</span><span data-en>FCFA / night · breakfast included</span></div>
           </div>
-          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Chambre%20Standard%20%C3%A0%20l%27H%C3%B4tel%20Saphir." data-room-fr="Chambre Standard" target="_blank" rel="noopener" class="btn-or shrink-0 wa-reserve-link">
+          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Chambre%20Standard%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or shrink-0">
             <span data-fr>Réserver</span><span data-en>Book</span>
           </a>
         </div>
@@ -453,7 +469,7 @@ tailwind.config = {
             <div class="font-serif text-2xl">65 000</div>
             <div class="text-brume text-xs"><span data-fr>FCFA / nuit · petit-déjeuner inclus</span><span data-en>FCFA / night · breakfast included</span></div>
           </div>
-          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Chambre%20Confort%20%C3%A0%20l%27H%C3%B4tel%20Saphir." data-room-fr="Chambre Confort" target="_blank" rel="noopener" class="btn-or shrink-0 wa-reserve-link">
+          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Chambre%20Confort%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or shrink-0">
             <span data-fr>Réserver</span><span data-en>Book</span>
           </a>
         </div>
@@ -472,7 +488,7 @@ tailwind.config = {
             <div class="font-serif text-2xl">150 000</div>
             <div class="text-brume text-xs"><span data-fr>FCFA / nuit · petit-déjeuner inclus</span><span data-en>FCFA / night · breakfast included</span></div>
           </div>
-          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Suite%20Junior%20%C3%A0%20l%27H%C3%B4tel%20Saphir." data-room-fr="Suite Junior" target="_blank" rel="noopener" class="btn-or shrink-0 wa-reserve-link">
+          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Suite%20Junior%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or shrink-0">
             <span data-fr>Réserver</span><span data-en>Book</span>
           </a>
         </div>
@@ -489,73 +505,6 @@ tailwind.config = {
     </p>
   </div>
 </section>
-
-<!-- ── modale de pré-réservation : dates (calendrier) + voyageurs, avant WhatsApp ── -->
-<div id="resModal" class="res-modal" aria-hidden="true">
-  <div class="res-modal-backdrop" data-close></div>
-  <div class="res-modal-panel" role="dialog" aria-modal="true" aria-labelledby="resRoomName">
-    <button type="button" class="res-modal-close" data-close aria-label="Fermer">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-
-    <div class="res-modal-room">
-      <div class="eyebrow mb-1"><span data-fr>Votre réservation</span><span data-en>Your booking</span></div>
-      <div id="resRoomName" class="font-serif text-xl serif-tight"></div>
-    </div>
-
-    <div class="res-cal">
-      <div class="res-cal-head">
-        <button type="button" id="resCalPrev" class="res-cal-nav" aria-label="Mois précédent">‹</button>
-        <div id="resCalLabel" class="res-cal-label"></div>
-        <button type="button" id="resCalNext" class="res-cal-nav" aria-label="Mois suivant">›</button>
-      </div>
-      <div id="resCalWeekdays" class="res-cal-weekdays"></div>
-      <div id="resCalGrid" class="res-cal-grid"></div>
-    </div>
-
-    <div class="res-dates-summary">
-      <div>
-        <div class="f-label"><span data-fr>Arrivée</span><span data-en>Check-in</span></div>
-        <div id="resArrLabel" class="res-date-value">—</div>
-      </div>
-      <div>
-        <div class="f-label"><span data-fr>Départ</span><span data-en>Check-out</span></div>
-        <div id="resDepLabel" class="res-date-value">—</div>
-      </div>
-    </div>
-
-    <div class="res-guests">
-      <div class="res-guest-row">
-        <div class="font-serif text-base"><span data-fr>Adultes</span><span data-en>Adults</span></div>
-        <div class="res-stepper">
-          <button type="button" class="res-step" data-step="adults" data-dir="-1" aria-label="Moins d'adultes">−</button>
-          <span id="resAdults">1</span>
-          <button type="button" class="res-step" data-step="adults" data-dir="1" aria-label="Plus d'adultes">+</button>
-        </div>
-      </div>
-      <div class="res-guest-row">
-        <div>
-          <div class="font-serif text-base"><span data-fr>Enfants</span><span data-en>Children</span></div>
-          <div class="text-brume text-xs"><span data-fr>0–12 ans</span><span data-en>Ages 0–12</span></div>
-        </div>
-        <div class="res-stepper">
-          <button type="button" class="res-step" data-step="children" data-dir="-1" aria-label="Moins d'enfants">−</button>
-          <span id="resChildren">0</span>
-          <button type="button" class="res-step" data-step="children" data-dir="1" aria-label="Plus d'enfants">+</button>
-        </div>
-      </div>
-    </div>
-
-    <a id="resSubmit" href="#" target="_blank" rel="noopener" class="btn-or w-full text-center res-disabled" style="display:block">
-      <span data-fr>Continuer sur WhatsApp</span><span data-en>Continue on WhatsApp</span>
-    </a>
-    <p id="resHint" class="text-or text-xs mt-3 text-center"><span data-fr>Sélectionnez vos dates pour continuer.</span><span data-en>Select your dates to continue.</span></p>
-    <p class="text-brume text-xs mt-3 text-center">
-      <span data-fr>Séjour confirmé par l'hôtel directement sur WhatsApp.</span>
-      <span data-en>Your stay is confirmed by the hotel directly on WhatsApp.</span>
-    </p>
-  </div>
-</div>
 
 <footer style="background:#0D1626">
   <div class="max-w-7xl mx-auto px-5 sm:px-10 py-16 grid sm:grid-cols-3 gap-12">
@@ -635,32 +584,6 @@ tailwind.config = {
     window.addEventListener('resize', () => { if (window.innerWidth >= 1024) closeMenu(); });
   })();
 
-  // Language toggle — choix mémorisé (localStorage) et appliqué sur toutes les pages
-  (function(){
-    const btn = document.getElementById('langToggle');
-    // <option> ne supporte pas [data-fr]/[data-en] + display:none de façon fiable
-    // (certains navigateurs gardent l'option sélectionnable même invisible, d'autres
-    // la retirent complètement du <select> — pour un champ obligatoire, mieux vaut
-    // ne pas dépendre du CSS ici et simplement retraduire le texte des options.
-    function applyOptionLabels(isEn){
-      document.querySelectorAll('option[data-fr-label]').forEach(opt => {
-        opt.textContent = isEn ? opt.dataset.enLabel : opt.dataset.frLabel;
-      });
-    }
-    const startEn = document.documentElement.classList.contains('lang-en');
-    applyOptionLabels(startEn);
-    if (!btn) return;
-    // la classe lang-en a déjà été posée par le script en <head> si besoin
-    btn.textContent = startEn ? 'FR' : 'EN';
-    btn.addEventListener('click', () => {
-      const isEn = document.documentElement.classList.toggle('lang-en');
-      btn.textContent = isEn ? 'FR' : 'EN';
-      applyOptionLabels(isEn);
-      try { localStorage.setItem('saphirLang', isEn ? 'en' : 'fr'); } catch(e) {}
-      document.dispatchEvent(new CustomEvent('saphir:langchange', { detail: { isEn } }));
-    });
-  })();
-
   // Reveal
   document.querySelectorAll('.reveal').forEach((el) => {
     el.classList.add('pre');
@@ -708,189 +631,6 @@ tailwind.config = {
         input.value = '';
         input.focus();
       }
-    });
-  })();
-</script>
-
-<script>
-  // Modale de pré-réservation : calendrier (dates) + nombre de voyageurs,
-  // ouverte au clic sur « Réserver ». Tout est front-end (pas de backend,
-  // pas de vérification de disponibilité réelle) — au clic sur « Continuer
-  // sur WhatsApp », un message pré-rempli (chambre, dates, voyageurs) est
-  // envoyé, et c'est la réceptionniste qui confirme ensuite.
-  (function(){
-    const modal = document.getElementById('resModal');
-    if (!modal) return;
-
-    const calGrid      = document.getElementById('resCalGrid');
-    const calWeekdays   = document.getElementById('resCalWeekdays');
-    const calLabel      = document.getElementById('resCalLabel');
-    const calPrev       = document.getElementById('resCalPrev');
-    const calNext       = document.getElementById('resCalNext');
-    const roomNameEl    = document.getElementById('resRoomName');
-    const arrLabelEl    = document.getElementById('resArrLabel');
-    const depLabelEl    = document.getElementById('resDepLabel');
-    const adultsEl      = document.getElementById('resAdults');
-    const childrenEl    = document.getElementById('resChildren');
-    const submitEl      = document.getElementById('resSubmit');
-    const hintEl        = document.getElementById('resHint');
-
-    const MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-    const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    const WD_FR = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-    const WD_EN = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-    function isEn(){ return document.documentElement.classList.contains('lang-en'); }
-
-    let currentRoomFr = '';
-    let calMonth = startOfMonth(new Date());
-    let selStart = null, selEnd = null;
-    let adults = 1, children = 0;
-
-    function startOfMonth(d){ return new Date(d.getFullYear(), d.getMonth(), 1); }
-    function isoLocal(d){
-      const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
-      return y + '-' + m + '-' + day;
-    }
-    function fmt(iso){ const p = iso.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
-
-    function buildMessage(){
-      let msg = "Bonjour, je suis intéressé(e) par la " + currentRoomFr + " à l'Hôtel Saphir.";
-      if (selStart && selEnd){
-        msg += " Du " + fmt(selStart) + " au " + fmt(selEnd) + ",";
-      }
-      msg += " pour " + adults + (adults > 1 ? " adultes" : " adulte");
-      if (children > 0){
-        msg += " et " + children + (children > 1 ? " enfants" : " enfant");
-      }
-      msg += ".";
-      return msg;
-    }
-
-    function renderWeekdays(){
-      const wd = isEn() ? WD_EN : WD_FR;
-      calWeekdays.innerHTML = wd.map(w => '<div>' + w + '</div>').join('');
-    }
-
-    function renderCalendar(){
-      renderWeekdays();
-      calLabel.textContent = (isEn() ? MONTHS_EN : MONTHS_FR)[calMonth.getMonth()] + ' ' + calMonth.getFullYear();
-
-      calGrid.innerHTML = '';
-      const first = startOfMonth(calMonth);
-      const leading = (first.getDay() + 6) % 7;
-      const daysInMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 0).getDate();
-      const todayIso = isoLocal(new Date());
-
-      for (let i = 0; i < leading; i++){
-        calGrid.appendChild(document.createElement('div'));
-      }
-      for (let d = 1; d <= daysInMonth; d++){
-        const iso = isoLocal(new Date(calMonth.getFullYear(), calMonth.getMonth(), d));
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'res-cal-day';
-        btn.textContent = String(d);
-        if (iso === todayIso) btn.classList.add('res-today');
-        if (iso < todayIso){
-          btn.disabled = true;
-        } else {
-          if (iso === selStart || iso === selEnd) btn.classList.add('res-selected');
-          else if (selStart && selEnd && iso > selStart && iso < selEnd) btn.classList.add('res-in-range');
-          btn.addEventListener('click', () => onDayClick(iso));
-        }
-        calGrid.appendChild(btn);
-      }
-
-      const now = new Date();
-      calPrev.disabled = (calMonth.getFullYear() === now.getFullYear() && calMonth.getMonth() === now.getMonth());
-    }
-
-    function onDayClick(iso){
-      if (!selStart || (selStart && selEnd)){
-        selStart = iso; selEnd = null;
-      } else if (iso <= selStart){
-        selStart = iso; selEnd = null;
-      } else {
-        selEnd = iso;
-      }
-      renderCalendar();
-      updateSummary();
-      updateSubmit();
-    }
-
-    function updateSummary(){
-      arrLabelEl.textContent = selStart ? fmt(selStart) : '—';
-      depLabelEl.textContent = selEnd ? fmt(selEnd) : '—';
-    }
-
-    function updateSubmit(){
-      if (selStart && selEnd){
-        submitEl.href = 'https://wa.me/24269284245?text=' + encodeURIComponent(buildMessage());
-        submitEl.classList.remove('res-disabled');
-        hintEl.style.display = 'none';
-      } else {
-        submitEl.href = '#';
-        submitEl.classList.add('res-disabled');
-        hintEl.style.display = '';
-      }
-    }
-
-    function openModal(roomFr){
-      currentRoomFr = roomFr;
-      roomNameEl.textContent = roomFr;
-      selStart = null; selEnd = null; adults = 1; children = 0;
-      adultsEl.textContent = '1';
-      childrenEl.textContent = '0';
-      calMonth = startOfMonth(new Date());
-      renderCalendar();
-      updateSummary();
-      updateSubmit();
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('res-modal-lock');
-    }
-
-    function closeModal(){
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('res-modal-lock');
-    }
-
-    document.querySelectorAll('.wa-reserve-link').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        openModal(link.getAttribute('data-room-fr'));
-      });
-    });
-
-    modal.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeModal));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
-
-    calPrev.addEventListener('click', () => { calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() - 1, 1); renderCalendar(); });
-    calNext.addEventListener('click', () => { calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1); renderCalendar(); });
-
-    modal.querySelectorAll('.res-step').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const key = btn.getAttribute('data-step');
-        const dir = parseInt(btn.getAttribute('data-dir'), 10);
-        if (key === 'adults'){
-          adults = Math.min(8, Math.max(1, adults + dir));
-          adultsEl.textContent = String(adults);
-        } else {
-          children = Math.min(8, Math.max(0, children + dir));
-          childrenEl.textContent = String(children);
-        }
-        updateSubmit();
-      });
-    });
-
-    submitEl.addEventListener('click', e => {
-      if (submitEl.classList.contains('res-disabled')){ e.preventDefault(); return; }
-      closeModal();
-    });
-
-    document.addEventListener('saphir:langchange', () => {
-      if (modal.classList.contains('open')) renderCalendar();
     });
   })();
 </script>
