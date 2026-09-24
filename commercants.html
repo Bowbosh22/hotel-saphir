@@ -151,6 +151,21 @@ tailwind.config = {
   }
   .merchant-card-tel:hover { color:#C6A15B; }
   .merchant-card-tel-icon { width:13px; height:13px; flex-shrink:0; }
+  .merchant-card-cat-badge {
+    position:absolute; top:10px; left:10px; z-index:2;
+    background:rgba(13,22,38,.55); color:#FBF7EF;
+    font-family:'Jost',sans-serif; font-size:.6rem; letter-spacing:.08em; text-transform:uppercase;
+    padding:3px 9px; border-radius:2px;
+  }
+
+  .cat-nav { display:flex; flex-wrap:wrap; justify-content:center; gap:.6rem; }
+  .cat-nav-pill {
+    font-family:'Jost',sans-serif; font-size:.68rem; letter-spacing:.06em; text-transform:uppercase;
+    color:#16233F; background:rgba(198,161,91,.10); border:1px solid rgba(198,161,91,.35);
+    padding:.55rem 1.15rem; border-radius:9999px; transition:all .25s;
+  }
+  .cat-nav-pill:hover { background:#C6A15B; color:#FBF7EF; border-color:#C6A15B; }
+  .cat-nav-pill-count { opacity:.6; margin-left:.25rem; }
 
   /* pas de letter-spacing négatif ici : sur certains rendus, ça décale l'accent
      des lettres accentuées (ex. « ô ») hors de la lettre de base — corrigé le 22/09 */
@@ -461,7 +476,24 @@ tailwind.config = {
     </p>
   </div>
 
-  <div class="mb-4 reveal">
+  <div class="mb-16">
+<div class="cat-nav reveal" style="transition-delay:.15s">
+    <a href="#restauration" class="cat-nav-pill">
+      <span data-fr>Restauration</span><span data-en>Food & drink</span><span class="cat-nav-pill-count">(8)</span>
+    </a>
+    <a href="#beaute-bien-etre" class="cat-nav-pill">
+      <span data-fr>Beauté & bien-être</span><span data-en>Beauty & wellness</span><span class="cat-nav-pill-count">(5)</span>
+    </a>
+    <a href="#mode-boutiques" class="cat-nav-pill">
+      <span data-fr>Mode & boutiques</span><span data-en>Fashion & shops</span><span class="cat-nav-pill-count">(6)</span>
+    </a>
+    <a href="#services" class="cat-nav-pill">
+      <span data-fr>Services</span><span data-en>Services</span><span class="cat-nav-pill-count">(2)</span>
+    </a>
+  </div>
+  </div>
+
+  <div id="restauration" class="mb-4 reveal" style="scroll-margin-top:100px">
     <div class="eyebrow mb-5 mt-12"><span data-fr>Restauration</span><span data-en>Food & drink</span></div>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
@@ -470,6 +502,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Restauration</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Grillades</h3>
@@ -483,6 +516,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Restauration</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Bar de l'hôtel</h3>
@@ -499,6 +533,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Restauration</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Le Mijoté</h3>
@@ -515,6 +550,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Restauration</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Chez Amigos</h3>
@@ -531,6 +567,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Restauration</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Crousty Fast</h3>
@@ -547,6 +584,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Restauration</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Bonelless AFR</h3>
@@ -560,6 +598,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8V6a3 3 0 016 0v2m-8 0h10l1 12H4L5 8z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Restauration</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Tira Juice</h3>
@@ -574,6 +613,7 @@ tailwind.config = {
     <div class="merchant-card reveal" style="transition-delay:0.21s">
       <div class="merchant-card-photo-wrap">
         <div class="merchant-card-photo" style="background-image:url('commerce-healthyeats.jpg')"></div>
+        <span class="merchant-card-cat-badge">Restauration</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Healthy Eats</h3>
@@ -586,7 +626,7 @@ tailwind.config = {
       </div>
     </div>
   </div>
-  <div class="mb-4 reveal">
+  <div id="beaute-bien-etre" class="mb-4 reveal" style="scroll-margin-top:100px">
     <div class="eyebrow mb-5 mt-12"><span data-fr>Beauté & bien-être</span><span data-en>Beauty & wellness</span></div>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
@@ -595,6 +635,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Beauté & bien-être</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Magic Hand by Dédé</h3>
@@ -609,6 +650,7 @@ tailwind.config = {
     <div class="merchant-card reveal" style="transition-delay:0.08s">
       <div class="merchant-card-photo-wrap">
         <div class="merchant-card-photo" style="background-image:url('commerce-choco.jpg')"></div>
+        <span class="merchant-card-cat-badge">Beauté & bien-être</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Choco Hair</h3>
@@ -625,6 +667,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Beauté & bien-être</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Fresh R Shop</h3>
@@ -641,6 +684,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Beauté & bien-être</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">NSA Mina</h3>
@@ -657,6 +701,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7.2-4.4-8.9-7.9C1.5 9.9 3 6.8 6.2 6.3a4.8 4.8 0 015.8 1.9 4.8 4.8 0 015.8-1.9c3.2.5 4.7 3.6 3.1 6.8C19.2 16.6 12 21 12 21z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Beauté & bien-être</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Stéphane Séry Hair</h3>
@@ -666,13 +711,14 @@ tailwind.config = {
       </div>
     </div>
   </div>
-  <div class="mb-4 reveal">
+  <div id="mode-boutiques" class="mb-4 reveal" style="scroll-margin-top:100px">
     <div class="eyebrow mb-5 mt-12"><span data-fr>Mode & boutiques</span><span data-en>Fashion & shops</span></div>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
     <div class="merchant-card reveal" style="transition-delay:0.10s">
       <div class="merchant-card-photo-wrap">
         <div class="merchant-card-photo" style="background-image:url('commerce-addis.jpg')"></div>
+        <span class="merchant-card-cat-badge">Mode & boutiques</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Addis Création Congo</h3>
@@ -689,6 +735,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Mode & boutiques</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Europa Shop</h3>
@@ -703,6 +750,7 @@ tailwind.config = {
     <div class="merchant-card reveal" style="transition-delay:0.16s">
       <div class="merchant-card-photo-wrap">
         <div class="merchant-card-photo" style="background-image:url('commerce-psg.jpg')"></div>
+        <span class="merchant-card-cat-badge">Mode & boutiques</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Paris Saint-Germain Shop</h3>
@@ -719,6 +767,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Mode & boutiques</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Aboubakar Store</h3>
@@ -735,6 +784,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Mode & boutiques</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Fashion et Style</h3>
@@ -751,6 +801,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 3-2 3h-2v10H8V10H6L4 7l4-3a4 4 0 008 0z"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Mode & boutiques</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">ONYX</h3>
@@ -760,7 +811,7 @@ tailwind.config = {
       </div>
     </div>
   </div>
-  <div class="mb-4 reveal">
+  <div id="services" class="mb-4 reveal" style="scroll-margin-top:100px">
     <div class="eyebrow mb-5 mt-12"><span data-fr>Services</span><span data-en>Services</span></div>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-2">
@@ -769,6 +820,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v8M8 12h8"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Services</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Congo BET</h3>
@@ -782,6 +834,7 @@ tailwind.config = {
         <div class="merchant-card-photo flex items-center justify-center">
           <svg class="w-9 h-9 text-or" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v8M8 12h8"/></svg>
         </div>
+        <span class="merchant-card-cat-badge">Services</span>
       </div>
       <div class="merchant-card-body">
         <h3 class="font-serif text-lg serif-tight merchant-card-name">Cordonnerie &amp; Clés Minute</h3>
