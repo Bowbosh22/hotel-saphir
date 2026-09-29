@@ -127,9 +127,45 @@ tailwind.config = {
 
   .commerce-thumb { width:44px; height:44px; border-radius:8px; background-size:cover; background-position:center; }
 
-  .merchant-card { background:#FBF7EF; display:flex; flex-direction:column; }
-  .merchant-card-photo { aspect-ratio:4/3; background-size:cover; background-position:center; }
-  .merchant-card-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
+  .merchant-card {
+    background:#FBF7EF; display:flex; flex-direction:column;
+    border-radius:3px; overflow:hidden;
+    box-shadow:0 14px 34px -22px rgba(33,29,26,.28);
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .merchant-card:hover { transform:translateY(-5px); box-shadow:0 22px 46px -18px rgba(33,29,26,.32); }
+  .merchant-card-photo-wrap { position:relative; aspect-ratio:4/3; overflow:hidden; background:rgba(198,161,91,.10); }
+  .merchant-card-photo {
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+    transition:transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .merchant-card:hover .merchant-card-photo { transform:scale(1.07); }
+  .merchant-card-body { padding:1.6rem 1.6rem 1.75rem; flex:1; display:flex; flex-direction:column; }
+  .merchant-card-name { letter-spacing:.005em; }
+  .merchant-card-divider { height:1px; background:rgba(33,29,26,.10); margin:1rem 0 .9rem; }
+  .merchant-card-tel {
+    display:inline-flex; align-items:center; gap:.4rem;
+    font-family:'Jost',sans-serif; font-size:.72rem; letter-spacing:.06em;
+    color:#16233F; margin-top:auto; transition:color .25s;
+  }
+  .merchant-card-tel:hover { color:#C6A15B; }
+  .merchant-card-tel-icon { width:13px; height:13px; flex-shrink:0; }
+  .merchant-card-cat-badge {
+    position:absolute; top:10px; left:10px; z-index:2;
+    background:rgba(13,22,38,.55); color:#FBF7EF;
+    font-family:'Jost',sans-serif; font-size:.6rem; letter-spacing:.08em; text-transform:uppercase;
+    padding:3px 9px; border-radius:2px;
+  }
+
+  .cat-nav { display:flex; flex-wrap:wrap; justify-content:center; gap:.6rem; }
+  .cat-nav-pill {
+    font-family:'Jost',sans-serif; font-size:.68rem; letter-spacing:.06em; text-transform:uppercase;
+    color:#16233F; background:rgba(198,161,91,.10); border:1px solid rgba(198,161,91,.35);
+    padding:.55rem 1.15rem; border-radius:9999px; transition:all .25s;
+  }
+  .cat-nav-pill:hover { background:#C6A15B; color:#FBF7EF; border-color:#C6A15B; }
+  .cat-nav-pill-count { opacity:.6; margin-left:.25rem; }
 
   /* pas de letter-spacing négatif ici : sur certains rendus, ça décale l'accent
      des lettres accentuées (ex. « ô ») hors de la lettre de base — corrigé le 22/09 */
@@ -368,7 +404,7 @@ tailwind.config = {
 
 <div class="demo-gate" id="demoGate">
   <div class="demo-gate-card" id="demoGateCard">
-    <img src="logo-large.png" alt="Hôtel Saphir">
+    <img src="assets/logo-large.png" alt="Hôtel Saphir">
     <div class="demo-gate-eyebrow">Démonstration — Atelier KPM</div>
     <div class="demo-gate-title">Accès réservé</div>
     <form class="demo-gate-form" id="demoGateForm" autocomplete="off">
@@ -383,7 +419,7 @@ tailwind.config = {
 <header class="fixed top-0 left-0 right-0 z-40">
   <div id="nav">
     <nav class="max-w-7xl mx-auto px-5 sm:px-10 flex items-center justify-between" style="height:76px" aria-label="Navigation principale">
-      <a href="index.html" class="shrink-0"><img src="logo.png" alt="Hôtel Saphir" class="nav-logo-img"></a>
+      <a href="index.html" class="shrink-0"><img src="assets/logo.png" alt="Hôtel Saphir" class="nav-logo-img"></a>
       <div class="hidden lg:flex items-center gap-8">
         <a href="index.html" class="nav-link hover:opacity-100"><span data-fr>Accueil</span><span data-en>Home</span></a>
         <a href="chambres.html" class="nav-link hover:opacity-100 font-semibold"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a>
@@ -451,19 +487,19 @@ tailwind.config = {
   </div>
 
   <div class="stay-banner reveal mb-14">
-    <div class="stay-banner-photo" style="background-image:url('pool-1.jpg')"></div>
+    <div class="stay-banner-photo" style="background-image:url('assets/pool-1.jpg')"></div>
     <div class="stay-banner-content">
       <div class="eyebrow mb-2">Hôtel Saphir</div>
       <h3 class="font-serif h-sub serif-tight stay-banner-title">Votre prochain séjour vous attend.</h3>
       <p class="stay-banner-text text-sm mt-3 max-w-sm">Chambres à partir de 40 000 FCFA la nuit, petit-déjeuner inclus. Indiquez-nous vos dates sur WhatsApp, nous confirmons la disponibilité directement.</p>
-      <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20une%20chambre%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or stay-banner-cta inline-block">Réserver maintenant</a>
+      <button type="button" class="btn-or stay-banner-cta inline-block" data-res-open data-res-room="">Réserver maintenant</button>
     </div>
   </div>
 
   <div class="space-y-6">
     
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.00s">
-      <div class="room-card-photo" style="background-image:url('room-standard.jpg')" data-photos="[&quot;room-standard.jpg&quot;, &quot;room-standard-2.jpg&quot;, &quot;room-standard-3.jpg&quot;, &quot;room-standard-4.jpg&quot;, &quot;room-standard-5.jpg&quot;]">
+      <div class="room-card-photo" style="background-image:url('assets/room-standard.jpg')" data-photos="[&quot;assets/room-standard.jpg&quot;, &quot;assets/room-standard-2.jpg&quot;, &quot;assets/room-standard-3.jpg&quot;, &quot;assets/room-standard-4.jpg&quot;, &quot;assets/room-standard-5.jpg&quot;]">
         <button type="button" class="room-card-nav prev" aria-label="Photo précédente">&#8249;</button>
         <button type="button" class="room-card-nav next" aria-label="Photo suivante">&#8250;</button>
         <div class="room-card-dots"><button type="button" class="dot active" data-i="0" aria-label="Photo 1"></button><button type="button" class="dot" data-i="1" aria-label="Photo 2"></button><button type="button" class="dot" data-i="2" aria-label="Photo 3"></button><button type="button" class="dot" data-i="3" aria-label="Photo 4"></button><button type="button" class="dot" data-i="4" aria-label="Photo 5"></button></div>
@@ -479,15 +515,15 @@ tailwind.config = {
             <div class="font-serif text-2xl">40 000</div>
             <div class="text-brume text-xs"><span data-fr>FCFA / nuit · petit-déjeuner inclus</span><span data-en>FCFA / night · breakfast included</span></div>
           </div>
-          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Chambre%20Standard%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or shrink-0">
+          <button type="button" class="btn-or shrink-0" data-res-open data-res-room="Chambre Standard">
             <span data-fr>Réserver</span><span data-en>Book</span>
-          </a>
+          </button>
         </div>
       </div>
     </article>
 
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.08s">
-      <div class="room-card-photo" style="background-image:url('room-confort.jpg')" data-photos="[&quot;room-confort.jpg&quot;, &quot;room-confort-2.jpg&quot;, &quot;room-confort-3.jpg&quot;, &quot;room-confort-4.jpg&quot;, &quot;room-confort-5.jpg&quot;, &quot;room-confort-6.jpg&quot;]">
+      <div class="room-card-photo" style="background-image:url('assets/room-confort.jpg')" data-photos="[&quot;assets/room-confort.jpg&quot;, &quot;assets/room-confort-2.jpg&quot;, &quot;assets/room-confort-3.jpg&quot;, &quot;assets/room-confort-4.jpg&quot;, &quot;assets/room-confort-5.jpg&quot;, &quot;assets/room-confort-6.jpg&quot;]">
         <button type="button" class="room-card-nav prev" aria-label="Photo précédente">&#8249;</button>
         <button type="button" class="room-card-nav next" aria-label="Photo suivante">&#8250;</button>
         <div class="room-card-dots"><button type="button" class="dot active" data-i="0" aria-label="Photo 1"></button><button type="button" class="dot" data-i="1" aria-label="Photo 2"></button><button type="button" class="dot" data-i="2" aria-label="Photo 3"></button><button type="button" class="dot" data-i="3" aria-label="Photo 4"></button><button type="button" class="dot" data-i="4" aria-label="Photo 5"></button><button type="button" class="dot" data-i="5" aria-label="Photo 6"></button></div>
@@ -503,15 +539,15 @@ tailwind.config = {
             <div class="font-serif text-2xl">65 000</div>
             <div class="text-brume text-xs"><span data-fr>FCFA / nuit · petit-déjeuner inclus</span><span data-en>FCFA / night · breakfast included</span></div>
           </div>
-          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Chambre%20Confort%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or shrink-0">
+          <button type="button" class="btn-or shrink-0" data-res-open data-res-room="Chambre Confort">
             <span data-fr>Réserver</span><span data-en>Book</span>
-          </a>
+          </button>
         </div>
       </div>
     </article>
 
     <article class="grid sm:grid-cols-2 gap-0 hx reveal" style="transition-delay:0.16s">
-      <div class="room-card-photo" style="background-image:url('room-suite.jpg')" data-photos="[&quot;room-suite.jpg&quot;, &quot;room-suite-2.jpg&quot;, &quot;room-suite-3.jpg&quot;, &quot;room-suite-4.jpg&quot;, &quot;room-suite-5.jpg&quot;]">
+      <div class="room-card-photo" style="background-image:url('assets/room-suite.jpg')" data-photos="[&quot;assets/room-suite.jpg&quot;, &quot;assets/room-suite-2.jpg&quot;, &quot;assets/room-suite-3.jpg&quot;, &quot;assets/room-suite-4.jpg&quot;, &quot;assets/room-suite-5.jpg&quot;]">
         <button type="button" class="room-card-nav prev" aria-label="Photo précédente">&#8249;</button>
         <button type="button" class="room-card-nav next" aria-label="Photo suivante">&#8250;</button>
         <div class="room-card-dots"><button type="button" class="dot active" data-i="0" aria-label="Photo 1"></button><button type="button" class="dot" data-i="1" aria-label="Photo 2"></button><button type="button" class="dot" data-i="2" aria-label="Photo 3"></button><button type="button" class="dot" data-i="3" aria-label="Photo 4"></button><button type="button" class="dot" data-i="4" aria-label="Photo 5"></button></div>
@@ -527,9 +563,9 @@ tailwind.config = {
             <div class="font-serif text-2xl">150 000</div>
             <div class="text-brume text-xs"><span data-fr>FCFA / nuit · petit-déjeuner inclus</span><span data-en>FCFA / night · breakfast included</span></div>
           </div>
-          <a href="https://wa.me/24269284245?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%28e%29%20par%20la%20Suite%20Junior%20%C3%A0%20l%27H%C3%B4tel%20Saphir." target="_blank" rel="noopener" class="btn-or shrink-0">
+          <button type="button" class="btn-or shrink-0" data-res-open data-res-room="Suite Junior">
             <span data-fr>Réserver</span><span data-en>Book</span>
-          </a>
+          </button>
         </div>
       </div>
     </article>
@@ -545,10 +581,61 @@ tailwind.config = {
   </div>
 </section>
 
+<div class="res-modal" id="resModal">
+  <div class="res-modal-backdrop" data-res-close></div>
+  <div class="res-modal-panel" role="dialog" aria-modal="true" aria-labelledby="resModalTitle">
+    <button type="button" class="res-modal-close" data-res-close aria-label="Fermer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <div class="res-modal-room">
+      <div class="eyebrow mb-1">Réservation</div>
+      <h3 class="font-serif serif-tight" id="resModalTitle" style="font-size:1.3rem">Votre séjour</h3>
+    </div>
+
+    <div class="res-cal-head">
+      <button type="button" class="res-cal-nav" id="resCalPrev" aria-label="Mois précédent">&#8249;</button>
+      <div class="res-cal-label" id="resCalLabel">—</div>
+      <button type="button" class="res-cal-nav" id="resCalNext" aria-label="Mois suivant">&#8250;</button>
+    </div>
+    <div class="res-cal-weekdays">
+      <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+    </div>
+    <div class="res-cal-grid" id="resCalGrid"></div>
+
+    <div class="res-dates-summary">
+      <div>
+        <div class="f-label">Arrivée</div>
+        <div class="res-date-value" id="resDateIn">—</div>
+      </div>
+      <div>
+        <div class="f-label">Départ</div>
+        <div class="res-date-value" id="resDateOut">—</div>
+      </div>
+    </div>
+
+    <div class="res-guests">
+      <div class="res-guest-row">
+        <div>
+          <div class="f-label">Personnes</div>
+        </div>
+        <div class="res-stepper">
+          <button type="button" class="res-step" id="resGuestMinus" aria-label="Moins de personnes">&minus;</button>
+          <span id="resGuestCount">2</span>
+          <button type="button" class="res-step" id="resGuestPlus" aria-label="Plus de personnes">+</button>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn-or" style="width:100%" id="resSubmit">Continuer sur WhatsApp</button>
+    <p class="text-brume text-xs mt-3 text-center" id="resHint">Sélectionnez une date d'arrivée.</p>
+  </div>
+</div>
+
 <footer style="background:#0D1626">
   <div class="max-w-7xl mx-auto px-5 sm:px-10 py-16 grid sm:grid-cols-3 gap-12">
     <div>
-      <img src="logo-large.png" alt="Hôtel Saphir" style="height:64px;width:auto" class="mb-5">
+      <img src="assets/logo-large.png" alt="Hôtel Saphir" style="height:64px;width:auto" class="mb-5">
       <p class="text-ivoire/45 text-xs leading-relaxed max-w-xs">Brazzaville, République du Congo.</p>
       <p class="text-ivoire/45 text-xs mt-4">Avenue Alfassa, rue Charles Ebina<br>Brazzaville — RC</p>
     </div>
@@ -701,6 +788,147 @@ tailwind.config = {
         render();
       });
     });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var modal = document.getElementById('resModal');
+  if (!modal) return;
+  var grid = document.getElementById('resCalGrid');
+  var label = document.getElementById('resCalLabel');
+  var prevBtn = document.getElementById('resCalPrev');
+  var nextBtn = document.getElementById('resCalNext');
+  var dateInEl = document.getElementById('resDateIn');
+  var dateOutEl = document.getElementById('resDateOut');
+  var guestCountEl = document.getElementById('resGuestCount');
+  var guestMinus = document.getElementById('resGuestMinus');
+  var guestPlus = document.getElementById('resGuestPlus');
+  var titleEl = document.getElementById('resModalTitle');
+  var submitBtn = document.getElementById('resSubmit');
+  var hintEl = document.getElementById('resHint');
+
+  var WA_NUMBER = '24269284245';
+  var MONTHS_FR = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  var DAYS_FR = ['dim','lun','mar','mer','jeu','ven','sam'];
+
+  var today = new Date(); today.setHours(0,0,0,0);
+  var viewYear = today.getFullYear();
+  var viewMonth = today.getMonth();
+  var checkIn = null, checkOut = null;
+  var guests = 2;
+  var currentRoom = '';
+
+  function fmt(d){
+    if (!d) return '—';
+    return DAYS_FR[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS_FR[d.getMonth()] + ' ' + d.getFullYear();
+  }
+  function sameDay(a,b){ return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+
+  function onDayClick(date){
+    if (!checkIn || (checkIn && checkOut)) {
+      checkIn = date; checkOut = null;
+    } else if (date <= checkIn) {
+      checkIn = date; checkOut = null;
+    } else {
+      checkOut = date;
+    }
+    dateInEl.textContent = fmt(checkIn);
+    dateOutEl.textContent = fmt(checkOut);
+    hintEl.style.color = '';
+    renderCalendar();
+    updateHint();
+  }
+
+  function renderCalendar(){
+    label.textContent = MONTHS_FR[viewMonth].charAt(0).toUpperCase() + MONTHS_FR[viewMonth].slice(1) + ' ' + viewYear;
+    grid.innerHTML = '';
+    var firstOfMonth = new Date(viewYear, viewMonth, 1);
+    var startOffset = (firstOfMonth.getDay() + 6) % 7; // lundi en 1re colonne
+    var daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
+    for (var i=0;i<startOffset;i++){ grid.appendChild(document.createElement('span')); }
+    for (var d=1; d<=daysInMonth; d++){
+      (function(d){
+        var date = new Date(viewYear, viewMonth, d);
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'res-cal-day';
+        btn.textContent = d;
+        if (sameDay(date, today)) btn.classList.add('res-today');
+        if (date < today) btn.disabled = true;
+        if (checkIn && sameDay(date, checkIn)) btn.classList.add('res-selected');
+        if (checkOut && sameDay(date, checkOut)) btn.classList.add('res-selected');
+        if (checkIn && checkOut && date > checkIn && date < checkOut) btn.classList.add('res-in-range');
+        btn.addEventListener('click', function(){ onDayClick(date); });
+        grid.appendChild(btn);
+      })(d);
+    }
+    var isCurrentMonth = (viewYear === today.getFullYear() && viewMonth === today.getMonth());
+    prevBtn.disabled = isCurrentMonth;
+  }
+
+  function updateHint(){
+    if (!checkIn) hintEl.textContent = "Sélectionnez une date d'arrivée.";
+    else if (!checkOut) hintEl.textContent = "Sélectionnez une date de départ.";
+    else hintEl.textContent = "Vérifiez vos dates, puis continuez sur WhatsApp.";
+  }
+
+  prevBtn.addEventListener('click', function(){
+    viewMonth--; if (viewMonth<0){ viewMonth=11; viewYear--; }
+    renderCalendar();
+  });
+  nextBtn.addEventListener('click', function(){
+    viewMonth++; if (viewMonth>11){ viewMonth=0; viewYear++; }
+    renderCalendar();
+  });
+
+  guestMinus.addEventListener('click', function(){ if (guests>1){ guests--; guestCountEl.textContent = guests; } });
+  guestPlus.addEventListener('click', function(){ if (guests<12){ guests++; guestCountEl.textContent = guests; } });
+
+  function openModal(room){
+    currentRoom = room || '';
+    titleEl.textContent = currentRoom || 'Votre séjour';
+    checkIn = null; checkOut = null; guests = 2;
+    guestCountEl.textContent = guests;
+    dateInEl.textContent = '—'; dateOutEl.textContent = '—';
+    viewYear = today.getFullYear(); viewMonth = today.getMonth();
+    renderCalendar();
+    updateHint();
+    modal.classList.add('open');
+    document.body.classList.add('res-modal-lock');
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.classList.remove('res-modal-lock');
+  }
+
+  document.querySelectorAll('[data-res-open]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      openModal(btn.getAttribute('data-res-room') || '');
+    });
+  });
+  modal.querySelectorAll('[data-res-close]').forEach(function(el){
+    el.addEventListener('click', closeModal);
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+  submitBtn.addEventListener('click', function(){
+    if (!checkIn || !checkOut) {
+      updateHint();
+      hintEl.style.color = '#C2554F';
+      return;
+    }
+    var lines = [];
+    lines.push('Bonjour, je souhaite réserver' + (currentRoom ? ' : ' + currentRoom : ' une chambre') + ' à l\'Hôtel Saphir.');
+    lines.push('Arrivée : ' + fmt(checkIn));
+    lines.push('Départ : ' + fmt(checkOut));
+    lines.push('Nombre de personnes : ' + guests);
+    var msg = lines.join(String.fromCharCode(10));
+    var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank', 'noopener');
+    closeModal();
   });
 })();
 </script>
