@@ -872,8 +872,14 @@ tailwind.config = {
     </button>
 
     <div class="res-modal-room">
-      <div class="eyebrow mb-1">Réservation</div>
-      <h3 class="font-serif serif-tight" id="resModalTitle" style="font-size:1.3rem">Votre séjour</h3>
+      <div class="eyebrow mb-1" id="resModalTitle">Réservation</div>
+      <select class="f-select" id="resRoomSelect" style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.25rem;color:#211D1A">
+        <option value="">Choisir une chambre</option>
+        <option value="Chambre Standard" data-price="40 000">Chambre Standard — 40 000 FCFA/nuit</option>
+        <option value="Chambre Confort" data-price="65 000">Chambre Confort — 65 000 FCFA/nuit</option>
+        <option value="Suite Junior" data-price="150 000">Suite Junior — 150 000 FCFA/nuit</option>
+      </select>
+      <div class="text-brume text-xs mt-1" id="resRoomPrice">&nbsp;</div>
     </div>
 
     <div class="res-cal-head">
@@ -1011,7 +1017,8 @@ tailwind.config = {
   var guestCountEl = document.getElementById('resGuestCount');
   var guestMinus = document.getElementById('resGuestMinus');
   var guestPlus = document.getElementById('resGuestPlus');
-  var titleEl = document.getElementById('resModalTitle');
+  var roomSelect = document.getElementById('resRoomSelect');
+  var roomPriceEl = document.getElementById('resRoomPrice');
   var submitBtn = document.getElementById('resSubmit');
   var hintEl = document.getElementById('resHint');
 
@@ -1074,10 +1081,22 @@ tailwind.config = {
     prevBtn.disabled = isCurrentMonth;
   }
 
+  function updateRoomPrice(){
+    var opt = roomSelect.options[roomSelect.selectedIndex];
+    var price = opt ? opt.getAttribute('data-price') : '';
+    roomPriceEl.textContent = price ? (price + ' FCFA / nuit · petit-déjeuner inclus') : ' ';
+  }
+  roomSelect.addEventListener('change', function(){
+    updateRoomPrice();
+    hintEl.style.color = '';
+    updateHint();
+  });
+
   function updateHint(){
-    if (!checkIn) hintEl.textContent = "Sélectionnez une date d'arrivée.";
+    if (!roomSelect.value) hintEl.textContent = 'Choisissez une chambre.';
+    else if (!checkIn) hintEl.textContent = "Sélectionnez une date d'arrivée.";
     else if (!checkOut) hintEl.textContent = "Sélectionnez une date de départ.";
-    else hintEl.textContent = "Vérifiez vos dates, puis continuez sur WhatsApp.";
+    else hintEl.textContent = "Vérifiez vos informations, puis continuez sur WhatsApp.";
   }
 
   prevBtn.addEventListener('click', function(){
@@ -1094,12 +1113,15 @@ tailwind.config = {
 
   function openModal(room){
     currentRoom = room || '';
-    titleEl.textContent = currentRoom || 'Votre séjour';
+    roomSelect.value = currentRoom;
+    if (roomSelect.value !== currentRoom) roomSelect.value = '';
+    updateRoomPrice();
     checkIn = null; checkOut = null; guests = 2;
     guestCountEl.textContent = guests;
     dateInEl.textContent = '—'; dateOutEl.textContent = '—';
     viewYear = today.getFullYear(); viewMonth = today.getMonth();
     renderCalendar();
+    hintEl.style.color = '';
     updateHint();
     modal.classList.add('open');
     document.body.classList.add('res-modal-lock');
@@ -1121,13 +1143,17 @@ tailwind.config = {
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
 
   submitBtn.addEventListener('click', function(){
-    if (!checkIn || !checkOut) {
+    var room = roomSelect.value;
+    if (!room || !checkIn || !checkOut) {
       updateHint();
       hintEl.style.color = '#C2554F';
       return;
     }
+    var opt = roomSelect.options[roomSelect.selectedIndex];
+    var price = opt ? opt.getAttribute('data-price') : '';
     var lines = [];
-    lines.push('Bonjour, je souhaite réserver' + (currentRoom ? ' : ' + currentRoom : ' une chambre') + ' à l\'Hôtel Saphir.');
+    lines.push('Bonjour, je souhaite réserver à l\'Hôtel Saphir.');
+    lines.push('Chambre : ' + room + (price ? ' — ' + price + ' FCFA/nuit' : ''));
     lines.push('Arrivée : ' + fmt(checkIn));
     lines.push('Départ : ' + fmt(checkOut));
     lines.push('Nombre de personnes : ' + guests);
