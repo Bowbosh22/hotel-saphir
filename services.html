@@ -127,9 +127,45 @@ tailwind.config = {
 
   .commerce-thumb { width:44px; height:44px; border-radius:8px; background-size:cover; background-position:center; }
 
-  .merchant-card { background:#FBF7EF; display:flex; flex-direction:column; }
-  .merchant-card-photo { aspect-ratio:4/3; background-size:cover; background-position:center; }
-  .merchant-card-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
+  .merchant-card {
+    background:#FBF7EF; display:flex; flex-direction:column;
+    border-radius:3px; overflow:hidden;
+    box-shadow:0 14px 34px -22px rgba(33,29,26,.28);
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .merchant-card:hover { transform:translateY(-5px); box-shadow:0 22px 46px -18px rgba(33,29,26,.32); }
+  .merchant-card-photo-wrap { position:relative; aspect-ratio:4/3; overflow:hidden; background:rgba(198,161,91,.10); }
+  .merchant-card-photo {
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+    transition:transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .merchant-card:hover .merchant-card-photo { transform:scale(1.07); }
+  .merchant-card-body { padding:1.6rem 1.6rem 1.75rem; flex:1; display:flex; flex-direction:column; }
+  .merchant-card-name { letter-spacing:.005em; }
+  .merchant-card-divider { height:1px; background:rgba(33,29,26,.10); margin:1rem 0 .9rem; }
+  .merchant-card-tel {
+    display:inline-flex; align-items:center; gap:.4rem;
+    font-family:'Jost',sans-serif; font-size:.72rem; letter-spacing:.06em;
+    color:#16233F; margin-top:auto; transition:color .25s;
+  }
+  .merchant-card-tel:hover { color:#C6A15B; }
+  .merchant-card-tel-icon { width:13px; height:13px; flex-shrink:0; }
+  .merchant-card-cat-badge {
+    position:absolute; top:10px; left:10px; z-index:2;
+    background:rgba(13,22,38,.55); color:#FBF7EF;
+    font-family:'Jost',sans-serif; font-size:.6rem; letter-spacing:.08em; text-transform:uppercase;
+    padding:3px 9px; border-radius:2px;
+  }
+
+  .cat-nav { display:flex; flex-wrap:wrap; justify-content:center; gap:.6rem; }
+  .cat-nav-pill {
+    font-family:'Jost',sans-serif; font-size:.68rem; letter-spacing:.06em; text-transform:uppercase;
+    color:#16233F; background:rgba(198,161,91,.10); border:1px solid rgba(198,161,91,.35);
+    padding:.55rem 1.15rem; border-radius:9999px; transition:all .25s;
+  }
+  .cat-nav-pill:hover { background:#C6A15B; color:#FBF7EF; border-color:#C6A15B; }
+  .cat-nav-pill-count { opacity:.6; margin-left:.25rem; }
 
   /* pas de letter-spacing négatif ici : sur certains rendus, ça décale l'accent
      des lettres accentuées (ex. « ô ») hors de la lettre de base — corrigé le 22/09 */
@@ -394,9 +430,9 @@ tailwind.config = {
         <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
       </div>
       <div class="flex items-center gap-3">
-        <a href="chambres.html#reserver" class="nav-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-ivoire/10 transition-all hidden sm:block">
+        <button type="button" data-res-open data-res-room="" class="nav-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-ivoire/10 transition-all hidden sm:block">
           <span data-fr>Réserver</span><span data-en>Book</span>
-        </a>
+        </button>
         <button id="mobileNavBtn" class="mobile-nav-btn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
           <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
           <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
@@ -413,9 +449,9 @@ tailwind.config = {
         <a href="galerie.html" class="nav-link hover:opacity-100"><span data-fr>Galerie</span><span data-en>Gallery</span></a>
         <a href="apropos.html" class="nav-link hover:opacity-100"><span data-fr>À propos</span><span data-en>About</span></a>
         <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
-      <a href="chambres.html#reserver" class="nav-cta mobile-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-3 rounded-sm">
+      <button type="button" data-res-open data-res-room="" class="nav-cta mobile-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-3 rounded-sm">
         <span data-fr>Réserver</span><span data-en>Book</span>
-      </a>
+      </button>
     </div>
   </div>
 </header>
@@ -585,6 +621,56 @@ tailwind.config = {
   <span data-fr>WhatsApp</span><span data-en>WhatsApp</span>
 </a>
 
+<div class="res-modal" id="resModal">
+  <div class="res-modal-backdrop" data-res-close></div>
+  <div class="res-modal-panel" role="dialog" aria-modal="true" aria-labelledby="resModalTitle">
+    <button type="button" class="res-modal-close" data-res-close aria-label="Fermer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <div class="res-modal-room">
+      <div class="eyebrow mb-1">Réservation</div>
+      <h3 class="font-serif serif-tight" id="resModalTitle" style="font-size:1.3rem">Votre séjour</h3>
+    </div>
+
+    <div class="res-cal-head">
+      <button type="button" class="res-cal-nav" id="resCalPrev" aria-label="Mois précédent">&#8249;</button>
+      <div class="res-cal-label" id="resCalLabel">—</div>
+      <button type="button" class="res-cal-nav" id="resCalNext" aria-label="Mois suivant">&#8250;</button>
+    </div>
+    <div class="res-cal-weekdays">
+      <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+    </div>
+    <div class="res-cal-grid" id="resCalGrid"></div>
+
+    <div class="res-dates-summary">
+      <div>
+        <div class="f-label">Arrivée</div>
+        <div class="res-date-value" id="resDateIn">—</div>
+      </div>
+      <div>
+        <div class="f-label">Départ</div>
+        <div class="res-date-value" id="resDateOut">—</div>
+      </div>
+    </div>
+
+    <div class="res-guests">
+      <div class="res-guest-row">
+        <div>
+          <div class="f-label">Personnes</div>
+        </div>
+        <div class="res-stepper">
+          <button type="button" class="res-step" id="resGuestMinus" aria-label="Moins de personnes">&minus;</button>
+          <span id="resGuestCount">2</span>
+          <button type="button" class="res-step" id="resGuestPlus" aria-label="Plus de personnes">+</button>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn-or" style="width:100%" id="resSubmit">Continuer sur WhatsApp</button>
+    <p class="text-brume text-xs mt-3 text-center" id="resHint">Sélectionnez une date d'arrivée.</p>
+  </div>
+</div>
 
 <script>
   // Nav
@@ -613,7 +699,7 @@ tailwind.config = {
     btn.addEventListener('click', () => {
       if (menu.classList.contains('open')) closeMenu(); else openMenu();
     });
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    menu.querySelectorAll('a, button').forEach(a => a.addEventListener('click', closeMenu));
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
     window.addEventListener('resize', () => { if (window.innerWidth >= 1024) closeMenu(); });
   })();
@@ -691,6 +777,147 @@ tailwind.config = {
       window.open('https://wa.me/24269284245?text=' + msg, '_blank');
     });
   }
+</script>
+
+<script>
+(function(){
+  var modal = document.getElementById('resModal');
+  if (!modal) return;
+  var grid = document.getElementById('resCalGrid');
+  var label = document.getElementById('resCalLabel');
+  var prevBtn = document.getElementById('resCalPrev');
+  var nextBtn = document.getElementById('resCalNext');
+  var dateInEl = document.getElementById('resDateIn');
+  var dateOutEl = document.getElementById('resDateOut');
+  var guestCountEl = document.getElementById('resGuestCount');
+  var guestMinus = document.getElementById('resGuestMinus');
+  var guestPlus = document.getElementById('resGuestPlus');
+  var titleEl = document.getElementById('resModalTitle');
+  var submitBtn = document.getElementById('resSubmit');
+  var hintEl = document.getElementById('resHint');
+
+  var WA_NUMBER = '24269284245';
+  var MONTHS_FR = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  var DAYS_FR = ['dim','lun','mar','mer','jeu','ven','sam'];
+
+  var today = new Date(); today.setHours(0,0,0,0);
+  var viewYear = today.getFullYear();
+  var viewMonth = today.getMonth();
+  var checkIn = null, checkOut = null;
+  var guests = 2;
+  var currentRoom = '';
+
+  function fmt(d){
+    if (!d) return '—';
+    return DAYS_FR[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS_FR[d.getMonth()] + ' ' + d.getFullYear();
+  }
+  function sameDay(a,b){ return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+
+  function onDayClick(date){
+    if (!checkIn || (checkIn && checkOut)) {
+      checkIn = date; checkOut = null;
+    } else if (date <= checkIn) {
+      checkIn = date; checkOut = null;
+    } else {
+      checkOut = date;
+    }
+    dateInEl.textContent = fmt(checkIn);
+    dateOutEl.textContent = fmt(checkOut);
+    hintEl.style.color = '';
+    renderCalendar();
+    updateHint();
+  }
+
+  function renderCalendar(){
+    label.textContent = MONTHS_FR[viewMonth].charAt(0).toUpperCase() + MONTHS_FR[viewMonth].slice(1) + ' ' + viewYear;
+    grid.innerHTML = '';
+    var firstOfMonth = new Date(viewYear, viewMonth, 1);
+    var startOffset = (firstOfMonth.getDay() + 6) % 7; // lundi en 1re colonne
+    var daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
+    for (var i=0;i<startOffset;i++){ grid.appendChild(document.createElement('span')); }
+    for (var d=1; d<=daysInMonth; d++){
+      (function(d){
+        var date = new Date(viewYear, viewMonth, d);
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'res-cal-day';
+        btn.textContent = d;
+        if (sameDay(date, today)) btn.classList.add('res-today');
+        if (date < today) btn.disabled = true;
+        if (checkIn && sameDay(date, checkIn)) btn.classList.add('res-selected');
+        if (checkOut && sameDay(date, checkOut)) btn.classList.add('res-selected');
+        if (checkIn && checkOut && date > checkIn && date < checkOut) btn.classList.add('res-in-range');
+        btn.addEventListener('click', function(){ onDayClick(date); });
+        grid.appendChild(btn);
+      })(d);
+    }
+    var isCurrentMonth = (viewYear === today.getFullYear() && viewMonth === today.getMonth());
+    prevBtn.disabled = isCurrentMonth;
+  }
+
+  function updateHint(){
+    if (!checkIn) hintEl.textContent = "Sélectionnez une date d'arrivée.";
+    else if (!checkOut) hintEl.textContent = "Sélectionnez une date de départ.";
+    else hintEl.textContent = "Vérifiez vos dates, puis continuez sur WhatsApp.";
+  }
+
+  prevBtn.addEventListener('click', function(){
+    viewMonth--; if (viewMonth<0){ viewMonth=11; viewYear--; }
+    renderCalendar();
+  });
+  nextBtn.addEventListener('click', function(){
+    viewMonth++; if (viewMonth>11){ viewMonth=0; viewYear++; }
+    renderCalendar();
+  });
+
+  guestMinus.addEventListener('click', function(){ if (guests>1){ guests--; guestCountEl.textContent = guests; } });
+  guestPlus.addEventListener('click', function(){ if (guests<12){ guests++; guestCountEl.textContent = guests; } });
+
+  function openModal(room){
+    currentRoom = room || '';
+    titleEl.textContent = currentRoom || 'Votre séjour';
+    checkIn = null; checkOut = null; guests = 2;
+    guestCountEl.textContent = guests;
+    dateInEl.textContent = '—'; dateOutEl.textContent = '—';
+    viewYear = today.getFullYear(); viewMonth = today.getMonth();
+    renderCalendar();
+    updateHint();
+    modal.classList.add('open');
+    document.body.classList.add('res-modal-lock');
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.classList.remove('res-modal-lock');
+  }
+
+  document.querySelectorAll('[data-res-open]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      openModal(btn.getAttribute('data-res-room') || '');
+    });
+  });
+  modal.querySelectorAll('[data-res-close]').forEach(function(el){
+    el.addEventListener('click', closeModal);
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+  submitBtn.addEventListener('click', function(){
+    if (!checkIn || !checkOut) {
+      updateHint();
+      hintEl.style.color = '#C2554F';
+      return;
+    }
+    var lines = [];
+    lines.push('Bonjour, je souhaite réserver' + (currentRoom ? ' : ' + currentRoom : ' une chambre') + ' à l\'Hôtel Saphir.');
+    lines.push('Arrivée : ' + fmt(checkIn));
+    lines.push('Départ : ' + fmt(checkOut));
+    lines.push('Nombre de personnes : ' + guests);
+    var msg = lines.join(String.fromCharCode(10));
+    var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank', 'noopener');
+    closeModal();
+  });
+})();
 </script>
 
 </body>

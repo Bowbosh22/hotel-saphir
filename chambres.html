@@ -430,9 +430,9 @@ tailwind.config = {
         <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
       </div>
       <div class="flex items-center gap-3">
-        <a href="chambres.html#reserver" class="nav-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-ivoire/10 transition-all hidden sm:block">
+        <button type="button" data-res-open data-res-room="" class="nav-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-ivoire/10 transition-all hidden sm:block">
           <span data-fr>Réserver</span><span data-en>Book</span>
-        </a>
+        </button>
         <button id="mobileNavBtn" class="mobile-nav-btn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
           <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
           <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
@@ -449,9 +449,9 @@ tailwind.config = {
         <a href="galerie.html" class="nav-link hover:opacity-100"><span data-fr>Galerie</span><span data-en>Gallery</span></a>
         <a href="apropos.html" class="nav-link hover:opacity-100"><span data-fr>À propos</span><span data-en>About</span></a>
         <a href="contact.html" class="nav-link hover:opacity-100"><span data-fr>Contact</span><span data-en>Contact</span></a>
-      <a href="chambres.html#reserver" class="nav-cta mobile-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-3 rounded-sm">
+      <button type="button" data-res-open data-res-room="" class="nav-cta mobile-cta text-ivoire border border-ivoire/40 text-xs uppercase tracking-widest px-5 py-3 rounded-sm">
         <span data-fr>Réserver</span><span data-en>Book</span>
-      </a>
+      </button>
     </div>
   </div>
 </header>
@@ -581,6 +581,52 @@ tailwind.config = {
   </div>
 </section>
 
+<footer style="background:#0D1626">
+  <div class="max-w-7xl mx-auto px-5 sm:px-10 py-16 grid sm:grid-cols-3 gap-12">
+    <div>
+      <img src="logo-large.png" alt="Hôtel Saphir" style="height:64px;width:auto" class="mb-5">
+      <p class="text-ivoire/45 text-xs leading-relaxed max-w-xs">Brazzaville, République du Congo.</p>
+      <p class="text-ivoire/45 text-xs mt-4">Avenue Alfassa, rue Charles Ebina<br>Brazzaville — RC</p>
+    </div>
+    <div>
+      <div class="eyebrow-light mb-5"><span data-fr>Navigation</span><span data-en>Navigation</span></div>
+      <ul class="space-y-2.5 text-xs text-ivoire/45">
+          <li><a href="index.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Accueil</span><span data-en>Home</span></a></li>
+          <li><a href="chambres.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a></li>
+          <li><a href="services.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a></li>
+          <li><a href="commercants.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Commerçants</span><span data-en>Merchants</span></a></li>
+          <li><a href="galerie.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Galerie</span><span data-en>Gallery</span></a></li>
+          <li><a href="apropos.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>À propos</span><span data-en>About</span></a></li>
+          <li><a href="contact.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Contact</span><span data-en>Contact</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="eyebrow-light mb-5"><span data-fr>Contact</span><span data-en>Contact</span></div>
+      <ul class="space-y-2.5 text-xs text-ivoire/45">
+        <li>+242 06 928 4245</li>
+        <li>+242 05 528 42 45</li>
+        <li>contact@hotel-saphir-brazza.com</li>
+      </ul>
+      <a href="https://wa.me/24269284245" target="_blank" rel="noopener" class="btn-outline-light text-xs mt-5 inline-block">
+        <span data-fr>Écrire sur WhatsApp</span><span data-en>Message us on WhatsApp</span>
+      </a>
+      <div class="flex gap-4 mt-6">
+        <a href="https://www.facebook.com/saphirstyle01/" target="_blank" rel="noopener" class="text-ivoire/40 hover:text-ivoire transition text-xs uppercase tracking-widest">Facebook</a>
+        <a href="https://www.instagram.com/hotel_saphir_242/" target="_blank" rel="noopener" class="text-ivoire/40 hover:text-ivoire transition text-xs uppercase tracking-widest">Instagram</a>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-5 sm:px-10 py-6 border-t border-ivoire/10 text-ivoire/30 text-[11px] flex flex-col sm:flex-row justify-between gap-2">
+    <span>&copy; 2026 Hôtel Saphir — Brazzaville.</span>
+    <span data-fr>Site réalisé par l'Atelier KPM.</span><span data-en>Website by Atelier KPM.</span>
+  </div>
+</footer>
+
+<a href="https://wa.me/24269284245" target="_blank" rel="noopener" class="wa-float hidden sm:flex items-center gap-2">
+  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0012.04 2zm0 18.1a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.35c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.83c0 4.55-3.7 8.2-8.25 8.2z"/></svg>
+  <span data-fr>WhatsApp</span><span data-en>WhatsApp</span>
+</a>
+
 <div class="res-modal" id="resModal">
   <div class="res-modal-backdrop" data-res-close></div>
   <div class="res-modal-panel" role="dialog" aria-modal="true" aria-labelledby="resModalTitle">
@@ -632,53 +678,6 @@ tailwind.config = {
   </div>
 </div>
 
-<footer style="background:#0D1626">
-  <div class="max-w-7xl mx-auto px-5 sm:px-10 py-16 grid sm:grid-cols-3 gap-12">
-    <div>
-      <img src="logo-large.png" alt="Hôtel Saphir" style="height:64px;width:auto" class="mb-5">
-      <p class="text-ivoire/45 text-xs leading-relaxed max-w-xs">Brazzaville, République du Congo.</p>
-      <p class="text-ivoire/45 text-xs mt-4">Avenue Alfassa, rue Charles Ebina<br>Brazzaville — RC</p>
-    </div>
-    <div>
-      <div class="eyebrow-light mb-5"><span data-fr>Navigation</span><span data-en>Navigation</span></div>
-      <ul class="space-y-2.5 text-xs text-ivoire/45">
-          <li><a href="index.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Accueil</span><span data-en>Home</span></a></li>
-          <li><a href="chambres.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Chambres &amp; Suites</span><span data-en>Rooms &amp; Suites</span></a></li>
-          <li><a href="services.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Services &amp; Événements</span><span data-en>Services &amp; Events</span></a></li>
-          <li><a href="commercants.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Commerçants</span><span data-en>Merchants</span></a></li>
-          <li><a href="galerie.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Galerie</span><span data-en>Gallery</span></a></li>
-          <li><a href="apropos.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>À propos</span><span data-en>About</span></a></li>
-          <li><a href="contact.html" class="hover:text-ivoire transition tracking-wide"><span data-fr>Contact</span><span data-en>Contact</span></a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="eyebrow-light mb-5"><span data-fr>Contact</span><span data-en>Contact</span></div>
-      <ul class="space-y-2.5 text-xs text-ivoire/45">
-        <li>+242 06 928 4245</li>
-        <li>+242 05 528 42 45</li>
-        <li>contact@hotel-saphir-brazza.com</li>
-      </ul>
-      <a href="https://wa.me/24269284245" target="_blank" rel="noopener" class="btn-outline-light text-xs mt-5 inline-block">
-        <span data-fr>Écrire sur WhatsApp</span><span data-en>Message us on WhatsApp</span>
-      </a>
-      <div class="flex gap-4 mt-6">
-        <a href="https://www.facebook.com/saphirstyle01/" target="_blank" rel="noopener" class="text-ivoire/40 hover:text-ivoire transition text-xs uppercase tracking-widest">Facebook</a>
-        <a href="https://www.instagram.com/hotel_saphir_242/" target="_blank" rel="noopener" class="text-ivoire/40 hover:text-ivoire transition text-xs uppercase tracking-widest">Instagram</a>
-      </div>
-    </div>
-  </div>
-  <div class="max-w-7xl mx-auto px-5 sm:px-10 py-6 border-t border-ivoire/10 text-ivoire/30 text-[11px] flex flex-col sm:flex-row justify-between gap-2">
-    <span>&copy; 2026 Hôtel Saphir — Brazzaville.</span>
-    <span data-fr>Site réalisé par l'Atelier KPM.</span><span data-en>Website by Atelier KPM.</span>
-  </div>
-</footer>
-
-<a href="https://wa.me/24269284245" target="_blank" rel="noopener" class="wa-float hidden sm:flex items-center gap-2">
-  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0012.04 2zm0 18.1a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.35c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.83c0 4.55-3.7 8.2-8.25 8.2z"/></svg>
-  <span data-fr>WhatsApp</span><span data-en>WhatsApp</span>
-</a>
-
-
 <script>
   // Nav
   const nav = document.getElementById('nav');
@@ -706,7 +705,7 @@ tailwind.config = {
     btn.addEventListener('click', () => {
       if (menu.classList.contains('open')) closeMenu(); else openMenu();
     });
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    menu.querySelectorAll('a, button').forEach(a => a.addEventListener('click', closeMenu));
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
     window.addEventListener('resize', () => { if (window.innerWidth >= 1024) closeMenu(); });
   })();
